@@ -1,6 +1,6 @@
 <?php
 /**
- *  index.php PHPCMS 入口
+ *  index.php PHPCMS入口
  *
  * @copyright			(C) 2005-2010 PHPCMS
  * @license				http://www.phpcms.cn/license/
