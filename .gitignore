@@ -1,4 +1,2 @@
-# 缓存文件
 caches/*
 index.html
-.gitignore
