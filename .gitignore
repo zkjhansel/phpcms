@@ -1,2 +1,9 @@
-caches/*
+caches/bak*
+caches/caches_*
+caches/sessions
+caches/poster_js
+caches/vote_js
+caches/error_log.php
+caches/index.html
+caches/install.lock
 index.html
