@@ -3,9 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=7" />
-<title>PHPCMS演示站</title>
-<meta name="keywords" content="PHPCMS演示站">
-<meta name="description" content="PHPCMS演示站">
+<title>hansel的网站</title>
+<meta name="keywords" content="临沂教师招聘 临沂公务员 临沂事业编 考研">
+<meta name="description" content="临沂教师招聘、临沂公务员、临沂事业编和考研的机构选择和一些消息都可以来这里逛逛">
 <link href="http://cms.com/statics/css/reset.css" rel="stylesheet" type="text/css" />
 <link href="http://cms.com/statics/css/default_blue.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="http://cms.com/statics/js/jquery.min.js"></script>
@@ -32,14 +32,14 @@ $(function(){
 
     <div class="search">
     	<div class="tab" id="search">
-																<a href="javascript:;" onclick="setmodel(1, $(this));" style="outline:medium none;" hidefocus="true"  class="on" >新闻</a><span> | </span>										<a href="javascript:;" onclick="setmodel(3, $(this));" style="outline:medium none;" hidefocus="true" >图片</a><span> | </span>										<a href="javascript:;" onclick="setmodel(2, $(this));" style="outline:medium none;" hidefocus="true" >下载</a><span> | </span>										<a href="javascript:;" onclick="setmodel(52, $(this));" style="outline:medium none;" hidefocus="true" >专题</a>								</div>
+																<a href="javascript:;" onclick="setmodel(53, $(this));" style="outline:medium none;" hidefocus="true"  class="on" >名师预约</a><span> | </span>										<a href="javascript:;" onclick="setmodel(1, $(this));" style="outline:medium none;" hidefocus="true" >新闻</a><span> | </span>										<a href="javascript:;" onclick="setmodel(3, $(this));" style="outline:medium none;" hidefocus="true" >图片</a><span> | </span>										<a href="javascript:;" onclick="setmodel(2, $(this));" style="outline:medium none;" hidefocus="true" >下载</a><span> | </span>										<a href="javascript:;" onclick="setmodel(52, $(this));" style="outline:medium none;" hidefocus="true" >专题</a>								</div>
 
         <div class="bd">
             <form action="http://cms.com/index.php" method="get" target="_blank">
 				<input type="hidden" name="m" value="search"/>
 				<input type="hidden" name="c" value="index"/>
 				<input type="hidden" name="a" value="init"/>
-				<input type="hidden" name="typeid" value="1" id="typeid"/>
+				<input type="hidden" name="typeid" value="53" id="typeid"/>
 				<input type="hidden" name="siteid" value="1" id="siteid"/>
                 <input type="text" class="text" name="q" id="q"/><input type="submit" value="搜 索" class="button" />
             </form>
@@ -53,11 +53,15 @@ $(function(){
     	        	<ul class="nav-site">
 			<li><a href="http://cms.com"><span>首页</span></a></li>
 						<li class="line">|</li>
-			<li><a href="http://cms.com"><span>国内</span></a></li>
+			<li><a href="http://cms.com/index.php?m=content&c=index&a=lists&catid=6"><span>国内</span></a></li>
 						<li class="line">|</li>
-			<li><a href="http://cms.com"><span>下载</span></a></li>
+			<li><a href="http://cms.com/index.php?m=content&c=index&a=lists&catid=7"><span>下载</span></a></li>
 						<li class="line">|</li>
-			<li><a href="http://cms.com"><span>图片</span></a></li>
+			<li><a href="http://cms.com/index.php?m=content&c=index&a=lists&catid=8"><span>图片</span></a></li>
+						<li class="line">|</li>
+			<li><a href="http://cms.com/index.php?m=content&c=index&a=lists&catid=9"><span>名师预约</span></a></li>
+						<li class="line">|</li>
+			<li><a href="http://cms.com/index.php?m=content&c=index&a=lists&catid=10"><span>公务员考试</span></a></li>
 			            </ul>
         		        </map>
     </div> 
@@ -91,21 +95,32 @@ $(function(){
         <div class="box">
         		<h5>图片新闻</h5>
                       <ul class="content news-photo picbig">
-                         </ul>
+                         	<li>
+                    <div class="img-wrap">
+                        <a href="http://cms.com/index.php?m=content&c=index&a=show&catid=6&id=1" title="习近平致信全国个体劳动者第五次代表大会"><img src="http://cms.com/statics/images/nopic.gif" title="习近平致信全国个体劳动者第五次代表大会"/></a>
+                    </div>
+                    <a href="http://cms.com/index.php?m=content&c=index&a=show&catid=6&id=1" title="习近平致信全国个体劳动者第五次代表大会">习近平致信...</a>
+                </li>
+                            </ul>
                     </div>
         <div class="bk10"></div>
                         <div class="box cat-area" style=" margin-right:10px">
-        		<h5 class="title-1">国内<a href="http://cms.com" class="more">更多>></a></h5>
+        		<h5 class="title-1">国内<a href="http://cms.com/index.php?m=content&c=index&a=lists&catid=6" class="more">更多>></a></h5>
              <div class="content">
-                                                        
+                                       	<p>
+             		<img src="http://cms.com/statics/images/nopic.gif" width="90" height="60"/>
+                    <strong><a href="http://cms.com/index.php?m=content&c=index&a=show&catid=6&id=1" target="_blank" title="习近平致信全国个体劳动者第五次代表大会">习近平致信全国...</a></strong><br />习近平致信全国个体劳动者第五次代表大会强调
+弘扬企业家精神发挥企...                </p>
+                                            
                 <div class="bk15 hr"></div>
                 
                 <ul class="list lh24 f14">
+                                	<li>·<a href="http://cms.com/index.php?m=content&c=index&a=show&catid=6&id=1" target="_blank" title="习近平致信全国个体劳动者第五次代表大会">习近平致信全国个体劳动...</a></li>
                                 </ul>
                             </div>
         </div>
         		                <div class="box cat-area" >
-        		<h5 class="title-1">下载<a href="http://cms.com" class="more">更多>></a></h5>
+        		<h5 class="title-1">下载<a href="http://cms.com/index.php?m=content&c=index&a=lists&catid=7" class="more">更多>></a></h5>
              <div class="content">
                                                         
                 <div class="bk15 hr"></div>
@@ -115,12 +130,48 @@ $(function(){
                             </div>
         </div>
         <div class="bk10"></div>		                <div class="box cat-area" style=" margin-right:10px">
-        		<h5 class="title-1">图片<a href="http://cms.com" class="more">更多>></a></h5>
+        		<h5 class="title-1">图片<a href="http://cms.com/index.php?m=content&c=index&a=lists&catid=8" class="more">更多>></a></h5>
              <div class="content">
                                                         
                 <div class="bk15 hr"></div>
                 
                 <ul class="list lh24 f14">
+                                </ul>
+                            </div>
+        </div>
+        		                <div class="box cat-area" >
+        		<h5 class="title-1">名师预约<a href="http://cms.com/index.php?m=content&c=index&a=lists&catid=9" class="more">更多>></a></h5>
+             <div class="content">
+                                       	<p>
+             		<img src="http://n.sinaimg.cn/news/transform/w550h309/20180123/W7K8-fyqwiqi9243290.jpg" width="90" height="60"/>
+                    <strong><a href="http://cms.com/index.php?m=content&c=index&a=show&catid=11&id=31" target="_blank" title="重返校园学技能 这两位雄安90后不简单|学技能|雄安|新区">重返校园学技能...</a></strong><br />                            　　党...                </p>
+                                            
+                <div class="bk15 hr"></div>
+                
+                <ul class="list lh24 f14">
+                                	<li>·<a href="http://cms.com/index.php?m=content&c=index&a=show&catid=11&id=31" target="_blank" title="重返校园学技能 这两位雄安90后不简单|学技能|雄安|新区">重返校园学技能 这两位...</a></li>
+                                	<li>·<a href="http://cms.com/index.php?m=content&c=index&a=show&catid=11&id=30" target="_blank" title="山西长治足协主席赛场打人：主席停职 副主席辞职|李健|">山西长治足协主席赛场打...</a></li>
+                                	<li>·<a href="http://cms.com/index.php?m=content&c=index&a=show&catid=11&id=29" target="_blank" title="吴偕林任福建高院副院长 霍敏任省检察院副检察长|人大常">吴偕林任福建高院副院长...</a></li>
+                                	<li>·<a href="http://cms.com/index.php?m=content&c=index&a=show&catid=11&id=28" target="_blank" title="中央政法工作会:近年举报政法干警违纪下降超30%|政法工作">中央政法工作会:近年举报...</a></li>
+                                	<li>·<a href="http://cms.com/index.php?m=content&c=index&a=show&catid=11&id=27" target="_blank" title="印度刚射完烈火5 中国就曝光了一款&ldquo;秘密&rdquo;武器|武器|印">印度刚射完烈火5 中国就...</a></li>
+                                </ul>
+                            </div>
+        </div>
+        <div class="bk10"></div>		                <div class="box cat-area" style=" margin-right:10px">
+        		<h5 class="title-1">公务员考试<a href="http://cms.com/index.php?m=content&c=index&a=lists&catid=10" class="more">更多>></a></h5>
+             <div class="content">
+                                       	<p>
+             		<img src="http://n.sinaimg.cn/news/crawl/w550h312/20180123/EBjv-fyqwiqi8513514.jpg" width="90" height="60"/>
+                    <strong><a href="http://cms.com/index.php?m=content&c=index&a=show&catid=10&id=20" target="_blank" title="儿童邪典片拍摄公司已被查封:会在微博回应疑问|迪士尼|暴">儿童邪典片拍摄...</a></strong><br />                            　　原...                </p>
+                                            
+                <div class="bk15 hr"></div>
+                
+                <ul class="list lh24 f14">
+                                	<li>·<a href="http://cms.com/index.php?m=content&c=index&a=show&catid=10&id=21" target="_blank" title="北京五环内禁放烟花爆竹 京郊十区也已划定禁放区|烟花爆">北京五环内禁放烟花爆竹...</a></li>
+                                	<li>·<a href="http://cms.com/index.php?m=content&c=index&a=show&catid=10&id=20" target="_blank" title="儿童邪典片拍摄公司已被查封:会在微博回应疑问|迪士尼|暴">儿童邪典片拍摄公司已被...</a></li>
+                                	<li>·<a href="http://cms.com/index.php?m=content&c=index&a=show&catid=10&id=19" target="_blank" title="蔡奇主持冬奥组委首次执委会 冬奥组委有哪些机构|蔡奇|">蔡奇主持冬奥组委首次执...</a></li>
+                                	<li>·<a href="http://cms.com/index.php?m=content&c=index&a=show&catid=10&id=18" target="_blank" title="北京对口支援雄安的四所学校幼儿园确定(名单)|对口支援|">北京对口支援雄安的四所...</a></li>
+                                	<li>·<a href="http://cms.com/index.php?m=content&c=index&a=show&catid=10&id=17" target="_blank" title="北京市纪委:去年阻止11名有外逃嫌疑党员干部出境|党员干">北京市纪委:去年阻止11名...</a></li>
                                 </ul>
                             </div>
         </div>
@@ -144,11 +195,14 @@ $(function(){
             <h5 class="title-2"><span class="rt fn f12 tab SwapTab"><span class="fb">热点</span> | <span >评论</span> | <span>关注</span></span>排行</h5>
             <div class="tab-content">
             <ul class="content digg">
-										            </ul>
+												<li><a href="http://cms.com/index.php?m=content&c=index&a=show&catid=6&id=1" target="_blank" title="习近平致信全国个体劳动者第五次代表大会">习近平致信全国个体劳动者第五次代表大会</a></li>
+							            </ul>
             <ul class="content digg hidden">
-										            </ul>
+												<li><a href="http://cms.com/index.php?m=content&c=index&a=show&catid=11&id=26" target="_blank">王晓林工作20余年的公司 至少18名原企业高管落马|王晓林</a></li>
+							            </ul>
             <ul class="content digg hidden">
-										            </ul>
+												<li><a href="http://cms.com/index.php?m=content&c=index&a=show&catid=6&id=1" target="_blank">习近平致信全国个体劳动者第五次代表大会</a></li>
+							            </ul>
             </div>
         </div><div class="bk10"></div>
         <div class="box">
@@ -163,12 +217,12 @@ $(function(){
     	<h5><a href="http://cms.com/index.php?m=link&siteid=1" hidefocus="true" class="rt">更多>></a>友情链接<a href="http://cms.com/index.php?m=link&c=index&a=register&siteid=1" class="red">申请链接</a></h5>
         <div class="bk10"></div>
 	<ul class="colli imgul">
-                        <li><a href="http://www.phpcms.cn" title="PHPCMS" target="_blank"><img src="http://www.phpcms.cn/images/logo_88_31.gif" width="88" height="31" /></a></li>
-                <li><a href="http://www.sdo.com" title="盛大在线" target="_blank"><img src="http://www.snda.com/cn/logo/comp_logo_sdo.gif" width="88" height="31" /></a></li>
+                        <li><a href="http://www.sdo.com" title="盛大在线" target="_blank"><img src="http://www.sdo.com/static2015/img/logo@1x.png" width="88" height="31" /></a></li>
                     </ul>
           <div class="bk10"></div>
 	<div class="linka">
-		 	</div>
+		                            <a href="http://shibo.com" target="_blank">士博教育</a> |
+              		 	</div>
 	</div>
 </div>
 <script type="text/javascript"> 
@@ -181,7 +235,7 @@ $(function(){
 <p class="info">
 <a href="http://cms.com/html/about/aboutus/" target="_blank">关于我们</a> |  
 <a href="http://cms.com/html/about/contactus/" target="_blank">联系方式</a> |  
-<a href="http://test.phpcms.cn/index.php?m=content&c=index&a=lists&catid=4" target="_blank">版权声明</a> |  
+<a href="http://cms.com/index.php?m=content&c=index&a=lists&catid=4" target="_blank">版权声明</a> |  
 <a href="http://cms.com/html/about/hr/" target="_blank">招聘信息</a> |  
 <a href="http://cms.com/index.php?m=link" target="_blank">友情链接</a>
 <br />

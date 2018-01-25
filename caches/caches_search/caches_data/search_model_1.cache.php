@@ -1,5 +1,11 @@
 <?php
 return array (
+  12 => 
+  array (
+    'typeid' => '53',
+    'name' => '名师预约',
+    'sort' => '0',
+  ),
   1 => 
   array (
     'typeid' => '1',

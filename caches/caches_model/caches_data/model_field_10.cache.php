@@ -31,7 +31,7 @@ return array (
     'isfulltext' => '1',
     'isposition' => '0',
     'listorder' => '0',
-    'disabled' => '0',
+    'disabled' => '1',
     'isomnipotent' => '0',
     'fieldtype' => 'date',
     'format' => 'Y-m-d',

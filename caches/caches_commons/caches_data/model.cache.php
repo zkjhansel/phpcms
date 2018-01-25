@@ -92,5 +92,28 @@ return array (
     'sort' => '0',
     'type' => '0',
   ),
+  12 => 
+  array (
+    'modelid' => '12',
+    'siteid' => '1',
+    'name' => '名师预约',
+    'description' => '名师预约',
+    'tablename' => 'teacher',
+    'setting' => '',
+    'addtime' => '0',
+    'items' => '0',
+    'enablesearch' => '1',
+    'disabled' => '0',
+    'default_style' => 'default',
+    'category_template' => 'category_picture',
+    'list_template' => 'list_picture',
+    'show_template' => 'show_picture',
+    'js_template' => '',
+    'admin_list_template' => '',
+    'member_add_template' => '',
+    'member_list_template' => '',
+    'sort' => '0',
+    'type' => '0',
+  ),
 );
 ?>
