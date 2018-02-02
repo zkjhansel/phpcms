@@ -31,7 +31,7 @@ return array(
 
 'charset' => 'utf-8', //网站字符集
 'timezone' => 'Etc/GMT-8', //网站时区（只对php 5.1以上版本有效），Etc/GMT-8 实际表示的是 GMT+8
-'debug' => 0, //是否显示调试信息
+'debug' => 1, //是否显示调试信息
 'admin_log' => 1, //是否记录后台操作日志
 'errorlog' => 1, //1、保存错误日志到 cache/error_log.php | 0、在页面直接显示
 'gzip' => 1, //是否Gzip压缩后输出
