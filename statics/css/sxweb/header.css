@@ -1,0 +1,281 @@
+.header h1{
+    float: left;
+}
+.header h1 a{
+    background: url(../../images/sxweb/logo.png) no-repeat;
+    line-height: 1000px;
+    width: 245px;
+    float: left;
+    height: 62px;
+    overflow: hidden;
+}
+.fl_left {
+    float: left;
+}
+.fl_right {
+    float: right;
+}
+.fl_right a{
+    padding-right: 10px;
+}
+.fl_right span{
+    display: inline-block;
+    margin-right: 5px;
+}
+.container {
+    width: 1200px;
+    height: auto;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.container_ {
+    width: 1200px;
+    height: 100%;
+    position: relative;
+    margin: 0 auto;
+}
+
+.header {
+    height: 62px;
+    min-width: 1200px;
+    margin-top: 18px;
+    position: relative;
+    z-index: 2;
+}
+
+.header_div {
+    height: 41px;
+    width: 1px;
+    background: #979797;
+    margin-left: 20px;
+}
+
+.xsb {
+    width: 110px;
+    height: 41px;
+    margin-left: 14px;
+}
+.xsb .sbgpgs {
+    color: #5f5858;
+    font-size: 16px;
+    width: 200px;
+    font-weight: 600;
+}
+.xsb p {
+    font-size: 12.67px;
+    line-height: 22px;
+    color: #b3b3b3;
+}
+
+.xsb p span {
+    font-size: 16.37px;
+    color: #9f9f9f;
+}
+ 
+
+
+.header_center ul {
+    font-size: 17px;
+    float: left;
+    margin-left: 96px;
+}
+
+.header_center ul li a {
+    display: block;
+    color: #000;
+    padding: 10px 29px 25px 3px;
+    position: relative;
+    transition: color .2s linear;
+}
+
+.header_hot:after {
+    content: "HOT";
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 8px;
+    -webkit-transform: scale(0.67);
+}
+
+.header_right {
+    margin-top: 6px;
+}
+.banner {
+    width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+.yuandian {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #fff;
+}
+.banner .news .content {
+    margin-left: 17px;
+}
+
+.banner .news .content ul li a span {
+    margin-right: 4px;
+    margin-bottom: 1px;
+}
+
+.banner .news .content ul li a:hover {
+    color: red;
+}
+/*
+轮播图
+*/
+.ck-slide ul { margin: 0; padding: 0; list-style-type: none;}
+.ck-slide { position: relative; overflow: hidden;width:1200px;height:398px;margin:0 auto;}
+.ck-slide ul.ck-slide-wrapper { position: absolute; top: 0; left: 0; z-index: 0; margin: 0; padding: 0;}
+.ck-slide ul.ck-slide-wrapper li { position: absolute;display:block;width: 1200px;height: 398px;}
+.ck-slide ul.ck-slide-wrapper li img{display: block;width: 100%;height: 100%;}
+.ck-slide .ck-prev, .ck-slide .ck-next { position: absolute; top: 50%; z-index: 2; width: 35px; height: 70px; margin-top: -35px; border-radius: 3px; opacity: .15; background: red; text-indent: -9999px; background-repeat: no-repeat; transition: opacity .2s linear 0s;}
+.ck-slide .ck-prev { left: 234px; background: url(../../images/sxweb/arrow-left.png) #000 50% no-repeat;}
+.ck-slide .ck-next { right: 232px; background: url(../../images/sxweb/arrow-right.png) #000 50% no-repeat;}
+.ck-slidebox { position: absolute; left: 50%; bottom: 12px; z-index: 30;}
+.ck-slidebox ul { height: 20px; padding: 0 4px; border-radius: 8px; background: rgba(0,0,0,0.5);}
+.ck-slidebox ul li { float: left; height: 12px; margin: 4px 4px;}
+.ck-slidebox ul li em { display: block; width: 12px; height: 12px; border-radius: 100%; background-color: #fff; text-indent: -9999px; cursor: pointer;}
+.ck-slidebox ul li.current em { background-color: #fe6500;}
+.ck-slidebox ul li em:hover { background-color: #fe6500;}            
+/* content banner sidebar */
+
+.sidebar {
+    width: 234px;
+    height: 398px;
+    position: absolute;
+    background: rgba(0, 0, 0, .6);
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.sidebar .sidebar_visibile {
+    width: 234px;
+    height: 364px;
+    padding: 17px 0;
+    position: relative;
+}
+
+.sidebar .sidebar_visibile .sidebar_vis_list {
+    width: 234px;
+    height: 35px;
+    margin-top: 12px;
+    position: relative;
+}
+
+.sidebar .sidebar_visibile .sidebar_vis_list .sidebar_vis_list_a {
+    padding-left: 30px;
+    display: block;
+    width: 204px;
+    height: 100%;
+    line-height: 35px;
+    color: #fff;
+}
+.sidebar .sidebar_visibile .sidebar_vis_list .sidebar_vis_list_a:hover {
+    text-decoration: none;
+}
+
+.sp_mg_left {
+    margin-left: 5px;
+}
+
+.sp_position {
+    position: absolute;
+    left: 200px;
+    top: 10px;
+    display: block;
+    background: url(../../images/sxweb/header_right.png) no-repeat;
+    width: 8px;
+    height: 16px;
+}
+
+.sidebar ul li .sidebar_div_1 {
+    position: absolute;
+    left: 234px;
+    top: 12px;
+    background: #fff;
+    top: 0px;
+    width: 531px;
+    height: 460px;
+    display: none;
+}
+
+.sidebar ul li div ul li {
+    float: left;
+}
+
+.sidebar_ul {
+    float: left;
+    width: 265px;
+    height: 460px;
+}
+
+/* news */
+
+.banner .news {
+    width: 232px;
+    height: 398px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    background: rgba(0, 0, 0, .6);
+}
+
+.banner .news h2 {
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    width: 100%;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 400;
+    font-size: 22px;
+}
+
+.banner .news .content {
+    width: 198px;
+    height: 350px;
+    margin: 0 30px;
+    overflow: hidden;
+}
+
+.banner .news .content ul li {
+    line-height: 32px;
+    height: 32px;
+    overflow: hidden;
+}
+
+.banner .news .content ul li a {
+    color: #fff;
+    font-size: 14px;
+}
+.banner .news .content ul li a:hover {
+    text-decoration: none;
+}
+
+.banner .news .content ul li a span {
+    margin-right: 3px;
+}
+
+
+/* 
+ * hover
+ */
+.header_center ul li a:hover {
+    color: #C11920;
+}
+
+.sidebar .sidebar_visibile .sidebar_vis_list:hover {
+    background: #C11920;
+}
+
+.banner .news .content {
+    margin-left: 20px;
+}
+dd:before {
+    content: '';
+    display: none;
+}

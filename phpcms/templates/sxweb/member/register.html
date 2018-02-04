@@ -1,0 +1,329 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={CHARSET}" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1">  
+<title>{$siteinfo['name']} - 会员管理中心 - 注册会员</title>
+<meta name="keywords" content="{$siteinfo['keyword']}">
+<meta name="description" content="{$siteinfo['description']}">
+<link rel="shortcut icon" type="images/x-icon" href="{IMG_PATH}sxweb/logo.ico">
+
+
+<script type="text/javascript" src="{JS_PATH}jquery.min.js"></script>
+<script type="text/javascript" src="{JS_PATH}member_common.js"></script>
+<script type="text/javascript" src="{JS_PATH}formvalidator.js" charset="UTF-8"></script>
+<script type="text/javascript" src="{JS_PATH}formvalidatorregex.js" charset="UTF-8"></script>
+<script type="text/javascript" src="{JS_PATH}dialog.js"></script>
+<script type="text/javascript" src="{JS_PATH}layer.js"></script>
+
+<link href="{CSS_PATH}reset.css" rel="stylesheet" type="text/css" />
+<link href="{CSS_PATH}dialog_simp.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript">
+
+$(function(){
+	$.formValidator.initConfig({autotip:true,formid:"myform",onerror:function(msg){}});
+
+	$("#password").formValidator({onshow:"{L('input').L('password')}",onfocus:"{L('password').L('between_6_to_20')}"}).inputValidator({min:6,max:20,onerror:"{L('password').L('between_6_to_20')}"}).regexValidator({regexp:"password",datatype:"enum",onerror:"密码只能是数字,字母 和 -_()等字符"});
+
+	$("#pwdconfirm").formValidator({onshow:"{L('input').L('cofirmpwd')}",onfocus:"{L('passwords_not_match')}",oncorrect:"{L('passwords_match')}"}).compareValidator({desid:"password",operateor:"=",onerror:"{L('passwords_not_match')}"});
+	
+
+	$("#mobile").formValidator({onshow:"请输入手机号码",onfocus:"请输入您的手机号码"}).inputValidator({min:1,max:11,onerror:"请输入正确的手机号码"});
+
+	$("#mobile_verify").formValidator({onshow:"请输入短信校验码",onfocus:"请输入正确的短信校验码"}).inputValidator({min:1,onerror:"请输入手机收到的验证码"}).ajaxValidator({
+					type : "get",
+					url : "api.php",
+					data :"op=sms_idcheck&action=id_code",
+					datatype : "html",
+					{if $member_setting['mobile_checktype']=='2'}
+					getdata:{mobile:"mobile"},
+					{/if}
+					async:"false",
+					success : function(data){
+						if( data == "1" ) {
+							return true;
+						} else {
+  							return false;
+						}
+					},
+					buttons: $("#dosubmit"),
+					onerror : "验证码错误",
+					onwait : "请稍候..."
+				});
+
+	{$formValidator}
+
+
+});
+
+function show_protocol() {
+	art.dialog({lock:false,title:'注册协议',id:'protocoliframe', iframe:'?m=member&c=index&a=register&protocol=1',width:'500',height:'310',yesText:'{L('agree')}'}, function(){
+		$("#protocol").attr("checked",true);
+	});
+}
+
+
+</script>
+<link href="{CSS_PATH}table_form.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.submit,.form-login .input label,.item span,#content h2 span em{display:inline-block;display:-moz-inline-stack;zoom:1;*display:inline;}
+.input-text {
+	text-indent: 5px;height: 30px;
+}
+label {
+	line-height: 35px;
+}
+.blue,.blue a{color:#377abe},.submit input{cursor:hand;}
+.log{line-height:24px; height:24px;float:right; font-size:12px}
+.log span{color:#ced9e7}
+.log a{color:#049;text-decoration: none;}
+.log a:hover{text-decoration: underline;}
+#header{ height:94px; background:url({IMG_PATH}member/h.png) repeat-x}
+#header .logo{ padding-right:100px;float:left;}
+#header .content{width:920px; margin:auto; height:60px;padding:10px 0 0 0}
+#content{width:920px; margin:20px auto; padding:20px 0 0 0; overflow:auto}
+.form-login{width:420px; padding-left:40px}
+#content h2{font-size:25px;color:#494949;border-bottom: none;}
+#content h2 span{
+	font-size:25px;
+	border: 1px solid #cdced4;
+    border-bottom: none;
+    -webkit-border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+	display: inline-block;
+    padding: 0 30px;
+    }
+.wrap {
+	min-height: 300px;
+    padding: 50px 0;
+    border: 1px solid #cdced4;
+    border-radius: 5px;
+    border-top-left-radius: 0;
+}
+#content h2 span em{background: url({IMG_PATH}member/order.png) no-repeat 0px -16px; width:15px; height:15px; line-height:15px; text-align:center; margin-right:5px; color:#FFF}
+#content h2 span.on{ color:#333; font-weight:700}
+#content h2 span.on em{background-position: 0px 0px;}
+
+.form-login .input{ padding:7px 0; overflow:hidden; clear:both}
+.form-login .input label{ width:84px;font-size:14px; color:#8c8686; text-align:right; float:left}
+.form-login .input .form{ width:560px; float:left}
+.take,.reg{padding:0 0 0 84px}
+.take .submit{margin-top:10px}
+.form-login .hr{background: url({IMG_PATH}member/line.png) no-repeat left center; height:50px;}
+.form-login .hr hr{ display:none}
+
+.form-reg{padding:10px 0 0 14px; width:700px; border-right:1px solid #ccc}
+.form-reg .input label{ width:120px}
+.form-reg .input label.type{ width:auto; color:#000; padding-right:10px}
+.form-reg .reg{padding:10px 0 0 120px}
+.form-reg .reg .submit{ margin-bottom:5px;margin-top: 20px;}
+
+.submit{padding-left:3px}
+.submit,.submit input{overflow:visible !ie}
+.submit input{background-position: right top; border:none; padding:0 10px 0 7px; font-size:14px}
+.reg{ color:#666; line-height:24px}
+.reg .submit{background-position: left -35px; height:35px}
+.reg-auto{ padding:10px 0 0 20px}
+.reg-auto p{ margin-bottom:10px; color:#666;}
+.item{padding:10px 0; vertical-align:middle; margin-bottom:10px}
+.item span{ color:#8c8686}
+
+.submit button.hqyz{
+	margin:0px; 
+	cursor:pointer;
+    background-position: 100% 0%;
+    border: 1px solid #ccc;
+    font-size: 12px;
+    padding: 0 10px 0 7px;
+    background: url("{IMG_PATH}member/but.png") no-repeat 80% 0px;
+    height: 30px;
+    width: auto;
+	
+}
+.tit {
+	font: 20px/40px Microsoft yahei;
+    position: relative;
+    float: left;
+    height: 40px;
+    height: 40px;
+    padding: 0 30px;
+    border: 1px solid #cdced4;
+    border-bottom: none;
+    -webkit-border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+    background: #fff;
+    color: #333;
+}
+
+.btnok {
+	font-size: 18px;
+    font-weight: bold;
+    line-height: 36px;
+    display: inline-block;
+    width: 121px;
+    height: 36px;
+    cursor: pointer;
+    cursor: pointer;
+    vertical-align: middle;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    background: #e53336;
+}
+.lj-login{
+	font: 16px/35px Microsoft yahei;
+    display: block;
+    width: 142px;
+    height: 35px;
+    padding: 0;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    background: #e53336;
+}
+#mobile_div input{*margin-bottom:12px;*_padding:0px 0px 6px 0px}
+</style>
+</head>
+<body>
+<div id="header">
+	<div class="content">
+	<div class="logo"><img src="{IMG_PATH}sxweb/logo.png"/></div>
+    <span class="log"></span>
+    </div>
+</div>
+
+<div id="content">
+
+	<div style="height: 40px;">
+		<h3 class="tit">会员注册</h3>
+	</div>
+
+	<div class="wrap">
+		
+		<form method="post" action="" id="myform">
+			<input type="hidden" name="siteid" value="{$siteid}" />
+
+			<div class="col-left form-login form-reg">
+				
+				{loop $modellist $k $v}
+				<input name="modelid" type="hidden" value="{$k}"/>
+				{/loop}
+
+
+		    	<div class="input" id="mobile_div">
+		    		<label>手机号码：</label>
+		    		<input type="text" id="mobile" name="mobile" size="36" class="input-text">
+		    		<span id="mobileTip"></span>
+		    	</div>
+
+		        <div class="input"><label>{L('password')}：</label><input type="password" id="password" name="password" size="36" class="input-text"></div>
+		        <div class="input"><label>{L('cofirmpwd')}：</label><input type="password" name="pwdconfirm" id="pwdconfirm" size="36" class="input-text"></div>
+
+
+				<div class="input"><label> 短信校验码：</label>
+					<div class="form">
+					<div >
+						<input type="text" name="mobile_verify" id="mobile_verify" value="" size="15" class="input-text" title="此服务免费,验证码将以短信免费发送到您的手机"> 
+						<div class="submit">
+							<button onclick="get_verify()" type="button" class="hqyz">获取短信验证码</button>
+						</div>
+						<div id="mobile_verifyTip" class="fl"></div>
+					<br>
+					</div>
+					<div id="mobile_send_div" style="display:none">此服务免费,验证码已发送到
+						<span id="mobile_send"></span>，<span id="edit_mobile" style="display:none">
+						<a href="javascript:void();" onclick="edit_mobile()">修改号码</a>，</span> 如果超过120秒未收到验证码，您可以免费重新获取。
+						<br><br>
+						<div class="submit">
+							<button type="button" id="GetVerify" onclick="get_verify()" class="hqyz">重获短信验证码</button>
+						</div> 
+						<br><br>
+					</div> 
+					<script language="JavaScript">
+						var times = 120;
+						var isinerval;
+						function get_verify() {
+
+							var mobile = $("#mobile").val();
+							var partten = /^1[3-9]\d{9}$/;
+							if(!partten.test(mobile)){
+								alert("请输入正确的手机号码");
+								$('#mobile').focus();
+								return false;
+							}
+							
+							$.get("api.php?op=sms",{ mobile: mobile,session_code:session_code,random:Math.random()}, function(data){
+								if(data=="0") {
+									$("#mobile_send").html(mobile);
+									$("#mobile_div").css("display","none");
+									$("#mobile_send_div").css("display","");
+									times = 120;
+									$("#GetVerify").attr("disabled", true);
+									isinerval = setInterval("CountDown()", 1000);
+								} else if(data=="-1") {
+									alert("你今天获取验证码次数已达到上限");
+								} else if(data=="-100") {
+									$('#code').val('');
+									alert("验证码已失效，请点击图片验证码获取新的验证码！");
+									$('#code').focus();
+								} else if(data=="-101") {
+									alert("验证码错误！");
+									$('#code').focus();
+								} else {
+									alert("短信发送失败");
+								}
+							});
+							
+						}
+						function CountDown() {
+							if (times < 1) {
+								$("#GetVerify").html("获取短信验证码").attr("disabled", false);
+								$("#edit_mobile").css("display","");
+								clearInterval(isinerval);
+								return;
+							}
+							$("#GetVerify").html(times+"秒后重获验证码");
+							times--;
+						}
+						function edit_mobile() {
+							$("#mobile_div").css("display","");
+							$("#mobile_send_div").css("display","none");
+						}
+					</script>
+				    </div>
+				</div>
+
+			
+				
+	        	<div class="reg">
+	        		<input type="checkbox" name="protocol" checked="checked" id="protocol" value="">我已经看过并同意<a href="javascript:void(0);" onclick="show_protocol();return false;" class="blue"> 《网站注册条款》 </a>
+
+	        		<br />
+	                <div class="submit"><input type="submit" class="btnok" name="dosubmit" value="提交注册"></div>
+	                
+	            </div>
+		    </div>
+		</form>
+
+
+	    <div class="col-auto reg-auto">
+	    	<p class="f14">
+	        已有账号
+	        </p>
+	        <div class="submit"><input type="submit" class="lj-login" name="dosubmit" value="立即登录" onclick="redirect('{APP_PATH}index.php?m=member&c=index&a=login')"></div>
+	    </div>
+
+	</div>
+
+
+
+</div>
+
+{template 'member', 'footer'}

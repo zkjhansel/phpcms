@@ -1,0 +1,26 @@
+.fl{ float:left;}
+.fr{ float:right;}
+.zgzf_ycxf{ width: 44px; height: auto; position:fixed; right: 10px; bottom: 150px; z-index: 99;}
+.zgzf_ycxf li{ width: 44px; margin-bottom: 5px;  background:url(../../images/sxweb/float_bar_09.png); position: relative;}
+.zgzf_ycxf li.zgzf_ycxf1{ height: 76px;}
+.zgzf_ycxf li.zgzf_ycxf1 .cur{ display: block; padding-top: 37px; height: 39px; text-align: center; font-size: 12px; color: #fff; font-family: 'Microsoft Yahei'; line-height: 16px;}
+.zgzf_ycxf li.zgzf_ycxf1 .cur:hover{ text-decoration: none;}
+.zgzf_ycxf li:hover{ background: #ef2d36;}
+.zgzf_ycxf li.on{ background: #ef2d36;}
+.zgzf_ycxf li .zgzf_zx{ background: url(../../images/sxweb/float_bar_01.png) no-repeat center 9px;}
+.zgzf_ycxf li .zgzf_yj{ background: url(../../images/sxweb/float_bar_02.png) no-repeat center 9px;}
+.zgzf_ycxf li .zgzf_sm{ background: url(../../images/sxweb/float_bar_03.png) no-repeat center 9px;}
+.zgzf_ycxf li.zgzf_ycxf2{ height: 44px; display: none; margin-bottom:-44px;}
+.zgzf_ycxf li.zgzf_ycxf2 span{ display: block; width: 44px; height: 44px; background: url(../../images/sxweb/float_bar_04.png) no-repeat center 11px; position: absolute; left: 0; top: 0;}
+.zgzf_ycxf li.zgzf_ycxf2 a{ display: block; width: 44px; height: 38px; padding-top: 6px; text-align: center; font-size: 14px; color: #fff; font-family: 'Microsoft Yahei'; line-height: 16px;position: absolute; left: 0; top: 0; display: none;}
+.zgzf_ycxf li.zgzf_ycxf2 a:hover{text-decoration: none;}
+.zgzf_ycxf li.zgzf_ycxf2:hover a{ display: block;}
+.zgzf_ycxf li.zgzf_ycxf2:hover span{ display: none;}
+.zgzf_ycxf_ewm{ width: 160px; height: 160px; padding-right: 10px; position: absolute; left: -170px; top: -25px; z-index: 99; display: none;}
+.zgzf_ycxf_ewm em{ display: block; width: 11px; height: 17px; background: url(../../images/sxweb/float_bar_05.png) no-repeat center; position: absolute; right: 0; top: 73px;}
+.zgzf_ycxf_ewmn{ width: 158px; height: 158px; border: 1px solid #e8e8e8; box-shadow: 0 0 5px #f4f4f4; background: #fff;}
+.zgzf_ycxf_ewmn img{ display: block; width: 140px; height: 140px; margin: 10px auto 0;}
+.zgzf_ycxf li:hover .zgzf_ycxf_ewm{ display: block;}
+.zgzf_ycxf_xkbb{ width: 220px; height: 265px; left: -230px; top: -41px;}
+.zgzf_ycxf_xkbb .zgzf_ycxf_ewmn{ width: 218px; height: 263px;}
+.zgzf_ycxf_xkse{ width: 195px; padding-top: 14px; padding-left: 14px; height: auto;}

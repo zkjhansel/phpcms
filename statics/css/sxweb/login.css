@@ -1,0 +1,263 @@
+﻿
+@charset "UTF-8";
+.w100 {
+  width: 100px;
+}
+
+.red,
+.red a {
+  color: #c00;
+}
+.coltit1 {
+  height: 40px;
+}
+
+.coltit1 .tit {
+  font: 20px/40px Microsoft yahei;
+  position: relative;
+  float: left;
+  height: 40px;
+  height: 40px;
+  padding: 0 30px;
+  border: 1px solid #cdced4;
+  border-bottom: none;
+  -webkit-border-radius: 5px 5px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
+  background: #fff;
+  _top: 1px;
+}
+
+.coltit2 {
+  font: bold  14px/24px Microsoft yahei, Arial, sans-serif;
+}
+
+.content1 {
+  font-family: simsun;
+  font-size: 12px;
+  min-height: 300px;
+  padding: 50px 0;
+  border: 1px solid #cdced4;
+  border-radius: 5px;
+  border-top-left-radius: 0;
+  _height: 300px;
+}
+
+.info-form {
+  float: left;
+  width: 650px;
+}
+.info-form .form {
+  padding: 0 0 0 96px;
+}
+.info-form .inputBox {
+  position: relative;
+  zoom: 1;
+  vertical-align: top;
+}
+.info-form label {
+  display: inline-block;
+  margin-right: 8px;
+  *zoom: 1;
+  vertical-align: middle;
+}
+.info-form .inline label {
+  display: block;
+}
+.info-form .inputBox a {
+  padding-left: 10px;
+  color: #0062d6;
+}
+.info-form .txt {
+  font-size: 15px;
+  vertical-align: middle;
+  display: inline;
+  border: 1px solid #d9d9d9;
+}
+.info-form .txt:focus,
+.info-form .focus1 {
+  border: 1px solid #b7d8ef;
+}
+.info-form .user,
+.info-form .psd {
+  text-indent: 50px;
+  display: block;
+}
+.info-form .placeholder {
+  text-indent: 36px;
+}
+.info-form .reg-wrap .placeholder {
+  text-indent: 0;
+}
+.info-form .user-ico,
+.info-form .psd-ico {
+  position: absolute;
+  width: 18px;
+  height: 21px;
+  margin: 12px 0 0 12px;
+  padding-right: 10px;
+  border-right: 1px solid #ddd;
+  background: url(../../images/sxweb/put_ico.gif) no-repeat;
+}
+.info-form .psd-ico {
+  background: url(../../images/sxweb/mima_ico.gif) no-repeat;
+}
+.info-form .yzm {
+  z-index: 100;
+}
+/*
+.info-form .yzm .txt {
+  display: block;
+}
+*/
+.info-form .rad {
+  overflow: hidden;
+  width: 13px;
+  height: 13px;
+  margin-right: 3px;
+  vertical-align: text-top;
+}
+
+body {
+  background-color: #fff;
+}
+
+.info-form-reg .txt {
+  width: 240px;
+}
+.info-form-reg .yzm .txt {
+  width: 90px;
+}
+.info-form-reg .yzm .lbl {
+  width: 152px;
+}
+
+.log-btn .btnok,
+.log-btn .reg-btn {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 36px;
+  display: inline-block;
+  width: 121px;
+  height: 36px;
+  cursor: pointer;
+  cursor: pointer;
+  vertical-align: middle;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  background: #e53336;
+}
+
+.log-btn .reg-btn {
+  background: url(../../images/sxweb/reg.gif) no-repeat 0 0;
+}
+
+.info-form .msg span {
+  font-size: 12px;
+  line-height: 22px;
+  display: block;
+  padding: 5px 10px;
+  border: 1px solid #fafafa;
+  background: #ffffe4;
+}
+
+.info-form .msg span img {
+  vertical-align: middle;
+}
+
+.info-right {
+  float: left;
+  width: 250px;
+  border-left: 1px solid #eaeaea;
+}
+
+.info-right-inner {
+  min-height: 300px;
+  margin: 10px 0 0 50px;
+  _height: 300px;
+}
+
+.info-right h3 {
+  font-size: 16px;
+  font-weight: bold;
+  height: 30px;
+  color: #666;
+}
+
+.info-right h4 {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 20px;
+  height: 20px;
+  margin-top: 10px;
+  color: #e53336;
+}
+
+.info-right .btn {
+  font: 16px/35px Microsoft yahei;
+  display: block;
+  width: 142px;
+  height: 35px;
+  padding: 0;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  background: #e53336;
+}
+
+.info-right .btn:hover {
+  opacity: .9;
+  filter: Alpha(Opacity=90);
+}
+
+.info-right .weibo_login,
+.info-right .QQ_login {
+  font-family: Microsoft yahei;
+  font-size: 14px;
+  line-height: 32px;
+  display: block;
+  width: 109px;
+  height: 32px;
+  margin-top: 10px;
+  padding-left: 35px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+}
+
+.info-right a:hover {
+  opacity: .9;
+}
+
+.info-right .weibo_login {
+  background: url(../../images/sxweb/login_tips.png) no-repeat;
+  background-position: -5px 0;
+}
+
+.info-right .QQ_login {
+  background: url(../../images/sxweb/login_tips.png) no-repeat;
+  background-position: -148px 0;
+}
+
+.text_articleCheck {
+  line-height: 1.5;
+  overflow: auto;
+  height: 200px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+.articleCheck .msg {
+  padding: 10px 10px 10px 66px;
+}
+
+.articleCheck input {
+  width: 13px;
+  height: 13px;
+  vertical-align: text-top;
+}

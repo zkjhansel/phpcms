@@ -1,0 +1,25 @@
+.footer {    font-size: 12px;    padding: 30px 0;    color: #333;    background: #eee;    min-width: 1200px;    clear: both;    margin-top: 35px;}
+.footer .inner {    width: 1200px;    margin: 0 auto;}
+.footer .nav-footer {    margin-bottom: 30px;    padding-bottom: 30px;    border-bottom: 1px solid #ccc;    overflow: hidden;}
+.footer dl {    float: left;    width: 115px;    min-height: 160px;    padding-right: 10px;    padding-left: 30px;    border-right: 1px solid #ccc;}
+.footer dl dt {    font: normal normal 16px/32px "Microsoft YaHei", "微软雅黑";    margin-bottom: 10px;    -webkit-user-select: none;    -moz-user-select: none;    -ms-user-select: none;    user-select: none;    cursor: default;}
+.footer dl dd a {    font: normal normal 12px/24px "Microsoft YaHei", "微软雅黑";    color: #333;    height: 24px;    display: block;    overflow: hidden;    transition: all 0.4s;    -moz-transition: all 0.4s; -webkit-transition: all 0.4s;    -o-transition: all 0.4s;   -ms-transition: all 0.4s;}
+.footer dl dd a:hover {    -webkit-transform: translate(5px);    -ms-transform: translate(5px);    -o-transform: translate(5px);    transform: translate(5px);    color: #d30000;    text-decoration: underline;}
+.footer dl.contact {    float: right;    width: 380px;    padding: 0;    border: none;}
+.footer dl.contact dt {    position: relative;}
+.footer dl.contact dd {    text-align: center;}
+.footer dl.contact dd .contact-info {    float: left;}
+.footer dl.contact dd .contact-info p {    overflow: hidden;    text-align: left;}
+.footer dl.contact dd .contact-info p * {    float: left;}
+.footer dl.contact dd .qrcode {    float: left;    margin-right: 20px;    color: #333;    font: normal normal 12px/22px "Microsoft YaHei", "微软雅黑";   -webkit-user-select: none;    -moz-user-select: none;    -ms-user-select: none;    user-select: none;    cursor: default;}
+.footer dl.contact dd .qrcode img {    display: block;    width: 100px;    height: 100px;    margin: 0 auto;}
+.footer .webinfo,.footer .copyright {    text-align: center;}
+.footer .webinfo a {    margin: 0 10px;    color: #333;}
+.footer .webinfo a:hover {    color: #d30000;}
+.footer .copyright a {    color: #333;}
+.footer .copyright a:hover {    color: #d30000;}
+.footer .consult-qq {    position: absolute;    right: 40px;    top: 2px;}
+.footer .consult-qq a {    float: left;    opacity: 0.8;    filter: alpha(opacity=80);}
+.footer .consult-qq a:hover {    opacity: 1;    filter: alpha(opacity=100);}
+.footer .consult-qq em {    float: left;    font-size: 12px;    color: #666;    margin-right: 5px;}
+.footer .consult-qq a img {    display: block;}

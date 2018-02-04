@@ -1,0 +1,24 @@
+<style>
+body,html{background:none; padding:0; margin:0}
+.log{line-height:20px; height:24px;float:right; font-size:13px}
+.log span{
+	color: #666;
+	display: inline-block;
+    margin-right: 5px;
+}
+.log a{color:#666;text-decoration: none;padding-right: 10px;}
+.log a:hover{text-decoration: none;color: #C11920;}
+.log .snda{ position:relative; bottom:-3px}
+.log .w27{* width:320px;}
+</style>
+<body style="background-color:transparent">
+<div class="log w27">{if $_username}{L('hellow')} {get_nickname()}, <a href="{APP_PATH}index.php?m=member&siteid={$siteid}" target="_blank">会员中心</a> <a href="{APP_PATH}index.php?m=member&c=index&a=logout&forward={urlencode($_GET['forward'])}&siteid={$siteid}" target="_top">退出</a>
+	{else} 
+	<span class="r">
+		<a href="{APP_PATH}index.php?m=member&c=index&a=register&siteid={$siteid}" target="_blank">注册</a> 
+		<span>|</span>
+		<a href="{APP_PATH}index.php?m=member&c=index&a=login&forward={urlencode($_GET['forward'])}&siteid={$siteid}" target="_top">登录</a>
+		<span>|</span> 
+	</span>
+{/if}</div>
+</body>

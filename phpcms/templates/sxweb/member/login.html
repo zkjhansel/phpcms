@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1">  
+
+<title>{$siteinfo['name']} - 会员管理中心 - 会员登录</title>
+<meta name="keywords" content="{$siteinfo['keyword']}">
+<meta name="description" content="{$siteinfo['description']}">
+<link rel="shortcut icon" type="images/x-icon" href="{IMG_PATH}sxweb/logo.ico">
+
+<script type="text/javascript" src="{JS_PATH}jquery.min.js"></script>
+<script type="text/javascript" src="{JS_PATH}cookie.js"></script>
+<script type="text/javascript" src="{JS_PATH}layer.js"></script>
+<script type="text/javascript" src="{JS_PATH}sxweb/jqvalidate.js"></script>
+<script type="text/javascript" src="{JS_PATH}sxweb/jquery.form.js"></script>
+
+<style type="text/css">
+.blue,.blue a{color:#377abe}
+.log{line-height:24px; height:24px;float:right; font-size:12px}
+.log span{color:#ced9e7}
+.log a{color:#049;text-decoration: none;}
+.log a:hover{text-decoration: underline;}
+#header{ height:94px; background:url({IMG_PATH}member/h.png) repeat-x}
+#header .logo{ padding-right:100px;float:left;}
+#header .logo img{ padding-top:10px;}
+#header .content{width:920px; margin:auto; height:60px;padding:10px 0 0 0}
+#code_img { cursor: pointer; }
+</style>
+
+<link rel="stylesheet" type="text/css" href="{CSS_PATH}sxweb/login_global.css">
+<link rel="stylesheet" type="text/css" href="{CSS_PATH}sxweb/login.css">
+<link rel="stylesheet" type="text/css" href="{CSS_PATH}sxweb/jqvalidate.css">
+
+</head>
+<body>
+<div id="header">
+	<div class="content">
+	<div class="logo"><a href="{$siteinfo['domain']}"><img src="{IMG_PATH}sxweb/logo.png"/></a></div>
+    <span class="rt log"></span>
+    </div>
+</div>
+
+<!-- body -->
+<div class="wrap" style="margin-top:40px;padding-bottom: 40px">
+    
+    <div class="coltit1"><h3 class="tit">会员登录</h3></div>
+    <div class="content1 clearfix">
+        <div class="info-form">
+            <form class="jqValidate" id="userlogin" data-tipmode="#tipinfo" method="post" action="" novalidate="novalidate">
+            <div class="form form-lg form-control">
+                <ul class="w400">
+                    <li class="inputBox">
+                        <i class="user-ico"></i>
+                        <input type="text" class="txt user" name="username" id="username" value="" placeholder="手机号码" data-type="m" data-tipmode="#tipinfo" data-vadmode="0">
+                    </li>
+                    <li class="inputBox">
+                        <i class="psd-ico"></i>
+                        <input type="password" class="txt psd" id="password" placeholder="密&#160;&#160;码" name="password" data-type="*6-20" value="" data-tipmode="#tipinfo" data-vadmode="0">
+                    </li>
+                    <li class="inputBox">
+                        <input type="checkbox" class="rad" id="cookietime" name="cookietime" value="2592000"><label for="cookietime">记住此用户名</label>
+                        
+                    </li>
+                    <li class="inputBox yzm reg-wrap" data-regcode="login" data-alias="a" style="display: list-item;">
+                        <div class="txt-wrap">
+                        	<input type="text" name="regcode" id="verify" data-type="*" data-init="请输入验证码" class="txt" placeholder="验证码" value="" data-offset="1" data-tipmode="#tipinfo" data-vadmode="0">
+                        	{form::checkcode('code_img', '4', '14', 138, 30)}
+                        </div>
+                    </li>
+                    <li class="inputBox">
+                        <input type="hidden" name="cmslogin" value="立即登录">
+                        <input type="submit" id="subbtn" class="btn" value="立即登录">
+                    </li>
+                    <li class="inputBox clearfix">
+                        <a class="r" data-head="&lt;i class=&quot;ico08 fco&quot;&gt;&#61529;&lt;/i&gt;忘记密码" data-css="{&quot;width&quot;: 500}" target="_blank" href="index.php?m=member&c=index&a=public_forget_password_mobile&siteid={$siteid}"><i class="ico08 fco">&#61529;</i>忘记密码</a>
+                        <div id="tipinfo" class="tip single"></div>
+                    </li>
+                </ul>
+            </div>
+            </form>
+        </div>
+        <div class="info-right">
+            <div class="info-right-inner">
+                <h3>没有帐号</h3>
+                <a class="btn" href="index.php?m=member&c=index&a=register">立即注册</a>
+                <h4>QQ快捷登录</h4>
+                <script type="text/javascript"> var urls = {"qq":"http:\/\/www.0557.cn\/tools\/other_site_sdk\/qqcom\/oauth\/qq_login.php","qq_reauth":"http:\/\/www.0557.cn\/tools\/other_site_sdk\/other_site_public_callback.php?type=qq&act=qq_reauth&target=http%3A%2F%2Fwww.0557.cn%2Ftools%2Fother_site_sdk%2Fqqcom%2Foauth%2Fqq_login.php","sina":"close"};            
+                var childWindow;
+	            function OtherWebSiteLogin(type, width, height)
+	            {
+	            	alert('该登录功能已经关闭！');
+	                return false;
+	                if(urls[type] == 'close')
+	                {
+	                    alert('该登录功能已经关闭！');
+	                    return false;
+	                }
+	                else
+	                {
+	                    childWindow = window.open(urls[type], type, "width=" + width + ",height=" + height + ",left="+((window.screen.availWidth-width)/2)+",top="+((window.screen.availHeight-height)/2));
+	                }
+	            }
+	            </script>
+	            <a class="QQ_login" title="QQ登陆" href="javascript:;" onclick="OtherWebSiteLogin(&#39;qq&#39;, 600, 470);">QQ账号登录</a>
+                                           
+                
+            </div>
+        </div>
+        <div class="blank0"></div>  
+    </div>
+ </div>
+
+
+
+<script language="JavaScript">
+
+
+	$(function(){
+		$('#username').focus();
+	})
+
+	var username = getcookie('username');
+	if(username != '' && username != null) {
+		$('#username').val(username);
+		$('#cookietime').attr('checked','checked');
+	}
+
+	/*function show_login(site) {
+		if(site == 'qq') {
+			art.dialog({lock:false,title:'{L('qq_login')}',id:'protocoliframe', iframe:'index.php?m=member&c=index&a=public_qq_login',width:'500',height:'310',yesText:'{L('close')}'}, function(){
+			});
+		}
+	}*/
+
+	//提交
+	$('#userlogin').submit(function () {
+
+		var posturl = '{APP_PATH}index.php?m=member&c=index&a=public_checklogin_ajax';
+		$(this).ajaxSubmit({
+			url : posturl,
+			type : 'POST',
+			beforeSubmit : function (formData, jqForm, options) {
+				$('#subbtn').attr('disabled', true).val('登录中……').css('opacity', '0.8');
+			},
+			success : function (responseText, statusText) {
+				//返回登录成功
+				if (responseText == 'success') {
+					//本地设置cookie.   attr('checked')=='checked'  不用等于true
+					if($('#cookietime').attr('checked')=='checked') {
+						var username = $('#username').val();
+						setcookie('username', username, 3);
+					} else {
+						delcookie('username');
+					}
+					//信息框
+					layer.msg('登录成功');
+					setTimeout(function () {
+						var forward = '{php echo $_GET["forward"]}';
+						if (forward=='') {
+							forward = '{APP_PATH}index.php?m=member&c=index';
+						}
+						window.location.href = forward;
+					},1300)
+				} else {
+					//登录失败
+					$('#subbtn').val('立即登录').css('opacity', '1').removeAttr('disabled');
+					layer.msg(responseText, {icon: 5});
+				}
+			},
+			error : function (event, errorText, errorType) {
+				alert(errorText);
+			},
+		});
+		return false;
+
+	})
+
+</script>
+
+{template 'member', 'footer'}
