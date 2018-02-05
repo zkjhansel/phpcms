@@ -1,0 +1,406 @@
+{template "content","header"}
+
+<link rel="stylesheet" type="text/css" href="{CSS_PATH}sxweb/index.css">
+<script src="{JS_PATH}sxweb/lunbo.js"></script>
+
+<!-- header.css -->
+<div class="wrapper">
+    
+    {template "content","index_nav"}
+
+    <!-- 导航 -->
+    <div class="banner">
+        <!-- 左侧导航栏 -->
+        <div class="sidebar">
+         	
+            <ul class="sidebar_visibile">
+			
+				
+			    <li class="sidebar_vis_list" style="margin-top: 0px;">
+                    <a href="###" class="sidebar_vis_list_a" target="_blank"> <span class="sidebar_vis_span">这里是大分类</span><span class="sp_position"></span></a>
+                </li>
+
+               	<!-- <li class="sidebar_vis_list">
+               							 <a href="http://em.itxdl.cn/" class="sidebar_vis_list_a" target="_blank"> <span class="sidebar_vis_span">网络营销经理人</span><span class="sp_position"></span></a>
+               						</li> -->
+            </ul>
+			
+        </div>
+		
+        <div class="ck-slide">
+            <ul class="ck-slide-wrapper">								
+				<li>
+					<a href="###" rel="nofollow" target="_blank"> 
+						<img src="{IMG_PATH}sxweb/20171220024614322.jpg" alt="" width="1200" height="398">
+					</a>	
+				</li>
+            </ul>
+			<a href="javascript:" class="ctrl-slide ck-prev" style="opacity: 0.15;">上一张</a>
+			<a href="javascript:" class="ctrl-slide ck-next" style="opacity: 0.15;">下一张</a>
+            <div class="ck-slidebox" style="margin-left: -104px;">
+                <div class="slideWrap">
+                    <ul class="dot-wrap">
+                       
+                	</ul>
+                </div>
+            </div> 
+        </div>
+		
+        <script>
+            var len = $('.ck-slide-wrapper li').length;
+			$('.ck-slide-wrapper li').css('display','none').eq(0).css('display','block');
+            for(var l=0;l<len;l++){
+                $('.dot-wrap').append('<li><em>'+(len+1)+'</em></li>');
+            };
+            $('.dot-wrap li').eq(0).addClass('current');
+            $('.ck-slide').ckSlide();
+        </script>
+
+        <div class="news">
+            <h2>最新公告</h2>
+            <div class="content">
+				<ul>
+                   <li>
+                        <a href="###" target="_blank">
+                            <span class="yuandian"></span>&nbsp;这里是公告内容<img src="{IMG_PATH}sxweb/hot.gif" alt="">
+                        </a>
+                    </li>
+                </ul>
+			</div>
+        </div>
+
+    </div>
+        
+</div>
+
+<!-- index.css -->
+<div class="content">
+    <div class="feature jqDuang" data-cell=".tab-hd ul" data-obj=".tab-bd ul" data-autoplay="0" data-speed="0">
+        <div class="tab-hd">
+            <ul>
+                <li class="act">火热报名</li>
+                <li class="">教师编推荐</li>
+                <li class="">公务员推荐</li>
+            </ul>
+        </div>
+        <div class="tab-bd">                 
+            <ul class="tab-fst" style="display: block;">                     
+                <li> <a href="http://www.0557.cn/newhouse/297/view.html"><img src="{IMG_PATH}sxweb/220933496ac0892e725870.jpg" width="260" height="170" alt="宿州万达广场"></a> <span><a href="http://www.0557.cn/newhouse/297/view.html">宿州万达广场</a></span>
+                    <div>
+                        <p><a>政务新区</a><em>临街现铺热售</em></p>
+                        <p><span>拂晓大道与银河三路交汇处</span><span>在线即可预定</span></p>
+                    </div>
+                </li>                      
+            </ul>                  
+            <ul style="display: none;">                     
+                <li> <a href="http://www.0557.cn/newhouse/312/view.html"><img src="{IMG_PATH}sxweb/300845497751f32bc12317.jpg" width="282" height="188" alt="宿州国购广场"></a> <span><a href="http://www.0557.cn/newhouse/312/view.html">宿州国购广场</a></span>
+                    <div>
+                        <p>1800平整层商务空间半层 整层发售</p>
+                        <p><span>商务办公</span><span>空间独立商铺</span></p>
+                    </div>
+                </li>
+            </ul>                  
+            <ul style="display: none;">                                       
+                <li> <a href="http://www.0557.cn/newhouse/282/view.html"><img src="{IMG_PATH}sxweb/3016361708cc3e6c1f2930.jpg" width="282" height="188" alt="恒馨印象"></a> <span><a href="http://www.0557.cn/newhouse/282/view.html">恒馨印象</a></span>
+                    <div>
+                        <p>恒馨印象二期火热预约中</p>
+                        <p><span>交通便利</span><span>西城核心地段</span><span>配套齐全</span></p>
+                    </div>
+                </li>  
+            </ul>  
+        </div>
+    </div>
+
+
+    <div class="content-news">
+        <div class="news-l">
+            <div class="colum">
+                <h3><a href="http://www.0557.cn/news/daogou/" target="_blank" title="原创">0557原创</a></h3>
+                <a href="http://www.0557.cn/news/201801/157928/1.html" class="news-img">
+                    <img src="{IMG_PATH}sxweb/13112656ba52d4c9506316_240_110.jpg" width="240" height="110" alt="1月第四周宿州商品房备案489套 华府春天53套居榜首">
+                    <span>1月第四周宿州商品房备案489套 华府春天53套居榜首</span>
+                </a>
+                <ul>                        
+                    <li><a href="http://www.0557.cn/news/201801/157807/1.html" target="_blank" title="循环四条循环四条循环四条循环四条">循环四条循环四条循环四条循环四条</a></li>  
+                </ul>
+            </div>
+
+            <div class="colum hqbb">
+                <h3><a href="http://www.0557.cn/news/bobao/" target="_blank" title="行情播报">行情播报</a></h3> 
+                <p><a target="_blank" href="http://www.0557.cn/news/201802/157937/1.html" title="1月31日宿州商品房备案41套">1月31日宿州商品房备案41套</a></p>
+                <div class="news-img"> <a href="http://www.0557.cn/news/201802/157937/1.html"><img src="{IMG_PATH}sxweb/pic_hq.jpg" alt="行情播报"></a>
+                    <p>1月31日，宿州商品房共备案：41套  总面积：4129㎡  其...<a class="red" target="_blank" href="http://www.0557.cn/news/201802/157937/1.html">[详细]</a></p>
+                </div>                    
+                <ul>
+                    <li> 
+                        <a target="_blank" href="http://www.0557.cn/special/newspecial/yuebao/20180109/" title="循环四条循环四条循环四条循环四条">循环四条循环四条循环四条循环四条</a></li>  
+                </ul>
+            </div>
+            <div class="colum">
+                <h3><a href="http://www.0557.cn/special/" target="_blank" title="热点专题">热点专题</a></h3>  
+                <a href="http://www.0557.cn/special/newspecial/cehua/20180126/" class="news-img">
+                    <img src="{IMG_PATH}sxweb/3109304969e3a0e10b8226_240_110.jpg" width="240" height="110" alt="2018宿州新春购房特惠季">                        
+                    <span>2018宿州新春购房特惠季</span>
+                </a>                     
+                <ul>                         
+                    <li><a href="http://www.0557.cn/special/newspecial/cehua/20171012/" target="_blank" title="循环四条循环四条循环四条循环四条">循环四条循环四条循环四条循环四条</a></li>  
+                </ul>
+            </div>
+        </div>
+        <div class="news-m">
+            <div class="headlines">                     
+                <h4 class="fst"><a href="http://www.0557.cn/news/201801/157932/1.html" target="_blank" title="大标题大标题大标题大标题大标题">大标题大标题大标题大标题大标题</a></h4>                     
+
+                <p>  
+                    <a href="http://www.0557.cn/news/201801/157565/1.html" target="_blank" title="小标题小标题小标题小标题小标题">[小标题小标题小标题小标题]</a> 
+                </p>
+            </div>
+            <div class="main">
+                <h3>
+                    <a href="###" target="_blank" title="楼市快讯">楼市快讯</a>
+                </h3>
+                <div class="main-news">
+                    <ul>                             
+                        <li><strong><a href="http://www.0557.cn/news/201802/157936/1.html" target="_blank" title="循环六条循环六条循环六条">循环六条循环六条循环六条</a></strong>
+                        </li>                             
+                        <li><a href="http://www.0557.cn/news/201801/157933/1.html" target="_blank" title="循环六条循环六条循环六条">循环六条循环六条循环六条</a>                      
+                        </li>                             
+                    </ul>
+
+                    <ul>                             
+                        <li><strong><a href="http://www.0557.cn/news/201801/157911/1.html" target="_blank" title="再循环六条循环六条循环六条">再循环六条循环六条循环六条</a></strong>
+                        </li>                             
+                        <li><a href="http://www.0557.cn/news/201801/157907/1.html" target="_blank" title="再循环六条循环六条循环六条">再循环六条循环六条循环六条</a>       </li>
+
+                    </ul>
+                    <div class="main-tab jqDuang" data-cell=".tab-hd h3" data-obj=".tab-bd ul" data-autoplay="0" data-speed="0">
+                        <div class="tab-hd">
+                            <h3>
+                            <a class="fst" href="http://www.0557.cn/news/qgls/" target="_blank" title="全国楼市">全国楼市</a>
+                            <a href="http://www.0557.cn/news/szrd/" target="_blank" title="宿州热点">宿州热点</a>
+                            </h3> 
+                        </div>
+
+                        <div class="tab-bd">
+                            <ul>
+                                <li> <a href="http://www.0557.cn/news/201801/157910/1.html" target="_blank" title="循环六条循环六条循环六条">循环六条循环六条循环六条</a> </li>                                     
+                            </ul>
+                            <ul style="display: none;">                                     
+                                <li><a href="http://www.0557.cn/news/201801/157929/1.html" target="_blank" title="循环六条循环六条循环六条">循环六条循环六条循环六条222222222</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-imgs">
+                    <ul>                             
+                        <li> <a href="http://www.0557.cn/tuku/201801/157530/1.html" target="_blank" title="循环三个循环三个循环三个循环三个"><img src="{IMG_PATH}sxweb/24121424f8f397286d1592_166_115.jpg" width="166" height="115" alt="循环三个循环三个循环三个循环三个"></a>
+
+                        <a href="http://www.0557.cn/tuku/loushi/" target="_blank"><strong>[图说楼市]</strong></a> &nbsp; <a class="gry" href="http://www.0557.cn/tuku/201801/157530/1.html" target="_blank" title="循环三个循环三个循环三个循环三个">循环三个循环三个循环三个循环三个</a> </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="news-r">
+            <div class="flash jqDuang" data-cell=".dot" data-obj=".imglist ul li" data-prevbtn=".prev" data-nextbtn=".next" data-effect="leftLoop" data-autoplay="1" data-wheel="1" data-showtit="1">
+                <div class="imglist" style="overflow: hidden; position: relative; width: 300px;">
+                    <ul style="position: relative; overflow: hidden; width: 9999px; left: -600px;">
+                        
+                        <li data-title="2017年终棚改篇：高热! 实施38个项目 城区" 涅槃重生""="" data-url="http://www.0557.cn/news/201801/156826/1.html" style="float: left;"> 
+                            <a href="http://www.0557.cn/news/201801/156826/1.html" title="2017年终棚改篇：高热! 实施38个项目 城区" 涅槃重生""="" target="_blank">
+                            <img alt="2017年终棚改篇：高热! 实施38个项目 城区" 涅槃重生""="" width="300" height="207" src="{IMG_PATH}sxweb/16160417368be387733666.jpg"></a> 
+                        </li>
+
+                        <li data-title="2017年终城建篇:厉害了!过去一年,宿州竟干了这么多大事" data-url="http://www.0557.cn/news/201801/156995/1.html" style="float: left;"> 
+                            <a href="http://www.0557.cn/news/201801/156995/1.html" title="2017年终城建篇:厉害了!过去一年,宿州竟干了这么多大事" target="_blank">
+                                <img alt="2017年终城建篇:厉害了!过去一年,宿州竟干了这么多大事" width="300" height="207" src="{IMG_PATH}sxweb/16160236297aedca708735.jpg"></a> 
+                        </li>                          
+                        
+                    </ul>
+                </div>
+                <a class="tit-duang" target="_blank" href="http://www.0557.cn/news/201801/156838/1.html"></a>
+                <div class="dot">  
+                    <span class="">1</span>  
+                    <span class="">1</span>   
+                </div> 
+                <span class="prev" unselectable="on" onselectstart="return false;" style="display: none;"><em></em></span>
+                 <span class="next" unselectable="on" onselectstart="return false;" style="display: none;"><em></em></span>
+            </div>
+
+
+            <div class="openevents">
+
+                <div class="activities">
+                    <h3>精彩活动<a class="act" href="http://www.0557.cn/news/huodong/" target="_blank" title="精彩活动">更多</a></h3>
+                    <ul> 
+                    <li> 
+                        <a href="http://www.0557.cn/news/201801/157904/1.html">碧桂园中南·双玺“玺”送温情 万份爱心早餐免费送</a>                                 
+                        <div> 
+                            <a href="http://www.0557.cn/news/201801/157904/1.html" target="_blank" title="碧桂园中南·双玺“玺”送温情 万份爱心早餐免费送">
+                            <img src="{IMG_PATH}sxweb/31100625abe1058b623720_90_60.jpg" width="90" height="60" alt="碧桂园中南·双玺“玺”送温情 万份爱心早餐免费送">
+                            <p>碧桂园中南·双玺，“玺”送温情，温...</p>
+                            </a> 
+                        </div>  
+                    </li>                                                        
+                    <li> <a href="###">循环四条循环四条循环四条循环四条</a></li>  
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="content-discount jqDuang" data-cell=".tit ul" data-obj=".discount-m ul" data-autoplay="0" data-speed="0">
+
+        <div class="tit">
+            <h2><a href="javascript:void(0);">优惠 团购</a><span>DISCOUNT</span></h2>
+            
+            <ul>
+                <li class="fst act"><span>1月推新</span></li>
+                <li class=""><span>销量榜</span></li>
+                <li class=""><span>好房精选</span></li>
+                <li class=""><span>帮你省钱</span></li>
+                <li class=""><span>人气担当</span></li>
+            </ul>
+
+            <div class="indicator" style="width: 464px;"><span style="margin-left: 270.212px; width: 97px;"></span></div>
+        </div>
+        <div class="discount-l">
+                            
+            <dl class="discount-search">
+                <div class="discount-type act">
+                </div>                                                                      
+                <div class="discount-type">
+                </div>                                                                      
+                <div class="discount-type">
+                </div>                                                                      
+                <div class="discount-type">
+                </div>      
+            </dl>
+          </div>
+        <div class="discount-m">
+            
+            <!-- 整个ul循环 上面 tit 下面li的个数  -->
+            <ul style="">                 
+                <li> 
+                    <a href="http://www.0557.cn/newhouse/258/view.html" target="_blank" title="两淮融景苑"><img src="{IMG_PATH}sxweb/2009261190a5612fc10449_190_140.jpg" width="190" height="140" alt="两淮融景苑"></a>
+                    <h4><a href="http://www.0557.cn/newhouse/258/view.html" target="_blank" title="两淮融景苑">两淮融景苑</a><a href="http://www.0557.cn/newhouse/zwxq/1.html" target="_blank">[政务新区]</a></h4>
+                    <p><strong>循环6个循环6个</strong>循环6个循环6个循环6个</p>
+                </li>                  
+            </ul>
+
+
+         </div>
+        <div class="discount-r">
+            <h3><a class="act" href="http://www.0557.cn/news/dazheyouhui/" target="_blank" title="打折优惠">打折优惠</a></h3>
+            <ul>                 
+                <li><a href="http://www.0557.cn/news/201711/153624/1.html" target="_blank" title="循环6个循环6个循环6个">循环6个循环6个循环6个</a></li>  
+            </ul>
+            <h3><a class="act" href="http://www.0557.cn/news/baodian/" target="_blank" title="购房宝典">购房宝典</a></h3>
+            <ul>                
+                <li><a href="http://www.0557.cn/news/201712/154917/1.html" target="_blank" title="循环6个循环6个循环6个">循环6个循环6个循环6个</a></li>  
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div class="content-commerce jqDuang" data-cell=".tit ul" data-obj=".commerce-m .tab-bd ul" data-autoplay="0" data-speed="0">
+        <div class="tit">
+            <h2><a href="http://www.0557.cn/index.php?caid=2&amp;ccid12=2&amp;addno=1">商业地产</a><span>COMMERCE</span></h2>
+            <ul>
+                <li class="fst act"><a href="http://www.0557.cn/index.php?caid=2&amp;ccid12=3058&amp;addno=1">市场商铺</a></li>
+                <li><a href="http://www.0557.cn/index.php?caid=2&amp;ccid12=2&amp;addno=1">公寓写字楼</a></li>
+                <li><a href="http://www.0557.cn/index.php?caid=2&amp;ccid12=3023&amp;addno=1">城市综合体</a></li>
+            </ul>
+            <div class="indicator" style="width: 318px;"><span style="margin-left: 0px; width: 96px;"></span></div>
+        </div>
+        <div class="commerce-l">
+
+            <dl class="commerce-search">
+                <div class="commerce-type act">
+                </div>                                                                                              <div class="commerce-type ">
+                </div>                                                                            
+                <div class="commerce-type ">
+                </div>
+            </dl>
+        </div>
+        <div class="commerce-m">
+            <div class="tab-bd">
+                <ul style="">
+                    <li><a href="http://www.0557.cn/newhouse/297/view.html" target="_blank" title="宿州万达广场"><img src="{IMG_PATH}sxweb/05152810e22f920e4a1823_190_140.jpg" width="190" height="140" alt="宿州万达广场"></a>
+                    <h4><a href="http://www.0557.cn/newhouse/297/view.html" target="_blank" title="宿州万达广场">宿州万达广场</a><a href="http://www.0557.cn/newhouse/zwxq/1.html" target="_blank">[政务新区]</a></h4>
+                    <p><strong>一房一价</strong>小户型 品牌地产 带装修</p>
+                    </li>                   
+                </ul>
+            </div>
+        </div>
+        <div class="commerce-r">
+            <a href="http://www.0557.cn/news/tudi/">
+                <img src="{IMG_PATH}sxweb/30163400de16ae20463339.jpg" width="300">
+            </a>
+            <a href="http://www.0557.cn/special/cehua/index_22.html">
+                <img src="{IMG_PATH}sxweb/0309271488435dd5d04178.jpg" width="300">
+            </a>
+            <a href="http://www.0557.cn/tuku/hangpai/">
+                <img src="{IMG_PATH}sxweb/21174335e6258c21906015.jpg" width="300">
+            </a>
+        </div>
+    </div>
+
+
+    <div class="content-picture">
+        <div class="tit">
+            <h2><a href="http://www.0557.cn/tuku/" target="_blank">图片摄</a><span>PICTURE</span></h2>
+            <div class="more-links">  
+                <a class="fst" href="http://www.0557.cn/tuku/loushi/" target="_blank">单页的循环</a>
+            </div>
+        </div>
+        <div class="picture-flash jqDuang" data-obj="div ul" data-prevbtn=".prev" data-nextbtn=".next" data-effect="leftLoop" data-autoplay="0" data-wheel="1" style="overflow: hidden; position: relative; width: 1200px;">
+            <div style="position: relative; overflow: hidden; width: 9999px; left: -1200px;">
+                <ul style="float: left;">                     
+                    <li style="margin-left:0">
+                    <a target="_blank" href="http://www.0557.cn/tuku/201712/155799/1.html" title="圣诞来临！看宿州各大楼盘如何玩转圣诞节！"><img data-original="{IMG_PATH}sxweb/251633596e5c98b9788124_477_318.jpg" src="" width="477" height="318" alt="圣诞来临！看宿州各大楼盘如何玩转圣诞节！">                  
+                    <p>圣诞来临！看宿州各大楼盘如何玩转圣诞节！</p>
+                    </a> 
+                    </li>                     
+                    <li> <a target="_blank" href="http://www.0557.cn/tuku/201712/155536/1.html" title="繁华而不喧闹 静谧却不冷清 宿州碧桂园夜景美翻了"><img src="{IMG_PATH}sxweb/2215575036319a9f906695_231_154.jpg" width="231" height="154" alt="繁华而不喧闹 静谧却不冷清 宿州碧桂园夜景美翻了">                                <p>繁华而不喧闹 静谧却不冷清 </p>                            </a> </li>                     
+                    
+                </ul>
+                <ul style="float: left;">                     
+                    <li style="margin-left:0"> <a target="_blank" href="http://www.0557.cn/tuku/201801/157530/1.html" title="乐泽鑫城剪纸、糖画欢度腊八节"><img src="{IMG_PATH}sxweb/24121424f8f397286d1592_477_318.jpg" width="477" height="318" alt="乐泽鑫城剪纸、糖画欢度腊八节">                                <p>乐泽鑫城剪纸、糖画欢度腊八节</p>                            </a> </li>
+                    <li> <a target="_blank" href="http://www.0557.cn/tuku/201801/156969/1.html" title="恒大名都三期样板间荣耀归来 邀你品鉴"><img src="{IMG_PATH}sxweb/1514410015beb17b7b3373_231_154.jpg" width="231" height="154" alt="恒大名都三期样板间荣耀归来 邀你品鉴">                                <p>恒大名都三期样板间荣耀归来</p>                            </a> </li>
+                </ul>
+
+            </div> 
+            <span class="prev" unselectable="on" onselectstart="return false;" style="display: none;"><em></em></span> 
+            <span class="next" unselectable="on" onselectstart="return false;" style="display: none;"><em></em></span> 
+        </div>
+    </div>
+</div>
+
+
+<div class="interlinks">
+    <h2><a>友情链接</a><span>INTERLINKS</span></h2>
+    <p>  
+        <a href="###">宿州市房地产管理局</a>   
+    </p>
+</div>
+
+
+<script src="{JS_PATH}sxweb/jqduang.js"></script>
+<script src="{JS_PATH}sxweb/call.js"></script>
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+    
+	  	$("img").lazyload({
+			effect: "fadeIn",
+			threshold: 200
+		});
+	});
+</script>
+
+
+{template "content","footer"}
+{template "content","float_sidebar"}
