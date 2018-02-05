@@ -142,6 +142,7 @@ class index extends foreground {
 	}
 	
 	public function register() {
+
 		$this->_session_start();
 
 		//获取用户siteid
@@ -157,6 +158,10 @@ class index extends foreground {
 		//echo '<pre>';print_r($member_setting);die;
 		if(!$member_setting['allowregister']) {
 			showmessage('注册功能已关闭', 'index.php?m=member&c=index&a=login');
+		}
+		//dialog加载协议
+		if(!empty($_GET['protocol'])) {
+			include template('member', 'protocol');die;
 		}
 		//加载短信模块配置
  		$sms_setting_arr = getcache('sms','sms');
