@@ -1,5 +1,6 @@
 <?php
 defined('IN_PHPCMS') or exit('No permission resources.'); 
+exit(0);
 /**
  * 短信发送接口
  */

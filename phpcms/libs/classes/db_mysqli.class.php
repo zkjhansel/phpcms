@@ -23,7 +23,11 @@ final class db_mysqli {
 	 * 最近一次查询资源句柄
 	 */
 	public $lastqueryid = null;
-	
+		
+	/**
+	 * 最后一次sql语句
+	 */
+	public $lastquerysql = '';
 	/**
 	 *  统计数据库查询次数
 	 */
@@ -77,6 +81,8 @@ final class db_mysqli {
 		}
 		$this->lastqueryid = $this->link->query($sql) or $this->halt($this->link->error, $sql);
 		$this->querycount++;
+		$this->lastquerysql = $sql;//赋值最后的sql语句
+
 		return $this->lastqueryid;
 	}
 

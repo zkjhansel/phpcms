@@ -29,9 +29,118 @@ class index extends foreground {
 		$memberinfo['groupname'] = $grouplist[$memberinfo[groupid]]['name'];
 		include template('member', 'index');
 	}
+
+	//ajax注册会员
+	public function public_reg_ajax()
+	{
+		$this->_session_start();
+		//获取用户siteid
+		$siteid = isset($_REQUEST['siteid']) && trim($_REQUEST['siteid']) ? intval($_REQUEST['siteid']) : 1;
+		//定义站点id常量
+		if (!defined('SITEID')) {
+		   define('SITEID', $siteid);
+		}
+		//加载用户模块配置
+		$member_setting = getcache('member_setting');
+
+		//echo '<pre>';print_r($member_setting);die;
+		if(!$member_setting['allowregister']) exit('注册功能已关闭');
+		
+		//加载短信模块配置
+ 		$sms_setting_arr = getcache('sms','sms');
+		$sms_setting = $sms_setting_arr[$siteid];		
+		
+		header("Cache-control: private");
+			
+		$userinfo = array();
+		$userinfo['encrypt'] = create_randomstr(6);
+
+		$userinfo['username'] = (isset($_POST['mobile']) && !empty($_POST['mobile'])) ? trim($_POST['mobile']) : exit('请输入手机号码');
+		$mobile = $userinfo['mobile'] = $userinfo['username'];
+
+		if(!preg_match('/^1([0-9]{10})$/',$userinfo['username'])) {
+			exit('请提供正确的手机号码！');
+		}
+
+		$userinfo['password'] = (isset($_POST['password']) && is_badword($_POST['password'])==false) ? $_POST['password'] : exit('请输入密码');
+		
+		$userinfo['nickname'] = '';
+		$userinfo['email'] = '';
+		$userinfo['modelid'] = isset($_POST['modelid']) ? intval($_POST['modelid']) : 10;
+		$userinfo['regip'] = ip();
+
+		$userinfo['point'] = $member_setting['defualtpoint'] ? $member_setting['defualtpoint'] : 0;
+		$userinfo['amount'] = $member_setting['defualtamount'] ? $member_setting['defualtamount'] : 0;
+		$userinfo['regdate'] = $userinfo['lastdate'] = SYS_TIME;
+		$userinfo['siteid'] = $siteid;
+		$userinfo['connectid'] = isset($_SESSION['connectid']) ? $_SESSION['connectid'] : '';
+		$userinfo['from'] = isset($_SESSION['from']) ? $_SESSION['from'] : '';
+		
+		//手机强制验证
+		$mobile_verify = $_POST['mobile_verify'] ? intval($_POST['mobile_verify']) : '';
+		if($mobile_verify=='') exit('请输入手机验证码！');
+
+		$sms_report_db = pc_base::load_model('sms_report_model');
+		$posttime = SYS_TIME-360;
+		$where = "`mobile`='$mobile' AND `id_code`='$mobile_verify' AND `posttime`>'$posttime'";
+		$res = $sms_report_db->get_one($where,'*','id DESC');
+
+		if(!$res){
+			exit('短信验证码不正确');
+		}
+		 
+		unset($_SESSION['connectid'], $_SESSION['from']);
+		
+		if(pc_base::load_config('system', 'phpsso')) {
+			
+			//$this->_init_phpsso();
+			//$status = $this->client->ps_member_register($userinfo['username'], $userinfo['password'], $userinfo['email'], $userinfo['regip'], $userinfo['encrypt']);
+
+			$userinfo['phpssouid'] = $status;
+			//传入phpsso为明文密码，加密后存入phpcms_v9
+			$password = $userinfo['password'];
+			$userinfo['password'] = password($userinfo['password'], $userinfo['encrypt']);
+			$userid = $this->db->insert($userinfo, 1);
+			if($member_setting['choosemodel']) {	//如果开启选择模型
+				$user_model_info['userid'] = $userid;
+				//插入会员模型数据
+				$this->db->set_model($userinfo['modelid']);
+				$this->db->insert($user_model_info);
+			}
+			
+			if($userid > 0) {
+				//执行登陆操作
+				if(!$cookietime) $get_cookietime = param::get_cookie('cookietime');
+				$_cookietime = $cookietime ? intval($cookietime) : ($get_cookietime ? $get_cookietime : 0);
+				$cookietime = $_cookietime ? TIME + $_cookietime : 0;
+				
+				if($userinfo['groupid'] == 7) {
+					param::set_cookie('_username', $userinfo['username'], $cookietime);
+					param::set_cookie('email', $userinfo['email'], $cookietime);							
+				} else {
+					$phpcms_auth =sys_auth($userid."\t".$userinfo['password'], 'ENCODE', get_auth_key('login'));
+					
+					param::set_cookie('auth', $phpcms_auth, $cookietime);
+					param::set_cookie('_userid', $userid, $cookietime);
+					param::set_cookie('_username', $userinfo['username'], $cookietime);
+					param::set_cookie('_nickname', $userinfo['nickname'], $cookietime);
+					param::set_cookie('_groupid', $userinfo['groupid'], $cookietime);
+					param::set_cookie('cookietime', $_cookietime, $cookietime);
+				}
+			}
+
+			//如果不需要邮箱认证、直接登录其他应用
+			//$synloginstr = $this->client->ps_member_synlogin($userinfo['phpssouid']);
+			echo 'success';die;
+			
+		}
+
+		echo 'success';die;
+	}
 	
 	public function register() {
 		$this->_session_start();
+
 		//获取用户siteid
 		$siteid = isset($_REQUEST['siteid']) && trim($_REQUEST['siteid']) ? intval($_REQUEST['siteid']) : 1;
 		//定义站点id常量
@@ -197,72 +306,60 @@ class index extends foreground {
 			}
 			showmessage(L('operation_failure'), HTTP_REFERER);
 		} else {
+
 			if(!pc_base::load_config('system', 'phpsso')) {
 				showmessage(L('enable_register').L('enable_phpsso'), 'index.php?m=member&c=index&a=login');
 			}
 			
-			if(!empty($_GET['verify'])) {
-				$code = isset($_GET['code']) ? trim($_GET['code']) : showmessage(L('operation_failure'), 'index.php?m=member&c=index');
-				$code_res = sys_auth($code, 'DECODE', get_auth_key('email'));
-				$code_arr = explode('|', $code_res);
-				$userid = isset($code_arr[0]) ? $code_arr[0] : '';
-				$userid = is_numeric($userid) ? $userid : showmessage(L('operation_failure'), 'index.php?m=member&c=index');
-
-				$this->db->update(array('groupid'=>$this->_get_usergroup_bypoint()), array('userid'=>$userid));
-				showmessage(L('operation_success'), 'index.php?m=member&c=index');
-			} elseif(!empty($_GET['protocol'])) {
-
-				include template('member', 'protocol');
-			} else {
-				//过滤非当前站点会员模型
-				$modellist = getcache('member_model', 'commons');
-				foreach($modellist as $k=>$v) {
-					if($v['siteid']!=$siteid || $v['disabled']) {
-						unset($modellist[$k]);
-					}
+			//过滤非当前站点会员模型
+			$modellist = getcache('member_model', 'commons');
+			foreach($modellist as $k=>$v) {
+				if($v['siteid']!=$siteid || $v['disabled']) {
+					unset($modellist[$k]);
 				}
-				//print_r($modellist);die;
-				if(empty($modellist)) {
-					showmessage(L('site_have_no_model').L('deny_register'), HTTP_REFERER);
-				}
-				//是否开启选择会员模型选项
-				if($member_setting['choosemodel']) {
-					$first_model = array_pop(array_reverse($modellist));
+			}
+			//print_r($modellist);die;
+			if(empty($modellist)) {
+				showmessage(L('site_have_no_model').L('deny_register'), HTTP_REFERER);
+			}
+			//是否开启选择会员模型选项
+			if($member_setting['choosemodel']) {
+				$first_model = array_pop(array_reverse($modellist));
 
-					//10 -- 普通会员
-					$modelid = isset($_GET['modelid']) && in_array($_GET['modelid'], array_keys($modellist)) ? intval($_GET['modelid']) : $first_model['modelid'];
+				//10 -- 普通会员
+				$modelid = isset($_GET['modelid']) && in_array($_GET['modelid'], array_keys($modellist)) ? intval($_GET['modelid']) : $first_model['modelid'];
 
-					if(array_key_exists($modelid, $modellist)) {
-						//获取会员模型表单
-						require CACHE_MODEL_PATH.'member_form.class.php';
-						$member_form = new member_form($modelid);
-						$this->db->set_model($modelid);
-						$forminfos = $forminfos_arr = $member_form->get();
+				if(array_key_exists($modelid, $modellist)) {
+					//获取会员模型表单
+					require CACHE_MODEL_PATH.'member_form.class.php';
+					$member_form = new member_form($modelid);
+					$this->db->set_model($modelid);
+					$forminfos = $forminfos_arr = $member_form->get();
 
-						//万能字段过滤  普通会员这个是空的
-						foreach($forminfos as $field=>$info) {
-							if($info['isomnipotent']) {
-								unset($forminfos[$field]);
-							} else {
-								if($info['formtype']=='omnipotent') {
-									foreach($forminfos_arr as $_fm=>$_fm_value) {
-										if($_fm_value['isomnipotent']) {
-											$info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'], $info['form']);
-										}
+					//万能字段过滤  普通会员这个是空的
+					foreach($forminfos as $field=>$info) {
+						if($info['isomnipotent']) {
+							unset($forminfos[$field]);
+						} else {
+							if($info['formtype']=='omnipotent') {
+								foreach($forminfos_arr as $_fm=>$_fm_value) {
+									if($_fm_value['isomnipotent']) {
+										$info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'], $info['form']);
 									}
-									$forminfos[$field]['form'] = $info['form'];
 								}
+								$forminfos[$field]['form'] = $info['form'];
 							}
 						}
-						
-						$formValidator = $member_form->formValidator;
 					}
+					
+					$formValidator = $member_form->formValidator;
 				}
-				$description = $modellist[$modelid]['description'];
-				$siteid =isset($_REQUEST['siteid']) && trim($_REQUEST['siteid']) ? intval($_REQUEST['siteid']) : 1;
-				$siteinfo = siteinfo($siteid);
-				include template('member', 'register');
 			}
+			$description = $modellist[$modelid]['description'];
+			$siteid =isset($_REQUEST['siteid']) && trim($_REQUEST['siteid']) ? intval($_REQUEST['siteid']) : 1;
+			$siteinfo = siteinfo($siteid);
+			include template('member', 'register');
+			
 		}
 	}
  	
@@ -1015,6 +1112,29 @@ class index extends foreground {
 		} else {
 			exit('1');
 		}
+	}
+
+	/**
+	 * 检查手机号
+	 * @param string $mobile	用户名
+	 * @return $status {-4：mobile禁止注册;-1:mobile已经存在 ;1:成功}
+	 */
+	public function public_checkmobile_ajax() {
+		$mobile = isset($_GET['mobile']) && trim($_GET['mobile']) && is_username(trim($_GET['mobile'])) ? trim($_GET['mobile']) : exit(0);
+
+		//首先判断会员审核表
+		$this->verify_db = pc_base::load_model('member_verify_model');
+		if($this->verify_db->get_one(array('username'=>$mobile))) {
+			exit('0');
+		}
+		//再判断会员表
+		$this->member = pc_base::load_model('member_model');
+		if($this->member->get_one(array('username'=>$mobile))) {
+			exit('0');
+		}
+
+		exit('1');
+		
 	}
 
 	//ajax登录

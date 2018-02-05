@@ -267,7 +267,7 @@ function execute_time() {
 * 产生随机字符串
 *
 * @param    int        $length  输出长度
-* @param    string     $chars   可选的 ，默认为 0123456789
+* @param    string     $chars   可选的 ，默认为 123456789
 * @return   string     字符串
 */
 function random($length, $chars = '0123456789') {
@@ -275,7 +275,10 @@ function random($length, $chars = '0123456789') {
 	$max = strlen($chars) - 1;
 	mt_srand();
 	for($i = 0; $i < $length; $i++) {
-		$hash .= $chars[mt_rand(0, $max)];
+		$tmp = $chars[mt_rand(0, $max)];
+		//第一个数字不能是0.否则验证码在数据库匹配那里，第一个0会被去掉原本的6位变成了5位
+		if ($tmp==0 && $i==0) $tmp = '1';	
+		$hash .= $tmp;
 	}
 	return $hash;
 }

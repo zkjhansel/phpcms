@@ -167,6 +167,14 @@ class model {
 	final public function affected_rows() {
 		return $this->db->affected_rows();
 	}
+
+	/**
+	 * 获取最后sql语句
+	 * @return int
+	 */
+	final public function get_last_sql() {
+		return $this->db->lastquerysql;
+	}
 	
 	/**
 	 * 获取数据表主键
