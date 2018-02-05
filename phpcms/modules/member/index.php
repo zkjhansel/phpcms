@@ -75,6 +75,9 @@ class index extends foreground {
 		$userinfo['siteid'] = $siteid;
 		$userinfo['connectid'] = isset($_SESSION['connectid']) ? $_SESSION['connectid'] : '';
 		$userinfo['from'] = isset($_SESSION['from']) ? $_SESSION['from'] : '';
+
+		//默认新手上路
+		$userinfo['groupid'] = 2;
 		
 		//手机强制验证
 		$mobile_verify = $_POST['mobile_verify'] ? intval($_POST['mobile_verify']) : '';

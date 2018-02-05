@@ -89,7 +89,7 @@ function addtext(data) {
 	</div>
 </div>
 <div class="bk10"></div>
-<div class="col-2 lf mr10" style="width:48%">
+<!-- <div class="col-2 lf mr10" style="width:48%">
 	<h6><?php echo L('main_product_team')?></h6>
 	<div class="content">
 	<?php echo L('main_copyright')?><?php echo $product_copyright?><br />
@@ -109,7 +109,7 @@ function addtext(data) {
 	<?php echo L('main_license_type')?><span id="phpcms_license"></span> <br />
 	<?php echo L('main_serial_number')?><span id="phpcms_sn"></span> <br />
 	</div>
-</div>
+</div> -->
     <div class="bk10"></div>
 </div>
 </body></html>

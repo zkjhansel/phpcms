@@ -3,8 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" class="off">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET?>" />
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-<title><?php echo L('admin_site_title')?></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+<link rel="shortcut icon" type="images/x-icon" href="<?php echo IMG_PATH?>sxweb/logo.ico">
+
+<title>临沂思学网 -- 管理后台中心</title>
 <link href="<?php echo CSS_PATH?>reset.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo CSS_PATH.SYS_STYLE;?>-system.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo CSS_PATH?>dialog.css" rel="stylesheet" type="text/css" />
