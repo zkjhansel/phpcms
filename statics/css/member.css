@@ -163,3 +163,12 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
 .products-para thead td{ text-align:center}
 .products-para td{ padding-left:6px}
 .home{background: url("../images/v9/icon.png") no-repeat left -40px; padding-left:18px;}
+
+/*提交按钮的自定义样式*/
+.button-submit{
+	background: #386ea8 !important;
+    color: #fff;
+    padding: 12px !important;
+    line-height: 0px;
+    cursor: pointer;
+}

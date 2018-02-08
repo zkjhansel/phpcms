@@ -2,7 +2,6 @@
 /**
  * 会员前台管理中心、账号管理、收藏操作类
  */
-
 defined('IN_PHPCMS') or exit('No permission resources.');
 pc_base::load_app_class('foreground');
 pc_base::load_sys_class('format', '', 0);
@@ -363,34 +362,54 @@ class index extends foreground {
 	}
 	
 	public function account_manage_info() {
+
 		if(isset($_POST['dosubmit'])) {
+
 			//更新用户昵称
+			if (empty($_POST['nickname'])) {
+				echo '请输入昵称';die;
+			}
+
 			$nickname = isset($_POST['nickname']) && is_username(trim($_POST['nickname'])) ? trim($_POST['nickname']) : '';
 			$nickname = safe_replace($nickname);
-			if($nickname) {
-				$this->db->update(array('nickname'=>$nickname), array('userid'=>$this->memberinfo['userid']));
-				if(!isset($cookietime)) {
-					$get_cookietime = param::get_cookie('cookietime');
-				}
-				$_cookietime = $cookietime ? intval($cookietime) : ($get_cookietime ? $get_cookietime : 0);
-				$cookietime = $_cookietime ? TIME + $_cookietime : 0;
-				param::set_cookie('_nickname', $nickname, $cookietime);
+			if (empty($nickname)) {
+				echo '昵称含有特殊字符';die;
 			}
+
+			//更新主表 nickname
+			$this->db->update(array('nickname'=>$nickname), array('userid'=>$this->memberinfo['userid']));
+			if(!isset($cookietime)) {
+				$get_cookietime = param::get_cookie('cookietime');
+			}
+			$_cookietime = $cookietime ? intval($cookietime) : ($get_cookietime ? $get_cookietime : 0);
+			$cookietime = $_cookietime ? TIME + $_cookietime : 0;
+			param::set_cookie('_nickname', $nickname, $cookietime);
+			
 			require_once CACHE_MODEL_PATH.'member_input.class.php';
 			require_once CACHE_MODEL_PATH.'member_update.class.php';
 			$member_input = new member_input($this->memberinfo['modelid']);
-			$modelinfo = $member_input->get($_POST['info']);
-
-			$this->db->set_model($this->memberinfo['modelid']);
-			$membermodelinfo = $this->db->get_one(array('userid'=>$this->memberinfo['userid']));
-			if(!empty($membermodelinfo)) {
-				$this->db->update($modelinfo, array('userid'=>$this->memberinfo['userid']));
-			} else {
-				$modelinfo['userid'] = $this->memberinfo['userid'];
-				$this->db->insert($modelinfo);
-			}
 			
-			showmessage(L('operation_success'), HTTP_REFERER);
+			//准备更新副表
+			$birthday = $_POST['info'];
+			unset($_POST['nickname'],$_POST['dosubmit'],$_POST['info']);
+			$_POST['info']['birthday'] = $birthday;
+
+			$modelinfo = $member_input->get($_POST['info']);
+			if (is_array($modelinfo) && count($modelinfo)>0) {
+
+				//其他额外的信息
+				$this->db->set_model($this->memberinfo['modelid']);
+				$membermodelinfo = $this->db->get_one(array('userid'=>$this->memberinfo['userid']));
+				if(!empty($membermodelinfo)) {
+					$this->db->update($modelinfo, array('userid'=>$this->memberinfo['userid']));
+				} else {
+					$modelinfo['userid'] = $this->memberinfo['userid'];
+					$this->db->insert($modelinfo);
+				}
+
+			}
+
+			echo 'success';die;
 		} else {
 			$memberinfo = $this->memberinfo;
 			//获取会员模型表单
@@ -447,13 +466,14 @@ class index extends foreground {
 			$updateinfo['password'] = $newpassword;
 			
 			$this->db->update($updateinfo, array('userid'=>$this->memberinfo['userid']));
-			if(pc_base::load_config('system', 'phpsso')) {
+			
+			/*if(pc_base::load_config('system', 'phpsso')) {
 				//初始化phpsso
 				$this->_init_phpsso();
 				$res = $this->client->ps_member_edit('', $email, $_POST['info']['password'], $_POST['info']['newpassword'], $this->memberinfo['phpssouid'], $this->memberinfo['encrypt']);
 				$message_error = array('-1'=>L('user_not_exist'), '-2'=>L('old_password_incorrect'), '-3'=>L('email_already_exist'), '-4'=>L('email_error'), '-5'=>L('param_error'));
 				if ($res < 0) showmessage($message_error[$res]);
-			}
+			}*/
 
 			showmessage(L('operation_success'), HTTP_REFERER);
 		} else {

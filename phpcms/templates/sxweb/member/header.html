@@ -16,6 +16,7 @@
 <link href="{CSS_PATH}table_form.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="{JS_PATH}jquery.min.js"></script>
 <script type="text/javascript" src="{JS_PATH}member_common.js"></script>
+<script type="text/javascript" src="{JS_PATH}layer.js"></script>
 {if isset($show_validator)}
 <script type="text/javascript" src="{JS_PATH}formvalidator.js" charset="UTF-8"></script>
 <script type="text/javascript" src="{JS_PATH}formvalidatorregex.js" charset="UTF-8"></script>
@@ -23,13 +24,19 @@
 </head>
 <body>
 <div id="header">
-	<div class="logo"><a href="{$siteinfo['domain']}"><img src="{IMG_PATH}v9/logo.jpg" height="60" /></a><h3>{L('member_center')}</h3></div>
+	<div class="logo">
+		<a href="javascript:;"><img src="{IMG_PATH}v9/logo.jpg" height="60" /></a>
+		<h3>会员中心</h3>
+	</div>
+
 	{php $siteinfo = siteinfo($this->memberinfo['siteid']);}
 	{php $this->menu_db = pc_base::load_model('member_menu_model');}
 	{php $menu = $this->menu_db->select(array('display'=>1, 'parentid'=>0), '*', 20 , 'listorder');}
-    <div class="link">{L('hellow')} {get_nickname()}<span> | </span>
-	<a href="{APP_PATH}index.php?m=member&c=index&a=logout">{L('logout')}</a>
-	<span> | </span><a href="{$siteinfo['domain']}">{L('index')}</a> </div>
+
+    <div class="link">你好 {get_nickname()}<span> | </span>
+		<a href="{APP_PATH}index.php?m=member&c=index&a=logout">退出</a>
+		<span> | </span><a href="{$siteinfo['domain']}">返回首页</a> 
+	</div>
 	<div class="nav-bar">
     	<map>
         	<ul class="nav-site cu-span">
