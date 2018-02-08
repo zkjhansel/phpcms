@@ -144,7 +144,7 @@ label {
 #header{ height:94px; background:url({IMG_PATH}member/h.png) repeat-x}
 #header .logo{ padding-right:100px;float:left;padding-top: 10px;}
 #header .content{width:920px; margin:auto; height:60px;padding:10px 0 0 0}
-#content{width:920px; margin:20px auto; padding:20px 0 0 0; overflow:auto}
+#content{width:920px; margin:20px auto; padding:0px 0 0 0; overflow:auto}
 .form-login{width:420px; padding-left:40px}
 #content h2{font-size:25px;color:#494949;border-bottom: none;}
 #content h2 span{
@@ -158,8 +158,8 @@ label {
     padding: 0 30px;
     }
 .wrap {
-	min-height: 430px;
-    padding: 50px 0;
+	min-height: 400px;
+    padding: 20px 0;
     border: 1px solid #cdced4;
     border-radius: 5px;
     border-top-left-radius: 0;
@@ -176,7 +176,7 @@ label {
 .form-login .hr{background: url({IMG_PATH}member/line.png) no-repeat left center; height:50px;}
 .form-login .hr hr{ display:none}
 
-.form-reg{padding:10px 0 0 14px; width:700px; border-right:1px solid #ccc}
+.form-reg{padding:10px 0 0 14px; width:700px; }
 .form-reg .input label{ width:120px}
 .form-reg .input label.type{ width:auto; color:#000; padding-right:10px}
 .form-reg .reg{padding:10px 0 0 120px}
@@ -187,7 +187,7 @@ label {
 .submit input{background-position: right top; border:none; padding:0 10px 0 7px; font-size:14px}
 .reg{ color:#666; line-height:24px}
 .reg .submit{background-position: left -35px; height:35px}
-.reg-auto{ padding:10px 0 0 20px}
+.reg-auto{ padding:10px 0 0 20px;    border-left: 1px solid #ccc;height: 300px;}
 .reg-auto p{ margin-bottom:10px; color:#666;}
 .item{padding:10px 0; vertical-align:middle; margin-bottom:10px}
 .item span{ color:#8c8686}
@@ -318,6 +318,10 @@ label {
 						var isinerval;
 						function get_verify() {
 
+							//如果手机号被占用那么不发短信
+							if ($('#mobileTip').hasClass('onError')) {
+								return false;
+							}
 							var mobile = $("#mobile").val();
 							var partten = /^1[3-9]\d{9}$/;
 							if(!partten.test(mobile)){
@@ -325,6 +329,7 @@ label {
 								$('#mobile').focus();
 								return false;
 							}
+
 							
 							$.get("api.php?op=sx_reg_sms",{ mobile: mobile,random:Math.random()}, function(data){
 								if(data=="0") {

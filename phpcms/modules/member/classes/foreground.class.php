@@ -7,6 +7,7 @@ class foreground {
 	public function __construct() {
 		self::check_ip();
 		$this->db = pc_base::load_model('member_model');
+
 		//ajax验证信息不需要登录
 		if(substr(ROUTE_A, 0, 7) != 'public_') {
 			self::check_member();
