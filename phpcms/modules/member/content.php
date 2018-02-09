@@ -17,12 +17,15 @@ class content extends foreground {
 	public function publish() {
 		$memberinfo = $this->memberinfo;
 		$grouplist = getcache('grouplist');
+
 		$priv_db = pc_base::load_model('category_priv_model'); //加载栏目权限表数据模型
 		
 		//判断会员组是否允许投稿
 		if(!$grouplist[$memberinfo['groupid']]['allowpost']) {
 			showmessage(L('member_group').L('publish_deny'), HTTP_REFERER);
 		}
+
+		
 		//判断每日投稿数
 		$this->content_check_db = pc_base::load_model('content_check_model');
 		$todaytime = strtotime(date('y-m-d',SYS_TIME));
@@ -126,11 +129,12 @@ class content extends foreground {
 			foreach ($CATEGORYS as $catid=>$cat) {
 				if($cat['siteid']==$siteid && $cat['child']==0 && $cat['type']==0 && $priv_db->get_one(array('catid'=>$catid, 'roleid'=>$memberinfo['groupid'], 'is_admin'=>0, 'action'=>'add'))) break;
 			}
+
 			$catid = $_GET['catid'] ? intval($_GET['catid']) : $catid;
 			if (!$catid) showmessage(L('category').L('publish_deny'), APP_PATH.'index.php?m=member');
 
-			//判断本栏目是否允许投稿
 			if (!$priv_db->get_one(array('catid'=>$catid, 'roleid'=>$memberinfo['groupid'], 'is_admin'=>0, 'action'=>'add'))) showmessage(L('category').L('publish_deny'), APP_PATH.'index.php?m=member');
+
 			$category = $CATEGORYS[$catid];
 			if($category['siteid']!=$siteid) showmessage(L('site_no_category'),'?m=member&c=content&a=publish');
 			$setting = string2array($category['setting']);
