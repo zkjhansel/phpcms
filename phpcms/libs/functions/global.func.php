@@ -834,6 +834,17 @@ function is_email($email) {
 }
 
 /**
+ * 判断mobile格式是否正确
+ * @param $email
+ */
+function is_mobile($mobile) {
+	if (strlen($mobile)==11 && preg_match('/^1([0-9]{10})$/',$mobile)) {
+		return true;
+	}
+	return false;
+}
+
+/**
  * iconv 编辑转换
  */
 if (!function_exists('iconv')) {

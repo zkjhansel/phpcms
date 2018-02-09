@@ -442,27 +442,42 @@ class index extends foreground {
 		}
 	}
 	
+	//ajax验证密码 .这里不以public开头  需要登录信息
+	public function check_password_ajax() {
+
+		if(!is_password($_GET['password'])) {
+			exit('-1');
+		}
+		if($this->memberinfo['password'] != password($_GET['password'], $this->memberinfo['encrypt'])) {
+			exit('-2');
+		}
+		echo "1";die;
+	}
+
 	public function account_manage_password() {
+
 		if(isset($_POST['dosubmit'])) {
 			$updateinfo = array();
-			if(!is_password($_POST['info']['password'])) {
-				showmessage(L('password_format_incorrect'), HTTP_REFERER);
+
+			if(!is_password($_POST['password'])) {
+				echo '原密码格式不符合规则';die;
 			}
-			if($this->memberinfo['password'] != password($_POST['info']['password'], $this->memberinfo['encrypt'])) {
-				showmessage(L('old_password_incorrect'), HTTP_REFERER);
+			if($this->memberinfo['password'] != password($_POST['password'], $this->memberinfo['encrypt'])) {
+				echo '原密码输入不正确';die;
 			}
 			
 			//修改会员邮箱
-			if($this->memberinfo['email'] != $_POST['info']['email'] && is_email($_POST['info']['email'])) {
-				$email = $_POST['info']['email'];
-				$updateinfo['email'] = $_POST['info']['email'];
+			if($this->memberinfo['email'] != $_POST['email'] && is_email($_POST['email'])) {
+				$email = $_POST['email'];
+				$updateinfo['email'] = $_POST['email'];
 			} else {
 				$email = '';
 			}
-			if(!is_password($_POST['info']['newpassword']) || is_badword($_POST['info']['newpassword'])) {
-				showmessage(L('password_format_incorrect'), HTTP_REFERER);
+
+			if(!is_password($_POST['newpassword']) || is_badword($_POST['newpassword'])) {
+				echo '新密码格式不符合规则';die;
 			}
-			$newpassword = password($_POST['info']['newpassword'], $this->memberinfo['encrypt']);
+			$newpassword = password($_POST['newpassword'], $this->memberinfo['encrypt']);
 			$updateinfo['password'] = $newpassword;
 			
 			$this->db->update($updateinfo, array('userid'=>$this->memberinfo['userid']));
@@ -474,8 +489,7 @@ class index extends foreground {
 				$message_error = array('-1'=>L('user_not_exist'), '-2'=>L('old_password_incorrect'), '-3'=>L('email_already_exist'), '-4'=>L('email_error'), '-5'=>L('param_error'));
 				if ($res < 0) showmessage($message_error[$res]);
 			}*/
-
-			showmessage(L('operation_success'), HTTP_REFERER);
+			echo 'success';die;
 		} else {
 			$show_validator = true;
 			$memberinfo = $this->memberinfo;
@@ -483,34 +497,43 @@ class index extends foreground {
 			include template('member', 'account_manage_password');
 		}
 	}
+
 	//更换手机号码
 	public function account_change_mobile() {
 		$memberinfo = $this->memberinfo;
+
 		if(isset($_POST['dosubmit'])) {
+
 			if(!is_password($_POST['password'])) {
-				showmessage(L('password_format_incorrect'), HTTP_REFERER);
+				exit('密码格式不正确');
 			}
 			if($this->memberinfo['password'] != password($_POST['password'], $this->memberinfo['encrypt'])) {
-				showmessage(L('old_password_incorrect'));
+				exit('验证密码不正确');
 			}
+
 			$sms_report_db = pc_base::load_model('sms_report_model');
-			$mobile_verify = $_POST['mobile_verify'];
-			$mobile = $_POST['mobile'];
-			if($mobile){
-				if(!preg_match('/^1([0-9]{10})$/',$mobile)) exit('check phone error');
-				$posttime = SYS_TIME-600;
-				$where = "`mobile`='$mobile' AND `send_userid`='".$memberinfo['userid']."' AND `posttime`>'$posttime'";
-				$r = $sms_report_db->get_one($where,'id,id_code','id DESC');
-				if($r && $r['id_code']==$mobile_verify) {
-					$sms_report_db->update(array('id_code'=>''),$where);
-					$this->db->update(array('mobile'=>$mobile),array('userid'=>$memberinfo['userid']));
-					showmessage("手机号码更新成功！",'?m=member&c=index&a=account_change_mobile&t=1');
-				} else {
-					showmessage("短信验证码错误！请重新获取！");
-				}
-			}else{
-				showmessage("短信验证码已过期！请重新获取！");
+			$mobile_verify = trim($_POST['mobile_verify']);
+			$mobile = trim($_POST['mobile']);
+
+			if (!$mobile_verify) exit('请输入验证码');
+			if (!$mobile) exit('请填写新的手机号码');
+			if(!is_mobile($mobile)) exit('手机号码格式错误');
+			
+
+			$posttime = SYS_TIME-600;
+			$where = "`mobile`='$mobile' AND `send_userid`='".$memberinfo['userid']."' AND `posttime`>'$posttime'";
+			$r = $sms_report_db->get_one($where,'id,id_code','id DESC');
+			
+			if($r && $r['id_code']==$mobile_verify) {
+
+				$sms_report_db->update(array('id_code'=>''),$where);
+				$this->db->update(array('username'=>$mobile,'mobile'=>$mobile),array('userid'=>$memberinfo['userid']));
+				
+				exit('success');
+			} else {
+				exit('短信验证码错误！请重新获取！');
 			}
+			
 		} else {
 			include template('member', 'account_change_mobile');
 		}
@@ -998,21 +1021,23 @@ class index extends foreground {
 
 	/**
 	 * 检查手机号
-	 * @param string $mobile	用户名
-	 * @return $status {-4：mobile禁止注册;-1:mobile已经存在 ;1:成功}
+	 * @param string $mobile	手机号
+	 * @return $status {-4：mobile禁止注册;-1:mobile已经存在 ;-2:格式不符，1:成功}
 	 */
 	public function public_checkmobile_ajax() {
 		$mobile = isset($_GET['mobile']) && trim($_GET['mobile']) && is_username(trim($_GET['mobile'])) ? trim($_GET['mobile']) : exit(0);
 
+		if (!is_mobile($mobile)) exit('-2');
+
 		//首先判断会员审核表
 		$this->verify_db = pc_base::load_model('member_verify_model');
 		if($this->verify_db->get_one(array('username'=>$mobile))) {
-			exit('0');
+			exit('-1');
 		}
 		//再判断会员表
 		$this->member = pc_base::load_model('member_model');
 		if($this->member->get_one(array('username'=>$mobile))) {
-			exit('0');
+			exit('-1');
 		}
 
 		exit('1');
@@ -1045,84 +1070,33 @@ class index extends foreground {
 		$cookietime = intval($_POST['cookietime']);
 		$synloginstr = ''; //同步登陆js代码
 		
-		//测试时间太久
-		if(pc_base::load_config('system', 'phpsso') && false) {
-			$this->_init_phpsso();
-			$status = $this->client->ps_member_login($username, $password);
-			$memberinfo = unserialize($status);
-			
-			if(isset($memberinfo['uid'])) {
-				//查询帐号
-				$r = $this->db->get_one(array('phpssouid'=>$memberinfo['uid']));
-				if(!$r) {
-					//插入会员详细信息，会员不存在 插入会员
-					$info = array(
-								'phpssouid'=>$memberinfo['uid'],
-					 			'username'=>$memberinfo['username'],
-					 			'password'=>$memberinfo['password'],
-					 			'encrypt'=>$memberinfo['random'],
-					 			'email'=>$memberinfo['email'],
-					 			'regip'=>$memberinfo['regip'],
-					 			'regdate'=>$memberinfo['regdate'],
-					 			'lastip'=>$memberinfo['lastip'],
-					 			'lastdate'=>$memberinfo['lastdate'],
-					 			'groupid'=>$this->_get_usergroup_bypoint(),	//会员默认组
-					 			'modelid'=>10,	//普通会员
-								);
-								
-					//如果是connect用户
-					if(!empty($_SESSION['connectid'])) {
-						$userinfo['connectid'] = $_SESSION['connectid'];
-					}
-					if(!empty($_SESSION['from'])) {
-						$userinfo['from'] = $_SESSION['from'];
-					}
-					unset($_SESSION['connectid'], $_SESSION['from']);
-					
-					$this->db->insert($info);
-					unset($info);
-					$r = $this->db->get_one(array('phpssouid'=>$memberinfo['uid']));
-				}
-				$password = $r['password'];
-				$synloginstr = $this->client->ps_member_synlogin($r['phpssouid']);
-			} else {
-				if($status == -1) {
-					exit('用户不存在');
-				} elseif($status == -2) {
-					exit('密码错误');
-				} else {
-					exit('登录失败');
-				}
-			}
-			
-		} else {
-			//密码错误剩余重试次数
-			$this->times_db = pc_base::load_model('times_model');
-			$rtime = $this->times_db->get_one(array('username'=>$username));
-			if($rtime['times'] > 4) {
-				$minute = 60 - floor((SYS_TIME - $rtime['logintime']) / 60);
-				exit('密码错误次数已达上限,请'.$minute.'分钟后再来');
-			}
-			
-			//查询帐号
-			$r = $this->db->get_one(array('username'=>$username));
-			if(!$r) exit('当前登录手机号不存在');
-			
-			//验证用户密码
-			$password = md5(md5(trim($password)).$r['encrypt']);
-			if($r['password'] != $password) {				
-				$ip = ip();
-				if($rtime && $rtime['times'] < 5) {
-					$times = 5 - intval($rtime['times']);
-					$this->times_db->update(array('ip'=>$ip, 'times'=>'+=1'), array('username'=>$username));
-				} else {
-					$this->times_db->insert(array('username'=>$username, 'ip'=>$ip, 'logintime'=>SYS_TIME, 'times'=>1));
-					$times = 5;
-				}
-				exit('密码输入错误');
-			}
-			$this->times_db->delete(array('username'=>$username));
+		//密码错误剩余重试次数
+		$this->times_db = pc_base::load_model('times_model');
+		$rtime = $this->times_db->get_one(array('username'=>$username));
+		if($rtime['times'] > 4) {
+			$minute = 60 - floor((SYS_TIME - $rtime['logintime']) / 60);
+			exit('密码错误次数已达上限,请'.$minute.'分钟后再来');
 		}
+		
+		//查询帐号
+		$r = $this->db->get_one(array('username'=>$username));
+		if(!$r) exit('当前登录手机号不存在');
+		
+		//验证用户密码
+		$password = md5(md5(trim($password)).$r['encrypt']);
+		if($r['password'] != $password) {				
+			$ip = ip();
+			if($rtime && $rtime['times'] < 5) {
+				$times = 5 - intval($rtime['times']);
+				$this->times_db->update(array('ip'=>$ip, 'times'=>'+=1'), array('username'=>$username));
+			} else {
+				$this->times_db->insert(array('username'=>$username, 'ip'=>$ip, 'logintime'=>SYS_TIME, 'times'=>1));
+				$times = 5;
+			}
+			exit('密码输入错误');
+		}
+		$this->times_db->delete(array('username'=>$username));
+		
 		//如果用户被锁定
 		if($r['islock']) exit('该用户已被锁定');
 		
@@ -1382,79 +1356,6 @@ class index extends foreground {
 			$aurl = $o->getAuthorizeURL(WEB_CALLBACK);
 			include template('member', 'connect_sina');
 		}
-	}
-	
-	/**
-	 * 盛大通行证登陆
-	 */
-	public function public_snda_login() {
-		define('SNDA_AKEY', pc_base::load_config('system', 'snda_akey'));
-		define('SNDA_SKEY', pc_base::load_config('system', 'snda_skey'));
-		define('SNDA_CALLBACK', urlencode(APP_PATH.'index.php?m=member&c=index&a=public_snda_login&callback=1'));
-		
-		pc_base::load_app_class('OauthSDK', '' ,0);
-		$this->_session_start();		
-		if(isset($_GET['callback']) && trim($_GET['callback'])) {
-					
-			$o = new OauthSDK(SNDA_AKEY, SNDA_SKEY, SNDA_CALLBACK);
-			$code = $_REQUEST['code'];
-			$accesstoken = $o->getAccessToken($code);
-		
-			if(is_numeric($accesstoken['sdid'])) {
-				$userid = $accesstoken['sdid'];
-			} else {
-				showmessage(L('login_failure'), 'index.php?m=member&c=index&a=login');
-			}
-
-			if(!empty($userid)) {
-				
-				//检查connect会员是否绑定，已绑定直接登录，未绑定提示注册/绑定页面
-				$where = array('connectid'=>$userid, 'from'=>'snda');
-				$r = $this->db->get_one($where);
-				
-				//connect用户已经绑定本站用户
-				if(!empty($r)) {
-					//读取本站用户信息，执行登录操作
-					$password = $r['password'];
-					$this->_init_phpsso();
-					$synloginstr = $this->client->ps_member_synlogin($r['phpssouid']);
-					$userid = $r['userid'];
-					$groupid = $r['groupid'];
-					$username = $r['username'];
-					$nickname = empty($r['nickname']) ? $username : $r['nickname'];
-					$this->db->update(array('lastip'=>ip(), 'lastdate'=>SYS_TIME, 'nickname'=>$me['name']), array('userid'=>$userid));
-					if(!$cookietime) $get_cookietime = param::get_cookie('cookietime');
-					$_cookietime = $cookietime ? intval($cookietime) : ($get_cookietime ? $get_cookietime : 0);
-					$cookietime = $_cookietime ? TIME + $_cookietime : 0;
-					
-					$phpcms_auth = sys_auth($userid."\t".$password, 'ENCODE', get_auth_key('login'));
-					
-					param::set_cookie('auth', $phpcms_auth, $cookietime);
-					param::set_cookie('_userid', $userid, $cookietime);
-					param::set_cookie('_username', $username, $cookietime);
-					param::set_cookie('_groupid', $groupid, $cookietime);
-					param::set_cookie('cookietime', $_cookietime, $cookietime);
-					param::set_cookie('_nickname', $nickname, $cookietime);
-					param::set_cookie('_from', 'snda');
-					$forward = isset($_GET['forward']) && !empty($_GET['forward']) ? $_GET['forward'] : 'index.php?m=member&c=index';
-					showmessage(L('login_success').$synloginstr, $forward);
-				} else {				
-					//弹出绑定注册页面
-					$_SESSION = array();
-					$_SESSION['connectid'] = $userid;
-					$_SESSION['from'] = 'snda';
-					$connect_username = $userid;
-					include template('member', 'connect');
-				}
-			}	
-		} else {
-			$o = new OauthSDK(SNDA_AKEY, SNDA_SKEY, SNDA_CALLBACK);
-			$accesstoken = $o->getSystemToken();		
-			$aurl = $o->getAuthorizeURL();
-			
-			include template('member', 'connect_snda');
-		}
-		
 	}
 	
 	
