@@ -76,23 +76,22 @@ $(function(){
 	$("#pwdconfirm").formValidator({onshow:"{L('input').L('cofirmpwd')}",onfocus:"{L('passwords_not_match')}",oncorrect:"{L('passwords_match')}"}).compareValidator({desid:"password",operateor:"=",onerror:"{L('passwords_not_match')}"});
 	
 
-	$("#mobile").formValidator({onshow:"请输入手机号码",onfocus:"请输入您的手机号码"}).inputValidator({min:1,max:11,onerror:"请输入正确的手机号码"}).ajaxValidator({
-		
-		type : "get",
-		url : "",
-		data :"m=member&c=index&a=public_checkmobile_ajax",
-		datatype : "html",
-		async:'false',
-		success : function(data){
-            if( data == "1" ) {
-                return true;
-			} else {
-                return false;
-			}
-		},
-		buttons: $("#dosubmit"),
-		onerror : "该手机号已被注册",
-		onwait : "请稍候..."
+	$("#mobile").formValidator({onshow:"请输入手机号码",onfocus:"请输入您的手机号码"}).inputValidator({min:11,onerror:"请输入正确的手机号码"}).regexValidator({regexp:"mobile",datatype:"enum",onError:"手机号码格式不正确"}).ajaxValidator({
+			type : "get",
+			url : "",
+			data :"m=member&c=index&a=public_checkmobile_ajax",
+			datatype : "html",
+			async:'false',
+			success : function(data){
+	            if( data == "1" ) {
+	                return true;
+				} else {
+	                return false;
+				}
+			},
+			buttons: $("#dosubmit"),
+			onerror : "该手机号已被注册",
+			onwait : "请稍候..."
 	});
 
 	/*ajax提交，放到后台校验。否则总是出现离不开焦点 和 提交冲突的小问题
@@ -299,64 +298,24 @@ label {
 					<div class="form">
 					<div >
 						<input type="text" name="mobile_verify" id="mobile_verify" value="" size="15" class="input-text" title="此服务免费,验证码将以短信免费发送到您的手机"> 
+
 						<div class="submit get_yzm">
 							<button onclick="get_verify()" type="button" class="hqyz">获取短信验证码</button>
 						</div>
+
+						<div class="submit" id="reget_yzm" style="display: none;">
+							<button type="button" id="GetVerify" onclick="get_verify()" class="hqyz">重获短信验证码</button>
+						</div>
+
 						<div id="mobile_verifyTip" class="fl"></div>
 					<br>
 					</div>
+
 					<div id="mobile_send_div" style="display: none;">此服务免费,验证码已发送到
 						<span id="mobile_send"></span>，如果超过120秒未收到验证码，您可以免费重新获取。
 						<br><br>
-						<div class="submit">
-							<button type="button" id="GetVerify" onclick="get_verify()" class="hqyz">重获短信验证码</button>
-						</div> 
-						<br><br>
 					</div> 
-					<script language="JavaScript">
-						var times = 120;
-						var isinerval;
-						function get_verify() {
-
-							//如果手机号被占用那么不发短信
-							if ($('#mobileTip').hasClass('onError')) {
-								return false;
-							}
-							var mobile = $("#mobile").val();
-							var partten = /^1[3-9]\d{9}$/;
-							if(!partten.test(mobile)){
-								layer.msg('请输入正确的手机号码', {icon: 5});
-								$('#mobile').focus();
-								return false;
-							}
-
-							
-							$.get("api.php?op=sx_reg_sms",{ mobile: mobile,random:Math.random()}, function(data){
-								if(data=="0") {
-									$("#mobile_send").html(mobile);
-									$(".get_yzm").css("display","none");
-									$("#mobile_send_div").css("display","");
-									times = 120;
-									$("#GetVerify").attr("disabled", true);
-									isinerval = setInterval("CountDown()", 1000);
-								} else if(data=="-1") {
-									layer.msg('你今天获取验证码次数已达到上限', {icon: 5});
-								} else {
-									layer.msg('短信发送失败', {icon: 5});
-								}
-							});
-							
-						}
-						function CountDown() {
-							if (times < 1) {
-								$("#GetVerify").html("获取短信验证码").attr("disabled", false);
-								clearInterval(isinerval);
-								return;
-							}
-							$("#GetVerify").html(times+"秒后重获验证码");
-							times--;
-						}
-					</script>
+					
 				    </div>
 				</div>
 
@@ -384,4 +343,49 @@ label {
 
 </div>
 
+<script language="JavaScript">
+	var times = 120;
+	var isinerval;
+	function get_verify() {
+
+		//如果手机号被占用那么不发短信
+		if ($('#mobileTip').hasClass('onError')) {
+			return false;
+		}
+
+		var mobile = $("#mobile").val();
+		var partten = /^1[3-9]\d{9}$/;
+		if(!partten.test(mobile)){
+			layer.msg('请输入正确的手机号码', {icon: 5});
+			$('#mobile').focus();
+			return false;
+		}
+
+		
+		$.get("api.php?op=sx_reg_sms",{ mobile: mobile,random:Math.random()}, function(data){
+			if(data=="0") {
+				$("#mobile_send").html(mobile);
+				$(".get_yzm").css("display","none");
+				$("#mobile_send_div,#reget_yzm").css("display","");
+				times = 120;
+				$("#GetVerify").attr("disabled", true);
+				isinerval = setInterval("CountDown()", 1000);
+			} else if(data=="-1") {
+				layer.msg('你今天获取验证码次数已达到上限', {icon: 5});
+			} else {
+				layer.msg('短信发送失败', {icon: 5});
+			}
+		});
+		
+	}
+	function CountDown() {
+		if (times < 1) {
+			$("#GetVerify").html("获取短信验证码").attr("disabled", false);
+			clearInterval(isinerval);
+			return;
+		}
+		$("#GetVerify").html(times+"秒后重获验证码");
+		times--;
+	}
+</script>
 {template 'member', 'footer'}

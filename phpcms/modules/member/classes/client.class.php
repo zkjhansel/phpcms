@@ -24,9 +24,9 @@ class client {
 	 * @return int {-1:用户名已经存在 ;-2:email已存在;-3:email格式错误;-4:用户名禁止注册;-5:邮箱禁止注册；int(uid):成功}
 	 */
 	public function ps_member_register($username, $password, $email, $regip='', $random='') {
-		if(!$this->_is_email($email)) {
+		/*if(!$this->_is_email($email)) {
 			return -3;
-		}
+		}*/
 		 
 		return $this->_ps_send('register', array('username'=>$username, 'password'=>$password, 'email'=>$email, 'regip'=>$regip, 'random'=>$random));
 	}

@@ -51,12 +51,13 @@ class index extends phpsso {
 			exit('-4');
 		}
 		
+		/*思学网暂时不注册邮箱 基本上都不怎么用邮箱了现在
 		$checkemail = $this->checkemail(1);
 		if($checkemail == -1) {
 			exit('-2');
 		} elseif ($checkemail == -5) {
 			exit('-5');
-		}
+		}*/
 		
 		//UCenter会员注册
 		$ucuserid = 0;
