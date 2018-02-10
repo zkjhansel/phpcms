@@ -29,8 +29,15 @@
         <div class="fl_left header_center" style="margin-left:-30px">
             <ul>
                 <li class="fl_left">
-                    <a href="" target="_blank" rel="nofollow">这里是导航</a>
+                    <a href="{APP_PATH}" target="_blank" rel="nofollow">首页</a>
                 </li>
+                {php $this->menu_db = pc_base::load_model('member_pcmenu_model');}
+                {php $menu = $this->menu_db->select(array('display'=>1, 'parentid'=>0), '*', 7 , 'listorder');}
+                {loop $menu $v}
+                <li class="fl_left">
+                    <a href="index.php?m={$v['m']}&c={$v['c']}&a={$v['a']}" target="_blank" rel="nofollow">{$v['name']}</a>
+                </li>
+                {/loop}
             </ul>
         </div>
         
