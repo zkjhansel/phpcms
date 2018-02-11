@@ -21,8 +21,8 @@
                 </li>
 
                	<!-- <li class="sidebar_vis_list">
-               							 <a href="http://em.itxdl.cn/" class="sidebar_vis_list_a" target="_blank"> <span class="sidebar_vis_span">网络营销经理人</span><span class="sp_position"></span></a>
-               						</li> -->
+                                         <a href="http://em.itxdl.cn/" class="sidebar_vis_list_a" target="_blank"> <span class="sidebar_vis_span">网络营销经理人</span><span class="sp_position"></span></a>
+                                    </li> -->
             </ul>
 			
         </div>
@@ -57,15 +57,24 @@
         </script>
 
         <div class="news">
-            <h2>最新公告</h2>
+            <h2>最新公告
+            <a class="news-more" target="_blank" href="{APP_PATH}index.php?m=announce&c=index&a=init">更多</a>
+            </h2>
             <div class="content">
+                {pc:announce action="lists" num="11"}
 				<ul>
-                   <li>
-                        <a href="###" target="_blank">
-                            <span class="yuandian"></span>&nbsp;这里是公告内容<img src="{IMG_PATH}sxweb/hot.gif" alt="">
+                    {loop $data $v}
+                    <li>
+                        <a href="{APP_PATH}index.php?m=announce&c=index&a=show&aid={$v['aid']}" target="_blank">
+                            <span class="yuandian"></span>&nbsp;{$v['title']}
+                            {if $n<=3}
+                                <img src="{IMG_PATH}sxweb/hot.gif" alt="">
+                            {/if}
                         </a>
                     </li>
+                    {/loop}
                 </ul>
+                {/pc}
 			</div>
         </div>
 

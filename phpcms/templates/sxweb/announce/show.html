@@ -1,0 +1,36 @@
+{template 'content', 'header'}
+<div class="wrapper">
+    {template "content","index_nav"}
+</div>
+
+<link rel="stylesheet" type="text/css" href="{CSS_PATH}sxweb/help.css">
+
+<!--main-->
+<div class="main" style="border-top: 2px solid #ab2121;padding-top: 30px;">
+    <div class="help_body">
+        <div class="help_left">
+            <div class="l_title"><img src="{IMG_PATH}sxweb/news_title.png" /></div>
+                
+                {loop $data $v}
+                <div class="l_menu_nav">
+                    <li>
+                        <a href="{APP_PATH}index.php?m=announce&c=index&a=show&aid={$v['aid']}" {if $v['aid']==$_GET['aid']} style="color:#F00" {/if}>
+                            {str_cut($v['title'],'40','...')}
+                            <span><img src="{IMG_PATH}sxweb/help_icon.png" /></span>
+                        </a>
+                    </li>
+                </div>
+                {/loop}
+        </div>
+        <div class="help_right">
+            <div class="r_title">{$title}
+            <span class="announce-time">发布时期：{date('y-m-d',$addtime)}</span>
+            </div>
+            <div class="r_table" style="color: #666">{$content}</div>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+</div>
+
+
+{template 'content', 'footer'}

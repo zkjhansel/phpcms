@@ -1,0 +1,47 @@
+/*css reset code */
+.help_body{ width:1200px; margin: 0 auto;}
+.help_body .help_left{ float:left; width:210px; height:auto; padding-right:10px;}
+.help_body .help_left .l_title{ width:210px; height:45px; margin-bottom:8px; background: url(/static/home/images/help_title.png);}
+.l_title .title-txt{
+    font-size: 15px;
+    color: #d56900;
+    font-weight: 600;
+    margin-left: 1px;
+    padding-top: 2px;
+    padding-bottom: 5px;
+    letter-spacing: 1px;
+    font-family: '微软雅黑';
+}
+
+.l_title .title-unline{
+    color: #777;
+    margin-left: 1px;
+}
+.help_body .help_left .l_menu{float:left; width:180px; padding:0px 15px; height:40px; background:#e6e1dd;font:14px/40px "微软雅黑";}
+.help_body .help_left .l_menu span { float:right; color:#999;}
+.help_body .help_left .l_menu_nav{ float:left;width:180px; padding:6px 15px; height:auto; background:#f8f5f0;}
+.help_body .help_left .l_menu_nav li{ float:left; width:180px; height:30px;font:12px/30px "微软雅黑";}
+.help_body .help_left .l_menu_nav li span { float:right; color:#999; padding-top:10px;}
+.help_body .help_left .l_menu_nav li:hover,.help_body .help_left .l_menu_nav li a:hover{color:#F00;}
+.help_body .help_right{ float:left; width:980px;}
+.help_body .help_right .r_title{ width:auto; height:40px; background:#f0f0f0;font:16px/40px "微软雅黑" ; text-align:center;}
+.help_body .help_right .r_table{ width:auto; height:auto;font:13px/30px "微软雅黑"; padding:10px 20px;}
+
+.help_body .help_right .help_news{ width:960px; padding:0px 10px;}
+.help_body .help_right .help_news li{ float:left; width:960px; line-height:36px; height:36px; border-bottom:1px dashed #CCC;}
+.help_body .help_right .help_news li:hover{ background:#F6F6F6}
+.help_body .help_title {
+    text-align: center;
+    font-size: 26px;
+    padding: 30px 0;
+    font-weight: normal;
+    letter-spacing: 2px;
+    font-family:宋体;
+}
+.announce-time{
+    font-size: 12px;
+    float: right;
+    line-height: 5;
+    color: #666;
+    padding-right: 10px;
+}

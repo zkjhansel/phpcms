@@ -744,7 +744,7 @@ function pages($num, $curr_page, $perpage = 20, $urlrule = '', $array = array(),
 			}
 			$more = 1;
 		}
-		$multipage .= '<a class="a1">'.$num.L('page_item').'</a>';
+		$multipage .= '<a class="a1 page-sum">'.$num.L('page_item').'</a>';
 		if($curr_page>0) {
 			$multipage .= ' <a href="'.pageurl($urlrule, $curr_page-1, $array).'" class="a1">'.L('previous').'</a>';
 			if($curr_page==1) {

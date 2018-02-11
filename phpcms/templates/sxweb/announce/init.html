@@ -1,0 +1,35 @@
+{template "content","header"}
+
+<div class="wrapper">
+    {template "content","index_nav"}
+</div>
+
+<link rel="stylesheet" type="text/css" href="{CSS_PATH}sxweb/help.css">
+<div class="main" style="border-top: 2px solid #ab2121;">
+
+    <div class="help_body">
+
+
+        <div class="help_right">
+            <div class="help_title">
+                公告列表
+            </div>
+            
+            <div class="help_news">
+                {loop $announce_list $v}
+                <li>
+                    <a href="{APP_PATH}index.php?m=announce&c=index&a=show&aid={$v['aid']}" target="_blank">{$v['title']}</a>
+                    <span style="float:right">{date('Y-m-d',$v['addtime'])}</span>
+                </li> 
+                {/loop}
+            </div>
+        
+            <div id="pages" class="text-c">{$pages}</div>
+            
+        </div>
+        <div style="clear:both"></div>
+    </div>
+</div>
+
+{template 'content', 'footer'}
+{template "content", "float_sidebar"}

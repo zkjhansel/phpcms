@@ -5,8 +5,15 @@ class index {
 		$this->db = pc_base::load_model('announce_model');
 	}
 	
+	/**
+	* 公告列表
+	*/
 	public function init() {
-		
+		$page = isset($_GET['page']) && trim($_GET['page']) ? intval($_GET['page']) : 1;
+		$where= " `passed`='1' AND (`endtime` >= '".date('Y-m-d')."' or `endtime`='0000-00-00')";
+		$announce_list = $this->db->listinfo($where, 'aid DESC', $page);
+		$pages = $this->db->pages;
+		include template('announce', 'init');
 	}
 	
 	/**
@@ -14,8 +21,12 @@ class index {
 	 */
 	public function show() {
 		if(!isset($_GET['aid'])) {
-			showmessage(L('illegal_operation'));
+			showmessage('非法操作');
 		}
+
+		$map  = " `passed`='1' AND (`endtime` >= '".date('Y-m-d')."' or `endtime`='0000-00-00')";
+		$data = $this->db->select($map, 'aid,title','15','aid DESC');
+
 		$_GET['aid'] = intval($_GET['aid']);
 		$where = '';
 		$where .= "`aid`='".$_GET['aid']."'";
