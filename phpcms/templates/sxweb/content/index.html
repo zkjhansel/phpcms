@@ -27,25 +27,28 @@
 			
         </div>
 		
+        {pc:get sql="SELECT `setting` FROM v9_poster where spaceid=1 AND disabled=0 AND startdate<$systime AND enddate>$systime order by listorder ASC" num="8" cache="3600" return="banners"}
         <div class="ck-slide">
-            <ul class="ck-slide-wrapper">								
-				<li>
-					<a href="###" rel="nofollow" target="_blank"> 
-						<img src="{IMG_PATH}sxweb/20171220024614322.jpg" alt="" width="1200" height="398">
-					</a>	
+            <ul class="ck-slide-wrapper">	
+                {loop $banners $ban}
+                {php $arrban = json_decode($ban['setting'],true);}
+				<li {if $n==1}style="display: block;"{else}style="display: none;"{/if}>
+					<a href="{$arrban['1']['linkurl']}" rel="nofollow" target="_blank"> 
+						<img src="{$arrban['1']['imageurl']}" alt="{$arrban['1']['alt']}" width="1200" height="398">
+					</a>
 				</li>
+                {/loop}
             </ul>
 			<a href="javascript:" class="ctrl-slide ck-prev" style="opacity: 0.15;">上一张</a>
 			<a href="javascript:" class="ctrl-slide ck-next" style="opacity: 0.15;">下一张</a>
             <div class="ck-slidebox" style="margin-left: -104px;">
                 <div class="slideWrap">
                     <ul class="dot-wrap">
-                       
                 	</ul>
                 </div>
             </div> 
         </div>
-		
+		{/pc}
         <script>
             var len = $('.ck-slide-wrapper li').length;
 			$('.ck-slide-wrapper li').css('display','none').eq(0).css('display','block');

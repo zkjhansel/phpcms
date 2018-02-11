@@ -18,6 +18,7 @@ class index {
 		} else {
 			$siteid = 1;
 		}
+		$systime = SYS_TIME;
 		$siteid = $GLOBALS['siteid'] = max($siteid,1);
 		define('SITEID', $siteid);
 		$_userid = $this->_userid;
