@@ -13,7 +13,7 @@
         <!-- 左侧导航栏 -->
         <div class="sidebar">
          	{pc:get sql="SELECT catname,url FROM v9_category where type=2 order by listorder ASC" num="8" cache="3600" return="cates"}
-            <ul class="sidebar_visibile">
+            <ul class="sidebar_visibile"> 
                 {loop $cates $cate}
 			    <li class="sidebar_vis_list" {if $n==1}style="margin-top: 0px;"{/if}>
                     <a href="{$cate['url']}" class="sidebar_vis_list_a" target="_blank"> <span class="sidebar_vis_span">{$cate['catname']}</span><span class="sp_position"></span></a>
