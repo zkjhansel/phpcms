@@ -1,0 +1,156 @@
+{template "content","header"}
+{template "content","index_nav"}
+
+<link rel="stylesheet" type="text/css" href="{CSS_PATH}sxweb/whole.css">
+<link rel="stylesheet" type="text/css" href="{CSS_PATH}sxweb/group.css">
+
+<div class="wrap" style="padding-top: 15px;">
+
+    <div class="bread clearfix">
+        <div class="r">
+            <form name="searchform" method="get" action="{APP_PATH}/index.php?m=group&c=index&a=init">
+                <div class="search-group form w300">
+                    <button type="submit" class="btn"><i class="ico08 mr5"></i>搜索</button>
+                    <div class="txt-wrap">
+                        <input type="text" class="txt" value="" placeholder="请输入关键字" name="searchword" id="searchword" x-webkit-speech="" speech="">
+                    </div>
+                    <input type="hidden" name="caid" value="5">
+                </div>
+            </form>
+        </div>
+        <span class="l mt5">
+            <a href="{APP_PATH}" target="_blank">
+            	<i class="ico08 ico mr5">&#61461;</i>首页</a>
+            	<i class="pipe">/</i><a href="javascript:;">团购优惠</a>
+            	(共有<span><b class="fcr"></b></span>个团购)
+        </span>
+    </div>
+
+    <div class="blank10"></div>
+      
+
+    <div class="tg-ydlc clearfix">
+        <ul>
+        	<li class="firstF">预订流程</li>
+        	<li class="act">选择团购</li>
+	        <li>在线咨询</li>
+	        <li>报名预约</li>
+	        <li>预订完成</li>
+	        <li>客服回访</li>
+	        <li>团购成功</li>
+        </ul>
+    </div>
+
+    <div class="blank10"></div>
+    
+
+    <div class="tg-list clearfix">
+        
+        <div class="linfo">
+            <h2><a href="" target="_blank" title="">这里是标题</a></h2>
+
+            <a href="" target="_blank" title="">
+            	<img alt="" src="http://www.0557.cn/userfiles/image/20171214/14091726bdbf7377c17217_820_320.jpg" height="320" width="820">
+            </a>
+        </div>
+
+        <div class="rinfo w300">
+        	<h1><a href="" target="_blank" title="冠景凯旋门">冠景凯旋门</a></h1>
+            <h3> 三期22#、23#少量房源热销，详情咨询售楼部。</h3>
+            <div class="ptb10 clearfix">
+                <div class="biaod">
+                    <div class="r info">已报名<em>11</em>人<br>房源共<em>50</em>套</div>
+                    <a class="btn-tg btn-tg-155045" href="http://www.0557.cn/houseonline/201712/155045/1.html#tgyh">立即报名</a>
+                </div>
+            </div>
+
+            <div class="jg ptb5 clearfix">
+                <ul>
+                    <li>
+                        <i class="ico1"></i>
+                        <span><em class="f90">待定</em></span><span>团购价</span>
+                    </li>
+                    <li>
+                        <i class="ico1"></i>
+                        <span><b>待定</b></span><span>市场价</span>
+                    </li>
+                    <li>
+                        <i class="ico2"></i>
+                        <span><b>936</b></span><span>人气</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="topbk">
+                <div class="end-date clearfix" data-endtime="1519747200" data-endele=".btn-tg-155045" data-noend="&lt;span class=&#39;fcr&#39;&gt;永久有效!&lt;/span&gt;" data-end="&lt;span class=&#39;fcr&#39;&gt;活动已经结束!&lt;/span&gt;">
+                    <span>剩余时间：</span>
+                    <span class="pri-txt">
+                        <span class="day"><d>0</d></span>天
+                        <span class="hour"><h>0</h></span>小时
+                        <span class="minutes"><m>0</m></span>分
+                        <span class="second"><s>0</s></span>秒
+                    </span>
+                </div>
+                <div class="ptb5">楼盘地址：待定</div>
+            </div>
+            <div class="tel"><i></i>待定</div>
+        </div>
+    </div>
+
+
+
+       
+    <div id="pages" class="text-c">
+        {pages}
+    </div>
+</div>
+
+
+<script type="text/javascript">
+	
+
+var serverTime = {SYS_TIME};
+updateEndTime();
+function updateEndTime() {
+
+    $("[data-endTime]").each(function(i) {
+        var $this = $(this),
+            _tpl;
+
+        if (!$this.data('template')) {
+            _tpl = this.innerHTML;
+            $this.data('template', _tpl);
+        } else {
+            _tpl = $this.data('template');
+        }
+
+        var endtime = $this.data('endtime'); //结束时间字符串
+        var lag = endtime - serverTime; //当前时间和结束时间之间的秒数
+
+        
+
+        if (endtime != 0) {
+            if (lag > 0) {
+
+				var second = Math.floor(lag % 60),
+				minutes    = Math.floor((lag / 60) % 60),
+				hour       = Math.floor((lag / 3600) % 24),
+				day        = Math.floor((lag / 3600) / 24);
+
+                $this.html(_tpl.replace('<d>0</d>', day).replace('<h>0</h>', hour).replace('<m>0</m>', minutes).replace('<s>0</s>', second));
+            } else {
+                $($this.data('endele')).addClass('is-end');
+                $this.html($this.data('end')).removeAttr('data-endTime');
+            }
+        } else $this.html($this.data('noend')).removeAttr('data-endTime');;
+    });
+    serverTime++;
+    setTimeout("updateEndTime()", 1000);
+}
+
+
+</script>
+
+
+{template "content","footer"}
+{template "content","float_sidebar"}
