@@ -18,7 +18,7 @@ $authkey = upload_key('1,'.$thisExt.',1');
 
 <form method="post" action="?m=poster&c=poster&a=add" id="myform">
 <table class="table_form" width="100%" cellspacing="0">
-<tbody>
+	<tbody>
 	<tr>
 		<th width="100"><?php echo L('poster_title')?>：</th>
 		<td><input name="poster[name]" id="name" class="input-text" type="text" size="25"></td>
@@ -45,23 +45,42 @@ $authkey = upload_key('1,'.$thisExt.',1');
 		<td><?php echo form::date('poster[enddate]', '', 1)?></td>
 	</tr>
 	</tbody>
-	</table><?php if(array_key_exists('images', $setting['type'])) {?><div class="pad-10" id="imagesdiv" style="display:">
+</table>
+
+<?php if(array_key_exists('images', $setting['type'])) {?>
+<!-- 图片 ：多个 -->
+	<div class="pad-10" id="imagesdiv" style="display:">
 	<fieldset>
 	<legend><?php echo L('photo_setting')?></legend>
 	<?php if($setting['num']>1) { for($i=1; $i<=$setting['num']; $i++) {?>
 	<table width="100%"  class="table_form">
 	<tbody>
   <tr>
-    <th width="80"><?php echo L('linkurl')?>：</th>
+    <th width="80"><?php echo $i;?>，链接地址：</th>
     <td class="y-bg"><input type="text" class="input-text" name="setting[images][<?php echo $i;?>][linkurl]" id="linkurl<?php echo $i;?>" size="30" value="http://" /></td>
     <td rowspan="2"><a href="javascript:flashupload('imgurl<?php echo $i;?>_images', '<?php echo L('upload_photo')?>','imgurl<?php echo $i;?>',preview,'1,<?php echo $thisExt?>,1','poster', '', '<?php echo $authkey?>');void(0);"><img src="<?php echo IMG_PATH;?>icon/upload-pic.png" id="imgurl<?php echo $i;?>_s" width="105" height="88"></a><input type="hidden" id="imgurl<?php echo $i;?>" name="setting[images][<?php echo $i;?>][imageurl]"></td>
   </tr>
-  <tr>
-    <th><?php echo L('alt')?>：</th>
-    <td class="y-bg"><input type="text" class="input-text" name="setting[images][<?php echo $i;?>][alt]" id="alt<?php echo $i;?>" size="30" /></td>
-  </tr>
+
+	<?php if(in_array($spaceid, array('2','3','4'))) {?>
+	  <tr>
+	    <th>机构名称：</th>
+	    <td class="y-bg"><input type="text" class="input-text" name="setting[images][<?php echo $i;?>][cname]" id="cname<?php echo $i;?>" size="30" /></td>
+	  </tr>
+	  <tr>
+	    <th width="80">一句营销：</th>
+	    <td class="y-bg"><input type="text" class="input-text" name="setting[images][<?php echo $i;?>][onewords]" id="onewords<?php echo $i;?>" size="30" placeholder="一句营销话" value="" /></td>
+	    <td rowspan="2">关键词优势：<input type="text" class="input-text" name="setting[images][<?php echo $i;?>][keywords]" id="keywords<?php echo $i;?>" size="30" placeholder="两三个优势关键词，以竖线'|'分隔" value="" /></td>
+	  </tr>
+	<?php } else { ?>
+	    <tr>
+	    	<th>文字提示：</th>
+	    	<td class="y-bg"><input type="text" class="input-text" name="setting[images][<?php echo $i;?>][alt]" id="alt<?php echo $i;?>" size="30" /></td>
+	  	</tr>
+	<?php }?>
+
 </table>
 <?php } } else {?>
+<!-- 图片 ：单个 -->
 <table width="100%"  class="table_form">
 	<tbody>
   <tr>
@@ -76,53 +95,65 @@ $authkey = upload_key('1,'.$thisExt.',1');
   </tbody>
 </table>
 <?php } ?>
-</fieldset></div><?php } if(array_key_exists('flash', $setting['type'])) {?>
+</fieldset></div>
+
+<?php } if(array_key_exists('flash', $setting['type'])) {?>
+<!-- flash ：多个 -->
 <div class="pad-10" id="flashdiv" style="display:none;">
 	<fieldset>
 	<legend><?php echo L('flash_setting')?></legend>
 	<?php if($setting['num']>1) { for($i=1; $i<=$setting['num']; $i++) {?>
 	<table width="100%"  class="table_form">
-	<tbody>
-  <tr>
-    <th width="80"><?php echo L('flash_url')?>：</th>
-    <td class="y-bg"><input type="text" class="input-text" name="setting[flash][<?php echo $i;?>][flashurl]" id="flashurl<?php echo $i;?>" size="40" /></td>
-    <td class="y-bg"><input type="button" class="button" onclick="javascript:flashupload('flashurl<?php echo $i;?>_images', '<?php echo L('flash_upload')?>','flashurl<?php echo $i;?>',submit_attachment,'1,<?php echo $thisExt?>,1','poster', '', '<?php echo $authkey?>')" value="<?php echo L('flash_upload')?>"></td>
-  </tr>
-  </tbody>
-</table>
+		<tbody>
+	  	<tr>
+	    <th width="80"><?php echo L('flash_url')?>：</th>
+	    <td class="y-bg"><input type="text" class="input-text" name="setting[flash][<?php echo $i;?>][flashurl]" id="flashurl<?php echo $i;?>" size="40" /></td>
+	    <td class="y-bg"><input type="button" class="button" onclick="javascript:flashupload('flashurl<?php echo $i;?>_images', '<?php echo L('flash_upload')?>','flashurl<?php echo $i;?>',submit_attachment,'1,<?php echo $thisExt?>,1','poster', '', '<?php echo $authkey?>')" value="<?php echo L('flash_upload')?>"></td>
+	  	</tr>
+	  	</tbody>
+	</table>
 <?php } } else {?>
-<table width="100%"  class="table_form">
-	<tbody>
-  <tr>
-    <th width="80"><?php echo L('flash_url')?>：</th>
-    <td class="y-bg"><input type="text" class="input-text" name="setting[flash][1][flashurl]" id="flashurl" size="40"  /></td>
-    <td class="y-bg"><input type="button" class="button" onclick="javascript:flashupload('flashurl_images', '<?php echo L('flash_upload')?>','flashurl',submit_attachment,'1,<?php echo $thisExt?>,1','poster', '', '<?php echo $authkey?>')" value="<?php echo L('flash_upload')?>"></td>
-  </tr>
-  </tbody>
-</table>
-<?php } ?>
-</fieldset></div><?php } if(array_key_exists('text', $setting['type'])) {?><div class="pad-10" id="textdiv" style="display:">
-	<fieldset>
-	<legend><?php if ($sinfo['type']=='code') { echo L('code_setting'); } else { echo L('word_link'); } ?></legend>
+	<!-- flash ：单个 -->
 	<table width="100%"  class="table_form">
-	<tbody>
+		<tbody>
+	  	<tr>
+	    <th width="80"><?php echo L('flash_url')?>：</th>
+	    <td class="y-bg"><input type="text" class="input-text" name="setting[flash][1][flashurl]" id="flashurl" size="40"  /></td>
+	    <td class="y-bg"><input type="button" class="button" onclick="javascript:flashupload('flashurl_images', '<?php echo L('flash_upload')?>','flashurl',submit_attachment,'1,<?php echo $thisExt?>,1','poster', '', '<?php echo $authkey?>')" value="<?php echo L('flash_upload')?>"></td>
+	  	</tr>
+	  	</tbody>
+	</table>
+<?php } ?>
+	</fieldset>
+</div>
+
+<?php } if(array_key_exists('text', $setting['type'])) {?>
+<div class="pad-10" id="textdiv" style="display:">
+	<fieldset>
+		<legend><?php if ($sinfo['type']=='code') { echo L('code_setting'); } else { echo L('word_link'); } ?></legend>
+		<table width="100%"  class="table_form">
+		<tbody>
 	<?php if($sinfo['type']=='code') {?>
-  <tr>
-    <th width="80"><?php echo L('code_content')?>：</th>
-    <td class="y-bg"><textarea name="setting[text][code]" id="code" cols="55" rows="6"><?php echo $info['setting']['code']?></textarea></td>
-  </tr>
-  <?php } else {?>
-  <tr>
-    <th width="80"><?php echo L('word_content')?>：</th>
-    <td class="y-bg"><input type="text" class="input-text" name="setting[text][1][title]" value="<?php echo $info['setting'][1]['title']?>" id="title" size="30" /></td>
-  </tr>
-  <tr>
-    <th><?php echo L('linkurl')?>：</th>
-    <td class="y-bg"><input type="text" class="input-text" name="setting[text][1][linkurl]" id="link" size="30" value="<?php echo $info['setting'][1]['linkurl']?>"  /></td>
-  </tr><?php }?>
-  </tbody>
-</table>
-</fieldset></div><?php }?>
+	  <tr>
+	    <th width="80"><?php echo L('code_content')?>：</th>
+	    <td class="y-bg"><textarea name="setting[text][code]" id="code" cols="55" rows="6"><?php echo $info['setting']['code']?></textarea></td>
+	  </tr>
+	<?php } else {?>
+	  <tr>
+	    <th width="80"><?php echo L('word_content')?>：</th>
+	    <td class="y-bg"><input type="text" class="input-text" name="setting[text][1][title]" value="<?php echo $info['setting'][1]['title']?>" id="title" size="30" /></td>
+	  </tr>
+	  <tr>
+	    <th><?php echo L('linkurl')?>：</th>
+	    <td class="y-bg"><input type="text" class="input-text" name="setting[text][1][linkurl]" id="link" size="30" value="<?php echo $info['setting'][1]['linkurl']?>"  /></td>
+	  </tr>
+	<?php }?>
+	  </tbody>
+	</table>
+	</fieldset>
+</div>
+<?php }?>
+
 <div class="bk15" style="margin-left:10px; line-height:30px;"><input type="submit" name="dosubmit" id="dosubmit" value=" <?php echo L('ok')?> " class="button">&nbsp;<input type="reset" value=" <?php echo L('goback')?> " class="button" onclick="history.go(-1)"></div>
 
 	

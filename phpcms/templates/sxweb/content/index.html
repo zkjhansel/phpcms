@@ -23,11 +23,12 @@
 			{/pc}
         </div>
 		
-        {pc:get sql="SELECT `setting` FROM v9_poster where spaceid=1 AND disabled=0 AND startdate<$systime AND enddate>$systime order by listorder ASC" num="8" cache="3600" return="banners"}
+        
         <div class="ck-slide">
+            {pc:get sql="SELECT `setting` FROM v9_poster where spaceid=1 AND disabled=0 AND startdate<$systime AND enddate>$systime order by listorder ASC" num="8" cache="3600" return="banners"}
             <ul class="ck-slide-wrapper">	
                 {loop $banners $ban}
-                {php $arrban = json_decode($ban['setting'],true);}
+                {php $arrban = string2array($ban['setting']);}
 				<li {if $n==1}style="display: block;"{else}style="display: none;"{/if}>
 					<a href="{$arrban['1']['linkurl']}" rel="nofollow" target="_blank"> 
 						<img src="{$arrban['1']['imageurl']}" alt="{$arrban['1']['alt']}" width="1200" height="398">
@@ -35,6 +36,7 @@
 				</li>
                 {/loop}
             </ul>
+            {/pc}
 			<a href="javascript:" class="ctrl-slide ck-prev" style="opacity: 0.15;">上一张</a>
 			<a href="javascript:" class="ctrl-slide ck-next" style="opacity: 0.15;">下一张</a>
             <div class="ck-slidebox" style="margin-left: -104px;">
@@ -44,7 +46,7 @@
                 </div>
             </div> 
         </div>
-		{/pc}
+		
         <script>
             var len = $('.ck-slide-wrapper li').length;
 			$('.ck-slide-wrapper li').css('display','none').eq(0).css('display','block');
@@ -60,7 +62,7 @@
             <a class="news-more" target="_blank" href="{APP_PATH}index.php?m=announce&c=index&a=init">更多</a>
             </h2>
             <div class="content">
-                {pc:announce action="lists" num="11"}
+                {pc:announce action="lists" cache="3600" num="11"}
 				<ul>
                     {loop $data $v}
                     <li>
@@ -84,38 +86,42 @@
 <!-- index.css -->
 <div class="content">
     <div class="feature jqDuang" data-cell=".tab-hd ul" data-obj=".tab-bd ul" data-autoplay="0" data-speed="0">
+        
         <div class="tab-hd">
             <ul>
                 <li class="act">火热报名</li>
-                <li class="">教师编推荐</li>
-                <li class="">公务员推荐</li>
+                <li class="">教师招聘考试推荐</li>
+                <li class="">公务员考试推荐</li>
             </ul>
         </div>
-        <div class="tab-bd">                 
-            <ul class="tab-fst" style="display: block;">                     
-                <li> <a href="http://www.0557.cn/newhouse/297/view.html"><img src="{IMG_PATH}sxweb/220933496ac0892e725870.jpg" width="260" height="170" alt="宿州万达广场"></a> <span><a href="http://www.0557.cn/newhouse/297/view.html">宿州万达广场</a></span>
+        <div class="tab-bd">
+
+        {pc:get sql="SELECT `spaceid`,`setting` FROM v9_poster where spaceid in (2,3,4) AND disabled=0 AND startdate<$systime AND enddate>$systime" num="3" cache="3600" return="positionAds"}
+
+        <?php $newArr = array();foreach ($positionAds as $k => $vads) {
+            $newArr[$vads['spaceid']][] = string2array($vads['setting']);}
+        ?>
+            {loop $newArr $sid $set}
+
+            <ul {if $sid==2} style="display: block;"{else}style="display: none;"{/if}>   
+                
+                {loop $set[0] $vv}
+                <li><a href="{$vv['linkurl']}"><img src="{$vv['imageurl']}" width="282" height="188" alt="{$vv['cname']}"></a><span><a href="{$vv['linkurl']}">{$vv['cname']}</a></span>
                     <div>
-                        <p><a>政务新区</a><em>临街现铺热售</em></p>
-                        <p><span>拂晓大道与银河三路交汇处</span><span>在线即可预定</span></p>
-                    </div>
-                </li>                      
-            </ul>                  
-            <ul style="display: none;">                     
-                <li> <a href="http://www.0557.cn/newhouse/312/view.html"><img src="{IMG_PATH}sxweb/300845497751f32bc12317.jpg" width="282" height="188" alt="宿州国购广场"></a> <span><a href="http://www.0557.cn/newhouse/312/view.html">宿州国购广场</a></span>
-                    <div>
-                        <p>1800平整层商务空间半层 整层发售</p>
-                        <p><span>商务办公</span><span>空间独立商铺</span></p>
+                        <p>{$vv['onewords']}</p>
+                        {php $keywords = explode('|',$vv['keywords'])}
+                        <p>
+                            {loop $keywords $word}
+                            <span>{$word}</span>
+                            {/loop}
+                        </p>
                     </div>
                 </li>
-            </ul>                  
-            <ul style="display: none;">                                       
-                <li> <a href="http://www.0557.cn/newhouse/282/view.html"><img src="{IMG_PATH}sxweb/3016361708cc3e6c1f2930.jpg" width="282" height="188" alt="恒馨印象"></a> <span><a href="http://www.0557.cn/newhouse/282/view.html">恒馨印象</a></span>
-                    <div>
-                        <p>恒馨印象二期火热预约中</p>
-                        <p><span>交通便利</span><span>西城核心地段</span><span>配套齐全</span></p>
-                    </div>
-                </li>  
-            </ul>  
+                {/loop}
+            </ul>
+            {/loop}
+            
+        {/pc}
         </div>
     </div>
 

@@ -18,7 +18,7 @@
     <div class="container_">
         <div class="fl_left header_left">
             <h1>
-                <a href="" target="_blank" title=""></a>
+                <a href="{APP_PATH}" target="_blank" title=""></a>
             </h1>
             <div class="header_div fl_left"></div>
             <div class="xsb fl_left">
@@ -27,18 +27,19 @@
             </div>
         </div>
         <div class="fl_left header_center" style="margin-left:-30px">
+            {pc:get sql="SELECT * FROM v9_member_pcmenu where display=1 AND parentid=0 order by listorder ASC" num="7" cache="3600" return="menus"}
             <ul>
+                {loop $menus $v}
                 <li class="fl_left">
-                    <a href="{APP_PATH}" target="_blank" rel="nofollow">首页</a>
-                </li>
-                {php $this->menu_db = pc_base::load_model('member_pcmenu_model');}
-                {php $menu = $this->menu_db->select(array('display'=>1, 'parentid'=>0), '*', 7 , 'listorder');}
-                {loop $menu $v}
-                <li class="fl_left">
-                    <a href="index.php?m={$v['m']}&c={$v['c']}&a={$v['a']}" target="_blank" rel="nofollow">{$v['name']}</a>
+                    {if $v['m']==''}
+                        <a href="{APP_PATH}" target="_blank" rel="nofollow">{$v['name']}</a>
+                    {else}
+                        <a href="index.php?m={$v['m']}&c={$v['c']}&a={$v['a']}" target="_blank" rel="nofollow">{$v['name']}</a>
+                    {/if}
                 </li>
                 {/loop}
             </ul>
+            {/pc}
         </div>
         
     </div>
