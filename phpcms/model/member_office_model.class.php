@@ -8,5 +8,16 @@ class member_office_model extends model {
 		$this->table_name = 'member_office';
 		parent::__construct();
 	}
+
+	public function getList() {
+
+		$list = $this->select(array('disabled'=>0),'id,name');
+		$new_list = array();
+		foreach ($list as $key => $value) {
+			$new_list[$value['id']] = $value['name'];
+		}
+		return $new_list;
+
+	}
 }
 ?>
