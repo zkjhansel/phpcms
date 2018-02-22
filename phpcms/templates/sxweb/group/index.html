@@ -3,18 +3,18 @@
 
 <link rel="stylesheet" type="text/css" href="{CSS_PATH}sxweb/whole.css">
 <link rel="stylesheet" type="text/css" href="{CSS_PATH}sxweb/group.css">
+<script type="text/javascript" src="{JS_PATH}layer.js"></script>
 
 <div class="wrap" style="padding-top: 15px;">
 
     <div class="bread clearfix">
         <div class="r">
-            <form name="searchform" method="get" action="{APP_PATH}/index.php?m=group&c=index&a=init">
+            <form name="searchform" method="post" action="index.php?m=group&c=index&a=init">
                 <div class="search-group form w300">
                     <button type="submit" class="btn"><i class="ico08 mr5"></i>搜索</button>
                     <div class="txt-wrap">
                         <input type="text" class="txt" value="" placeholder="请输入关键字" name="searchword" id="searchword" x-webkit-speech="" speech="">
                     </div>
-                    <input type="hidden" name="caid" value="5">
                 </div>
             </form>
         </div>
@@ -22,7 +22,7 @@
             <a href="{APP_PATH}" target="_blank">
             	<i class="ico08 ico mr5">&#61461;</i>首页</a>
             	<i class="pipe">/</i><a href="javascript:;">团购优惠</a>
-            	(共有<span><b class="fcr"></b></span>个团购)
+            	(共有<span><b class="fcr">{$count}</b></span>个团购)
         </span>
     </div>
 
@@ -43,24 +43,28 @@
 
     <div class="blank10"></div>
     
-
+    {loop $group_list $data}
     <div class="tg-list clearfix">
         
         <div class="linfo">
-            <h2><a href="" target="_blank" title="">这里是标题</a></h2>
+            <h2><a href="javascript:;" title="{$data['title']}">{$data['title']}</a></h2>
 
-            <a href="" target="_blank" title="">
-            	<img alt="" src="http://www.0557.cn/userfiles/image/20171214/14091726bdbf7377c17217_820_320.jpg" height="320" width="820">
+            <a href="javascript:;" title="{$data['title']}">
+            	<img alt="" src="{$data['image']}" width="820" height="320">
             </a>
         </div>
 
         <div class="rinfo w300">
-        	<h1><a href="" target="_blank" title="冠景凯旋门">冠景凯旋门</a></h1>
-            <h3> 三期22#、23#少量房源热销，详情咨询售楼部。</h3>
+        	<h1><a href="javascript:;" title="{$data['title']}">{$offices[$data['office_id']]}</a></h1>
+            <h3> {$data['desc']} </h3>
             <div class="ptb10 clearfix">
                 <div class="biaod">
-                    <div class="r info">已报名<em>11</em>人<br>房源共<em>50</em>套</div>
-                    <a class="btn-tg btn-tg-155045" href="http://www.0557.cn/houseonline/201712/155045/1.html#tgyh">立即报名</a>
+                    <div class="r info">已报名<em>{$data['sign_num']}</em>人<br>
+                        {if $data['max_num']>0}
+                            名额限前<em>{$data['max_num']}</em>人
+                        {/if}
+                    </div>
+                    <a class="signup btn-tg btn-tg-155045" data-groupid="{$data['id']}" href="javascript:;">立即报名</a>
                 </div>
             </div>
 
@@ -68,21 +72,21 @@
                 <ul>
                     <li>
                         <i class="ico1"></i>
-                        <span><em class="f90">待定</em></span><span>团购价</span>
+                        <span><em class="f90">{if $data['low_price']>0}{$data['low_price']}{else}待定{/if}</em></span><span>团购价</span>
                     </li>
                     <li>
                         <i class="ico1"></i>
-                        <span><b>待定</b></span><span>市场价</span>
+                        <span><b>{if $data['market_price']>0}{$data['market_price']}{else}待定{/if}</b></span><span>市场价</span>
                     </li>
                     <li>
                         <i class="ico2"></i>
-                        <span><b>936</b></span><span>人气</span>
+                        <span><b>{$data['popular']}</b></span><span>人气</span>
                     </li>
                 </ul>
             </div>
 
             <div class="topbk">
-                <div class="end-date clearfix" data-endtime="1519747200" data-endele=".btn-tg-155045" data-noend="&lt;span class=&#39;fcr&#39;&gt;永久有效!&lt;/span&gt;" data-end="&lt;span class=&#39;fcr&#39;&gt;活动已经结束!&lt;/span&gt;">
+                <div class="end-date clearfix" data-endtime="{$data['end_time']}" data-endele=".btn-tg-155045" data-noend="&lt;span class=&#39;fcr&#39;&gt;永久有效!&lt;/span&gt;" data-end="&lt;span class=&#39;fcr&#39;&gt;活动已经结束!&lt;/span&gt;">
                     <span>剩余时间：</span>
                     <span class="pri-txt">
                         <span class="day"><d>0</d></span>天
@@ -91,20 +95,79 @@
                         <span class="second"><s>0</s></span>秒
                     </span>
                 </div>
-                <div class="ptb5">楼盘地址：待定</div>
+                <div class="ptb5">上课地址：{if !empty($data['address'])}{$data['address']}{else}待定{/if}</div>
             </div>
-            <div class="tel"><i></i>待定</div>
+            <div class="tel"><i></i>{$data['phone']}</div>
         </div>
     </div>
-
+    {/loop}
 
 
        
     <div id="pages" class="text-c">
-        {pages}
+        {$pages}
     </div>
 </div>
 
+<style type="text/css" media="screen">
+    #bmform {
+        width: 300px;
+        padding-left: 65px;
+        padding-top: 20px;
+    }
+    .form-control .txt {
+        display: inline;
+        width: 240px;
+    }
+    .btn-submit {
+        font-family: Microsoft yahei;
+        font-size: 18px;
+        line-height: 35px;
+        display: block;
+        overflow: hidden;
+        width: 120px;
+        height: 35px;
+        text-align: center;
+        text-transform: none;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        background-color: #ff5e00;
+        cursor: pointer;
+        margin-left: 55px;
+    }
+    ul.form-control li {
+        margin-top: 5px;
+    }
+</style>
+
+<div id="sign" class="r-info w300" style="display: none;">
+
+    <form id="bmform" class="jqValidate" data-tipmode="#tg-tip" novalidate="novalidate">
+        
+        <span id="chooseid"></span>
+
+        <div class="blank25" style="margin-top:-10px"><span id="tg-tip" class="tip single"></span></div>
+
+        <ul class="form form-control">
+            <li>
+                姓　名：<input type="text" class="txt"  id="truename" name="truename" placeholder="您的姓名">
+            </li>
+
+            <li>
+                电　话：<input type="text" class="txt sign-mobile" id="mobile" name="mobile" placeholder="您的电话">
+            </li>
+
+            <li class="reg-wrap" data-regcode="commu8" style="display: list-item;">
+                验证码：<input type="text" name="verify" id="verify" class="txt" style="width: 120px;" placeholder="请输入验证码" value="">
+                {form::checkcode('code_img', '4', '14', 138, 30)}
+            </li>
+            <li>
+                <input type="button" id="sure_sign" class="btn-submit" value="立即报名">
+            </li>
+        </ul>
+    </form>
+</div>
 
 <script type="text/javascript">
 	
@@ -147,6 +210,106 @@ function updateEndTime() {
     serverTime++;
     setTimeout("updateEndTime()", 1000);
 }
+
+
+
+
+
+$('.signup').click(function(event) {
+    //判断是否登录
+    var posturl = '{APP_PATH}index.php?m=group&c=index&a=ajax_check_login';
+    $.ajax({
+        url : posturl,
+        type : 'POST',
+        data : {},
+        success : function (responseText) {
+            //返回登录成功
+            //console.log(responseText);
+            if (responseText == 'success') {
+                //信息框
+                var _thisId = $(this).attr('data-groupid');
+                $('#chooseid').html(_thisId);
+                layer.open({
+                  type: 1,
+                  title:'报名预约',
+                  skin: 'layui-layer-rim', //加上边框
+                  area: ['520px', '340px'], //宽高
+                  content: $('#sign').html(),
+                });
+            } else {
+                //登录失败
+                layer.msg('请先登录', {icon: 5});
+                setTimeout(function () {
+                    window.location.href = '/index.php?m=member&c=index&a=login';
+                },1500);
+                return false;
+            }
+        },
+        error : function (event, errorText, errorType) {
+            layer.msg(errorText, {icon: 5});
+            return false;
+        },
+    });   
+});
+
+
+var truename = $('#truename').val();
+var verify = $('#verify').val();
+
+$(document).on('click', '#sure_sign', function(event) {
+    event.preventDefault();
+    
+    
+    /*if (truename=='') {
+        alert(truename);
+        layer.msg('请填写您的姓名', {icon: 5});return false;
+    }*/
+    var mobile = $(".sign-mobile").val();
+    alert(mobile);
+    if (mobile=='') {
+        layer.msg('请填写手机号', {icon: 5});return false;
+    }
+    if (verify=='') {
+        layer.msg('请填写验证码', {icon: 5});return false;
+    }
+
+
+    var _this = this;
+    //ajax提交报名
+    var posturl = '{APP_PATH}index.php?m=group&c=index&a=signup';
+    $.ajax({
+        url : posturl,
+        type : 'POST',
+        data : {
+            mobile : mobile,
+            truename : truename,
+            verify : verify
+        },
+        beforeSend : function (data) {
+            $(_this).val('提交中……').css({'background':'#ccc'}).attr('disabled', true);
+        },
+        success : function (responseText) {
+            //返回登录成功
+            if (responseText == 'success') {
+                //信息框
+                layer.msg('预约成功，请等待客服回访确认');
+                setTimeout(function () {
+                    forward = '{APP_PATH}index.php?m=member&c=group&a=show';
+                    window.location.href = forward;
+                },1300)
+            } else {
+                //登录失败
+                $(_this).val('立即报名').removeAttr('disabled').css({'background':'#ff5e00'});
+                layer.msg(responseText, {icon: 5});
+            }
+        },
+        error : function (event, errorText, errorType) {
+            layer.msg(errorText, {icon: 5});
+        },
+    });
+    return false;
+
+});
 
 
 </script>

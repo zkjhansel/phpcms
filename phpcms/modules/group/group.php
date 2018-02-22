@@ -9,65 +9,54 @@ class group extends admin {
 	}
 
 	public function init() {
-		if($_GET['typeid']!=''){
-			$where = array('typeid'=>intval($_GET['typeid']),'siteid'=>$this->get_siteid());
-		}else{
-			$where = array('siteid'=>$this->get_siteid());
-		}
+
+		$where = array('siteid'=>$this->get_siteid());
+
  		$page = isset($_GET['page']) && intval($_GET['page']) ? intval($_GET['page']) : 1;
 		$infos = $this->db->listinfo($where,$order = 'listorder DESC,id DESC',$page, $pages = '9');
 		$pages = $this->db->pages;
 		
+		$offices = $this->db_office->getList();
+
 		$big_menu = array('javascript:window.top.art.dialog({id:\'add\',iframe:\'?m=group&c=group&a=add\', title:\'添加团购\', width:\'700\', height:\'450\'}, function(){var d = window.top.art.dialog({id:\'add\'}).data.iframe;var form = d.document.getElementById(\'dosubmit\');form.click();return false;}, function(){window.top.art.dialog({id:\'add\'}).close()});void(0);','添加团购');
 		include $this->admin_tpl('group_list');
-	}
-
-	/*
-	 *判断标题重复和验证 
-	 */
-	public function public_name() {
-		$link_title = isset($_GET['link_name']) && trim($_GET['link_name']) ? (pc_base::load_config('system', 'charset') == 'gbk' ? iconv('utf-8', 'gbk', trim($_GET['link_name'])) : trim($_GET['link_name'])) : exit('0');
-			
-		$linkid = isset($_GET['linkid']) && intval($_GET['linkid']) ? intval($_GET['linkid']) : '';
-		$data = array();
-		if ($linkid) {
-
-			$data = $this->db->get_one(array('linkid'=>$linkid), 'name');
-			if (!empty($data) && $data['name'] == $link_title) {
-				exit('1');
-			}
-		}
-		if ($this->db->get_one(array('name'=>$link_title), 'linkid')) {
-			exit('0');
-		} else {
-			exit('1');
-		}
 	}
 	 
 	//添加团购优惠
  	public function add() {
+
+ 		$siteid = $this->get_siteid();
+
  		if(isset($_POST['dosubmit'])) {
-			$_POST['link']['addtime'] = SYS_TIME;
-			$_POST['link']['siteid'] = $this->get_siteid();
-			if(empty($_POST['link']['name'])) {
-				showmessage(L('sitename_noempty'),HTTP_REFERER);
-			} else {
-				$_POST['link']['name'] = safe_replace($_POST['link']['name']);
+			$_POST['group']['add_time'] = SYS_TIME;
+			$_POST['group']['siteid'] = $siteid;
+			if(empty($_POST['group']['title'])) {
+				showmessage('请填写团购名称',HTTP_REFERER);
 			}
-			if ($_POST['link']['logo']) {
-				$_POST['link']['logo'] = safe_replace($_POST['link']['logo']);
+			if(empty($_POST['group']['image'])) {
+				showmessage('请上传团购封面',HTTP_REFERER);
 			}
-			$data = new_addslashes($_POST['link']);
-			$linkid = $this->db->insert($data,true);
-			if(!$linkid) return FALSE; 
- 			$siteid = $this->get_siteid();
+			if(empty($_POST['group']['start_time']) || empty($_POST['group']['end_time'])) {
+				showmessage('请选择开始时间或者结束时间',HTTP_REFERER);
+			}
+			$_POST['group']['title'] = safe_replace($_POST['group']['title']);
+			$_POST['group']['image'] = safe_replace($_POST['group']['image']);
+			$_POST['group']['start_time'] = strtotime($_POST['group']['start_time']);
+			$_POST['group']['end_time'] = strtotime($_POST['group']['end_time']);
+
+			//echo '<pre>';print_r($_POST['group']);die;
+			$data = new_addslashes($_POST['group']);
+			$groupid = $this->db->insert($data,true);
+			if(!$groupid) showmessage('增加团购失败',HTTP_REFERER);
+ 			
 	 		//更新附件状态
-			if(pc_base::load_config('system','attachment_stat') & $_POST['link']['logo']) {
+			if(pc_base::load_config('system','attachment_stat') & $_POST['group']['image']) {
 				$this->attachment_db = pc_base::load_model('attachment_model');
-				$this->attachment_db->api_update($_POST['link']['logo'],'link-'.$linkid,1);
+				$this->attachment_db->api_update($_POST['group']['image'],'group-'.$groupid,1);
 			}
 			showmessage(L('operation_success'),HTTP_REFERER,'', 'add');
 		} else {
+
 			$show_validator = $show_scroll = $show_header = true;
 			pc_base::load_sys_class('form', '', 0);
  			$siteid = $this->get_siteid();
@@ -77,59 +66,51 @@ class group extends admin {
 		}
 
 	}
-	
-	/**
-	 * 说明:异步更新排序 
-	 * @param  $optionid
-	 */
-	public function listorder_up() {
-		$result = $this->db->update(array('listorder'=>'+=1'),array('linkid'=>$_GET['linkid']));
-		if($result){
-			echo 1;
-		} else {
-			echo 0;
-		}
-	}
-	
+
 	//更新排序
  	public function listorder() {
 		if(isset($_POST['dosubmit'])) {
-			foreach($_POST['listorders'] as $linkid => $listorder) {
-				$linkid = intval($linkid);
-				$this->db->update(array('listorder'=>$listorder),array('linkid'=>$linkid));
+
+			foreach($_POST['listorders'] as $groupid => $listorder) {
+				$groupid = intval($groupid);
+				$this->db->update(array('listorder'=>$listorder),array('id'=>$groupid));
 			}
-			showmessage(L('operation_success'),HTTP_REFERER);
+			showmessage('排序成功',HTTP_REFERER);
 		} 
 	}
 		
  
 	public function edit() {
 		if(isset($_POST['dosubmit'])){
- 			$linkid = intval($_GET['linkid']);
-			if($linkid < 1) return false;
-			if(!is_array($_POST['link']) || empty($_POST['link'])) return false;
-			if((!$_POST['link']['name']) || empty($_POST['link']['name'])) return false;
-			$this->db->update($_POST['link'],array('linkid'=>$linkid));
+
+ 			$id = intval($_GET['id']);
+			if($id < 1) return false;
+
+			if(!is_array($_POST['group']) || empty($_POST['group'])) return false;
+			if((!$_POST['group']['title']) || empty($_POST['group']['title'])) return false;
+
+			$_POST['group']['start_time'] = strtotime($_POST['group']['start_time']);
+			$_POST['group']['end_time'] = strtotime($_POST['group']['end_time']);
+
+			$this->db->update($_POST['group'],array('id'=>$id));
 			//更新附件状态
-			if(pc_base::load_config('system','attachment_stat') & $_POST['link']['logo']) {
+			if(pc_base::load_config('system','attachment_stat') & $_POST['group']['image']) {
 				$this->attachment_db = pc_base::load_model('attachment_model');
-				$this->attachment_db->api_update($_POST['link']['logo'],'link-'.$linkid,1);
+				$this->attachment_db->api_update($_POST['group']['image'],'group-'.$id,1);
 			}
 			showmessage(L('operation_success'),'?m=link&c=link&a=edit','', 'edit');
 			
 		}else{
  			$show_validator = $show_scroll = $show_header = true;
 			pc_base::load_sys_class('form', '', 0);
-			$types = $this->db2->listinfo(array('module'=> ROUTE_M,'siteid'=>$this->get_siteid()),$order = 'typeid DESC');
- 			$type_arr = array ();
-			foreach($types as $typeid=>$type){
-				$type_arr[$type['typeid']] = $type['name'];
-			}
+
+
+			$offices = $this->db_office->getList();
 			//解出链接内容
-			$info = $this->db->get_one(array('linkid'=>$_GET['linkid']));
-			if(!$info) showmessage(L('link_exit'));
-			extract($info); 
- 			include $this->admin_tpl('link_edit');
+			$info = $this->db->get_one(array('id'=>$_GET['groupid']));
+			if(!$info) showmessage('信息不存在');
+			extract($info);
+ 			include $this->admin_tpl('group_edit');
 		}
 
 	}
@@ -139,37 +120,39 @@ class group extends admin {
 	 * @param	intval	$sid	友情链接ID，递归删除
 	 */
 	public function delete() {
-  		if((!isset($_GET['linkid']) || empty($_GET['linkid'])) && (!isset($_POST['linkid']) || empty($_POST['linkid']))) {
+
+  		if((!isset($_GET['groupid']) || empty($_GET['groupid'])) && (!isset($_POST['groupid']) || empty($_POST['groupid']))) {
 			showmessage(L('illegal_parameters'), HTTP_REFERER);
 		} else {
-			if(is_array($_POST['linkid'])){
-				foreach($_POST['linkid'] as $linkid_arr) {
+
+			if(is_array($_POST['groupid'])){
+				foreach($_POST['groupid'] as $groupid_arr) {
  					//批量删除友情链接
-					$this->db->delete(array('linkid'=>$linkid_arr));
+					$this->db->delete(array('id'=>$groupid_arr));
 					//更新附件状态
 					if(pc_base::load_config('system','attachment_stat')) {
 						$this->attachment_db = pc_base::load_model('attachment_model');
-						$this->attachment_db->api_delete('link-'.$linkid_arr);
+						$this->attachment_db->api_delete('group-'.$groupid_arr);
 					}
 				}
-				showmessage(L('operation_success'),'?m=link&c=link');
+				showmessage(L('operation_success'),'?m=group&c=group');
 			}else{
-				$linkid = intval($_GET['linkid']);
-				if($linkid < 1) return false;
+				$groupid = intval($_GET['groupid']);
+				if($groupid < 1) return false;
 				//删除友情链接
-				$result = $this->db->delete(array('linkid'=>$linkid));
+				$result = $this->db->delete(array('id'=>$groupid));
 				//更新附件状态
 				if(pc_base::load_config('system','attachment_stat')) {
 					$this->attachment_db = pc_base::load_model('attachment_model');
-					$this->attachment_db->api_delete('link-'.$linkid);
+					$this->attachment_db->api_delete('link-'.$groupid);
 				}
 				if($result){
-					showmessage(L('operation_success'),'?m=link&c=link');
+					showmessage(L('operation_success'),'?m=group&c=group');
 				}else {
-					showmessage(L("operation_failure"),'?m=link&c=link');
+					showmessage(L("operation_failure"),'?m=group&c=group');
 				}
 			}
-			showmessage(L('operation_success'), HTTP_REFERER);
+			showmessage('操作成功', HTTP_REFERER);
 		}
 	}    
 	

@@ -2,31 +2,62 @@
 defined('IN_PHPCMS') or exit('No permission resources.');
 class index {
 	function __construct() {
-		pc_base::load_app_func('global');
 		$siteid = isset($_GET['siteid']) ? intval($_GET['siteid']) : get_siteid();
   		define("SITEID",$siteid);
+  		$this->db = pc_base::load_model('group_model');
+  		$this->db_office = pc_base::load_model('member_office_model');
 	}
 	
 	public function init() {
 		$siteid = SITEID;
 		$SEO = seo($siteid);
-		
+
+		$where = "1";
+		//搜索关键字
+		if ($_POST['searchword']) {
+			$searchword = trim($_POST['searchword']);
+			$where .= " AND title LIKE '%$searchword%'";
+		}
+		$page  = isset($_GET['page']) && trim($_GET['page']) ? intval($_GET['page']) : 1;
+		$where .= " AND `start_time` < '".SYS_TIME."' AND `end_time` > '".SYS_TIME."' ";
+		$group_list = $this->db->listinfo($where, 'listorder ASC', $page,5);
+
+		$count = $this->db->count($where);
+		//echo '<pre>';print_r($group_list);die;
+		$pages = $this->db->pages;
+		$offices = $this->db_office->getList();
+
+		pc_base::load_sys_class('form', '', 0);
 		include template('group', 'index');
+	}
+
+	//ajax判断是否登录
+	public function ajax_check_login() {
+		$phpcms_auth = param::get_cookie('auth');
+		if (!$phpcms_auth) {
+			exit('0');
+		}
+		exit('success');
 	}
 	
 	 /**
-	 *	友情链接列表页
+	 *	申请报名
 	 */
-	public function list_type() {
-		$siteid = SITEID;
-  		$type_id = trim(urldecode($_GET['type_id']));
-		$type_id = intval($type_id);
-  		if($type_id==""){
- 			$type_id ='0';
- 		}
-   		$setting = getcache('link', 'commons');
-		$SEO = seo(SITEID, '', L('link'), '', '');
-  		include template('link', 'list_type');
+	public function signup() {
+		
+		$phpcms_auth = param::get_cookie('auth');
+		if (!$phpcms_auth) {
+			exit('请先登录');
+		}
+		if (empty($_POST['mobile'])) exit('请填写手机号码');
+		if (empty($_POST['truename'])) exit('请填写您的姓名');
+		if (empty($_POST['verify'])) exit('请填写验证码');
+
+		
+
+		$mobile = $_POST['mobile'];
+
+
 	} 
  	
 	 /**

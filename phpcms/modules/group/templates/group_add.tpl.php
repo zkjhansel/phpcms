@@ -9,11 +9,20 @@ $(function(){
 
 	$("#group_title").formValidator({onshow:"请输入团购标题",onfocus:"请输入团购标题"}).inputValidator({min:1,onerror:"请输入团购标题"});
 
+	$("#image").formValidator({onshow:"上传封面",onfocus:"上传封面"}).inputValidator({min:1,onerror:"上传封面"});
 
+	$("#start_time").formValidator({onshow:"请选择开始时间",onfocus:"请选择开始时间"}).inputValidator({min:1,onerror:"请选择开始时间"});
+
+	$("#end_time").formValidator({onshow:"请选择结束时间",onfocus:"请选择结束时间"}).inputValidator({min:1,onerror:"请选择结束时间"});
 	 
 })
 
 </script>
+<style type="text/css" media="screen">
+	#start_time,#end_time {
+		width: 140px;
+	}
+</style>
 
 <div class="pad_10">
 <form action="?m=group&c=group&a=add" method="post" name="myform" id="myform">
@@ -33,12 +42,12 @@ $(function(){
 	
 	<tr>
 		<th width="100">标题：</th>
-		<td><input type="text" name="group[title]" id="group_title" size="30" class="input-text"></td>
+		<td><input type="text" name="group[title]" id="group_title" size="50" class="input-text"></td>
 	</tr>
 	
 	<tr>
 		<th width="100">简短描述：</th>
-		<td><input type="text" name="group[desc]" id="group_desc" size="30" class="input-text"></td>
+		<td><input type="text" name="group[desc]" id="group_desc" size="50" class="input-text"></td>
 	</tr>
 	
 	<tr id="logogroup">
@@ -48,21 +57,34 @@ $(function(){
 	
 	<tr>
 		<th width="100">开始时间：</th>
-		<td><input type="text" name="group[start_time]" id="start_time" size="30" class="input-text"></td>
+		<td>
+			<?php echo form::date('group[start_time]')?>
+		</td>
 	</tr>
 
 	<tr>
 		<th>结束时间：</th>
-		<td><input type="text" name="group[end_time]" id="end_time" size="30" class="input-text"></td>
+		<td>
+		<?php echo form::date('group[end_time]')?>
+		</td>
 	</tr>
 	<tr>
 		<th>市场价：</th>
-		<td><input type="text" name="group[market_price]" id="market_price" size="30" class="input-text"></td>
+		<td><input type="number" name="group[market_price]" id="market_price" size="30" class="input-text">
+		<span style="color: red">不填写则显示"待定"</span>
+		</td>
 	</tr>
 	 
 	<tr>
 		<th>团购价：</th>
-		<td><input type="text" name="group[low_price]" id="low_price" size="30" class="input-text"></td>
+		<td><input type="number" name="group[low_price]" id="low_price" size="30" class="input-text">
+		<span style="color: red">不填写则显示"待定"</span>
+	</td>
+	</tr>
+
+	<tr>
+		<th>授课地址：</th>
+		<td><input type="text" name="group[address]" size="30" class="input-text"></td>
 	</tr>
 
 	<tr>
@@ -72,7 +94,9 @@ $(function(){
 
 	<tr>
 		<th>最大报名数：</th>
-		<td><input type="text" name="group[max_num]" id="max_num" size="30" class="input-text"></td>
+		<td><input type="number" name="group[max_num]" id="max_num" value="0" size="30" class="input-text">
+		<span style="color: red">0 则不做限制</span>	
+		</td>
 	</tr>
 	
 
