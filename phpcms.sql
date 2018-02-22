@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-02-13 17:16:18
+Date: 2018-02-22 17:42:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -38,7 +38,7 @@ CREATE TABLE `v9_admin` (
 -- ----------------------------
 -- Records of v9_admin
 -- ----------------------------
-INSERT INTO `v9_admin` VALUES ('1', 'admin', '4bc423ff66d41b757576ce017eb11593', '1', 'xt3Vgr', '127.0.0.1', '1518507207', '1125014902@qq.com', '凯建', '', '');
+INSERT INTO `v9_admin` VALUES ('1', 'admin', '4bc423ff66d41b757576ce017eb11593', '1', 'xt3Vgr', '127.0.0.1', '1519261334', '1125014902@qq.com', '凯建', '', '');
 
 -- ----------------------------
 -- Table structure for v9_admin_panel
@@ -151,7 +151,7 @@ CREATE TABLE `v9_attachment` (
   `siteid` smallint(5) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`aid`),
   KEY `authcode` (`authcode`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of v9_attachment
@@ -177,6 +177,8 @@ INSERT INTO `v9_attachment` VALUES ('19', 'poster', '0', '中师教育.png', '20
 INSERT INTO `v9_attachment` VALUES ('20', 'poster', '0', '联创世华.jpg', '2018/0212/20180212111848631.jpg', '105452', 'jpg', '1', '0', '0', '1', '1518405528', '127.0.0.1', '1', '6f555758b17013fff8014d4d611cc387', '1');
 INSERT INTO `v9_attachment` VALUES ('21', 'poster', '0', 'test.jpg', '2018/0212/20180212015055780.jpg', '48815', 'jpg', '1', '0', '0', '1', '1518414655', '127.0.0.1', '1', '91a32ce506391267ad9825eca6937808', '1');
 INSERT INTO `v9_attachment` VALUES ('22', 'group', '0', '3.jpg', '2018/0213/20180213050952279.jpg', '17455', 'jpg', '1', '0', '0', '1', '1518512992', '127.0.0.1', '0', 'e6f0f905a962f3f2a2eaf5895689b995', '1');
+INSERT INTO `v9_attachment` VALUES ('23', 'group', '0', '1_820_320.jpg', '2018/0222/20180222093143140.jpg', '39038', 'jpg', '1', '0', '0', '1', '1519263103', '127.0.0.1', '1', '992e6cd8a43ba840c6b2c1cf249846ff', '1');
+INSERT INTO `v9_attachment` VALUES ('24', 'group', '0', '4_820_320.jpg', '2018/0222/20180222011104109.jpg', '42903', 'jpg', '1', '0', '0', '1', '1519276264', '127.0.0.1', '1', 'b089aba4683c9b98d198da7c7a325e18', '1');
 
 -- ----------------------------
 -- Table structure for v9_attachment_index
@@ -213,6 +215,9 @@ INSERT INTO `v9_attachment_index` VALUES ('poster-7', '18');
 INSERT INTO `v9_attachment_index` VALUES ('poster-7', '19');
 INSERT INTO `v9_attachment_index` VALUES ('poster-7', '20');
 INSERT INTO `v9_attachment_index` VALUES ('poster-5', '21');
+INSERT INTO `v9_attachment_index` VALUES ('group-1', '23');
+INSERT INTO `v9_attachment_index` VALUES ('group-2', '23');
+INSERT INTO `v9_attachment_index` VALUES ('group-4', '24');
 
 -- ----------------------------
 -- Table structure for v9_badword
@@ -843,14 +848,19 @@ CREATE TABLE `v9_group` (
   `phone` varchar(20) DEFAULT NULL,
   `sign_num` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '已经报名',
   `max_num` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最大可报名人数',
+  `address` varchar(200) DEFAULT '' COMMENT '上课地址',
   `add_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
   `siteid` tinyint(1) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `listorder` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `start_time` (`start_time`,`end_time`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='优惠团购表';
 
 -- ----------------------------
 -- Records of v9_group
 -- ----------------------------
+INSERT INTO `v9_group` VALUES ('1', '正蒙协议班火热团购开班啦，越多越优惠', '正蒙协议班火热团购开班啦，越多越优惠', 'http://cms.com/uploadfile/2018/0222/20180222093143140.jpg', '1519228800', '1519747200', '2', '32000.00', '18500.00', '50', '0539-5555666', '1', '0', '兰山区琅琊王路与王庄路交汇正蒙大楼', '1519264621', '1', '5');
+INSERT INTO `v9_group` VALUES ('2', '华图教师资格证培训，火热报名中……', '华图教师资格证培训，火热报名中……', 'http://cms.com/uploadfile/2018/0222/20180222011104109.jpg', '1517414400', '1519315200', '3', '0.00', '5500.00', '0', '0539-5555777', '0', '200', '', '1519266806', '1', '0');
 
 -- ----------------------------
 -- Table structure for v9_hits
@@ -4364,7 +4374,7 @@ CREATE TABLE `v9_log` (
   PRIMARY KEY (`logid`),
   KEY `module` (`module`,`file`,`action`),
   KEY `username` (`username`,`action`)
-) ENGINE=MyISAM AUTO_INCREMENT=872 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=962 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of v9_log
@@ -5240,6 +5250,96 @@ INSERT INTO `v9_log` VALUES ('868', '', '0', 'group', '', 'group', '?m=group&c=g
 INSERT INTO `v9_log` VALUES ('869', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-13 16:45:38');
 INSERT INTO `v9_log` VALUES ('870', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-13 16:49:02');
 INSERT INTO `v9_log` VALUES ('871', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-13 17:09:22');
+INSERT INTO `v9_log` VALUES ('872', '', '0', 'admin', '', 'index', '?m=admin&c=index&a=login', '', '0', 'admin', '127.0.0.1', '2018-02-22 09:02:06');
+INSERT INTO `v9_log` VALUES ('873', '', '0', 'admin', '', 'index', '?m=admin&c=index&a=login', '', '0', 'admin', '127.0.0.1', '2018-02-22 09:02:14');
+INSERT INTO `v9_log` VALUES ('874', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:02:40');
+INSERT INTO `v9_log` VALUES ('875', '', '0', 'member', '', 'member_office', '?m=member&c=member_office&a=manage', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:03:00');
+INSERT INTO `v9_log` VALUES ('876', '', '0', 'member', '', 'member_office', '?m=member&c=member_office&a=manage', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:07:55');
+INSERT INTO `v9_log` VALUES ('877', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:08:12');
+INSERT INTO `v9_log` VALUES ('878', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:24:01');
+INSERT INTO `v9_log` VALUES ('879', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:24:45');
+INSERT INTO `v9_log` VALUES ('880', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:27:23');
+INSERT INTO `v9_log` VALUES ('881', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:28:00');
+INSERT INTO `v9_log` VALUES ('882', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:32:18');
+INSERT INTO `v9_log` VALUES ('883', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:32:20');
+INSERT INTO `v9_log` VALUES ('884', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:38:04');
+INSERT INTO `v9_log` VALUES ('885', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:39:45');
+INSERT INTO `v9_log` VALUES ('886', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:40:55');
+INSERT INTO `v9_log` VALUES ('887', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:41:30');
+INSERT INTO `v9_log` VALUES ('888', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:46:36');
+INSERT INTO `v9_log` VALUES ('889', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:46:51');
+INSERT INTO `v9_log` VALUES ('890', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:47:27');
+INSERT INTO `v9_log` VALUES ('891', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:49:04');
+INSERT INTO `v9_log` VALUES ('892', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:51:23');
+INSERT INTO `v9_log` VALUES ('893', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:52:03');
+INSERT INTO `v9_log` VALUES ('894', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:54:47');
+INSERT INTO `v9_log` VALUES ('895', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:56:23');
+INSERT INTO `v9_log` VALUES ('896', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:57:01');
+INSERT INTO `v9_log` VALUES ('897', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 09:59:34');
+INSERT INTO `v9_log` VALUES ('898', '', '0', 'group', '', 'group', '?m=group&c=group&a=listorder', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:20:53');
+INSERT INTO `v9_log` VALUES ('899', '', '0', 'group', '', 'group', '?m=group&c=group&a=listorder', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:25:00');
+INSERT INTO `v9_log` VALUES ('900', '', '0', 'group', '', 'group', '?m=group&c=group&a=listorder', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:25:47');
+INSERT INTO `v9_log` VALUES ('901', '', '0', 'group', '', 'group', '?m=group&c=group&a=delete', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:26:46');
+INSERT INTO `v9_log` VALUES ('902', '', '0', 'group', '', 'group', '?m=group&c=group&a=delete', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:26:55');
+INSERT INTO `v9_log` VALUES ('903', '', '0', 'group', '', 'group', '?m=group&c=group&a=delete', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:28:07');
+INSERT INTO `v9_log` VALUES ('904', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:29:34');
+INSERT INTO `v9_log` VALUES ('905', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:29:48');
+INSERT INTO `v9_log` VALUES ('906', '', '0', 'group', '', 'group', '?m=group&c=group&a=delete', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:30:07');
+INSERT INTO `v9_log` VALUES ('907', '', '0', 'group', '', 'group', '?m=group&c=group&a=delete', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:30:55');
+INSERT INTO `v9_log` VALUES ('908', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:31:04');
+INSERT INTO `v9_log` VALUES ('909', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:31:15');
+INSERT INTO `v9_log` VALUES ('910', '', '0', 'group', '', 'group', '?m=group&c=group&a=delete', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:31:22');
+INSERT INTO `v9_log` VALUES ('911', '', '0', 'group', '', 'group', '?m=group&c=group&a=delete', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:31:54');
+INSERT INTO `v9_log` VALUES ('912', '', '0', 'group', '', 'group', '?m=group&c=group&a=delete', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:33:03');
+INSERT INTO `v9_log` VALUES ('913', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:33:13');
+INSERT INTO `v9_log` VALUES ('914', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:33:26');
+INSERT INTO `v9_log` VALUES ('915', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 10:33:33');
+INSERT INTO `v9_log` VALUES ('916', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:10:57');
+INSERT INTO `v9_log` VALUES ('917', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:12:48');
+INSERT INTO `v9_log` VALUES ('918', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:13:04');
+INSERT INTO `v9_log` VALUES ('919', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:17:39');
+INSERT INTO `v9_log` VALUES ('920', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:17:45');
+INSERT INTO `v9_log` VALUES ('921', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:18:38');
+INSERT INTO `v9_log` VALUES ('922', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:20:40');
+INSERT INTO `v9_log` VALUES ('923', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:20:44');
+INSERT INTO `v9_log` VALUES ('924', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:22:46');
+INSERT INTO `v9_log` VALUES ('925', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:22:50');
+INSERT INTO `v9_log` VALUES ('926', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:23:51');
+INSERT INTO `v9_log` VALUES ('927', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:23:56');
+INSERT INTO `v9_log` VALUES ('928', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:24:47');
+INSERT INTO `v9_log` VALUES ('929', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:27:55');
+INSERT INTO `v9_log` VALUES ('930', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:28:06');
+INSERT INTO `v9_log` VALUES ('931', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:28:10');
+INSERT INTO `v9_log` VALUES ('932', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:29:20');
+INSERT INTO `v9_log` VALUES ('933', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 11:30:02');
+INSERT INTO `v9_log` VALUES ('934', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 13:08:00');
+INSERT INTO `v9_log` VALUES ('935', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 13:10:26');
+INSERT INTO `v9_log` VALUES ('936', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 13:10:33');
+INSERT INTO `v9_log` VALUES ('937', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 13:11:35');
+INSERT INTO `v9_log` VALUES ('938', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 13:13:21');
+INSERT INTO `v9_log` VALUES ('939', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 13:13:47');
+INSERT INTO `v9_log` VALUES ('940', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 13:13:56');
+INSERT INTO `v9_log` VALUES ('941', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 13:15:38');
+INSERT INTO `v9_log` VALUES ('942', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 13:16:37');
+INSERT INTO `v9_log` VALUES ('943', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 13:16:46');
+INSERT INTO `v9_log` VALUES ('944', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 13:59:09');
+INSERT INTO `v9_log` VALUES ('945', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 13:59:14');
+INSERT INTO `v9_log` VALUES ('946', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 14:16:53');
+INSERT INTO `v9_log` VALUES ('947', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 14:17:00');
+INSERT INTO `v9_log` VALUES ('948', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 14:17:37');
+INSERT INTO `v9_log` VALUES ('949', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 14:17:42');
+INSERT INTO `v9_log` VALUES ('950', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 14:17:57');
+INSERT INTO `v9_log` VALUES ('951', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 14:18:54');
+INSERT INTO `v9_log` VALUES ('952', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 14:19:28');
+INSERT INTO `v9_log` VALUES ('953', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 14:19:56');
+INSERT INTO `v9_log` VALUES ('954', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 14:20:10');
+INSERT INTO `v9_log` VALUES ('955', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 14:20:45');
+INSERT INTO `v9_log` VALUES ('956', '', '0', 'member', '', 'member', '?m=member&c=member&a=manage', '', '1', 'admin', '127.0.0.1', '2018-02-22 14:44:17');
+INSERT INTO `v9_log` VALUES ('957', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 14:50:24');
+INSERT INTO `v9_log` VALUES ('958', '', '0', 'group', '', 'group', '?m=group&c=group&a=add', '', '1', 'admin', '127.0.0.1', '2018-02-22 14:51:13');
+INSERT INTO `v9_log` VALUES ('959', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 14:53:52');
+INSERT INTO `v9_log` VALUES ('960', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 14:54:26');
+INSERT INTO `v9_log` VALUES ('961', '', '0', 'group', '', 'group', '?m=group&c=group&a=edit', '', '1', 'admin', '127.0.0.1', '2018-02-22 14:54:30');
 
 -- ----------------------------
 -- Table structure for v9_member
@@ -5281,7 +5381,7 @@ CREATE TABLE `v9_member` (
 -- ----------------------------
 -- Records of v9_member
 -- ----------------------------
-INSERT INTO `v9_member` VALUES ('1', '1', '18264929491', '3a3be174faeb06aad3c3e4ea082fb8e2', '1kigRh', 'hansel', '1518155990', '1518160415', '127.0.0.1', '127.0.0.1', '0', '', '2', '0', '0.00', '0', '10', '0', '0', '0', '0', '1', '', '', '18264929491');
+INSERT INTO `v9_member` VALUES ('1', '1', '18264929491', '3a3be174faeb06aad3c3e4ea082fb8e2', '1kigRh', 'hansel', '1518155990', '1519289256', '127.0.0.1', '127.0.0.1', '0', '', '2', '0', '0.00', '0', '10', '0', '0', '0', '0', '1', '', '', '18264929491');
 INSERT INTO `v9_member` VALUES ('2', '2', '18264929492', '0302abb94a8c2b64b8a515c5ce5e8179', '1j9KGl', '', '1518156071', '1518156071', '127.0.0.1', '', '0', '', '2', '0', '0.00', '0', '10', '0', '0', '0', '0', '1', '', '', '18264929492');
 INSERT INTO `v9_member` VALUES ('3', '3', '18264929493', '0bbee3dd4cb769531a02169e81f708e8', '1MwCWT', '', '1518156277', '1518156277', '127.0.0.1', '', '0', '', '2', '0', '0.00', '0', '10', '0', '0', '0', '0', '1', '', '', '18264929493');
 
