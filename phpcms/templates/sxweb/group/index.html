@@ -141,33 +141,10 @@
     }
 </style>
 
-<div id="sign" class="r-info w300" style="display: none;">
-
-    <form id="bmform" class="jqValidate" data-tipmode="#tg-tip" novalidate="novalidate">
-        
-        <span id="chooseid"></span>
-
-        <div class="blank25" style="margin-top:-10px"><span id="tg-tip" class="tip single"></span></div>
-
-        <ul class="form form-control">
-            <li>
-                姓　名：<input type="text" class="txt"  id="truename" name="truename" placeholder="您的姓名">
-            </li>
-
-            <li>
-                电　话：<input type="text" class="txt sign-mobile" id="mobile" name="mobile" placeholder="您的电话">
-            </li>
-
-            <li class="reg-wrap" data-regcode="commu8" style="display: list-item;">
-                验证码：<input type="text" name="verify" id="verify" class="txt" style="width: 120px;" placeholder="请输入验证码" value="">
-                {form::checkcode('code_img', '4', '14', 138, 30)}
-            </li>
-            <li>
-                <input type="button" id="sure_sign" class="btn-submit" value="立即报名">
-            </li>
-        </ul>
-    </form>
+<div id="get_verify" style="display: none;">
+    {form::checkcode('code_img', '4', '14', 138, 30)}
 </div>
+<span id="chooseid" style="display: none;"></span>
 
 <script type="text/javascript">
 	
@@ -218,6 +195,7 @@ function updateEndTime() {
 $('.signup').click(function(event) {
     //判断是否登录
     var posturl = '{APP_PATH}index.php?m=group&c=index&a=ajax_check_login';
+    var __this = this;
     $.ajax({
         url : posturl,
         type : 'POST',
@@ -227,14 +205,27 @@ $('.signup').click(function(event) {
             //console.log(responseText);
             if (responseText == 'success') {
                 //信息框
-                var _thisId = $(this).attr('data-groupid');
+                var _thisId = $(__this).attr('data-groupid');
                 $('#chooseid').html(_thisId);
+                var getverify = $('#get_verify').html();
+                var html =  '<div id="sign" class="r-info w300">'
+                            +'<form id="bmform" class="jqValidate" data-tipmode="#tg-tip" novalidate="novalidate">'
+                            +    '<ul class="form form-control">'
+                            +        '<li>姓　名：<input type="text" class="txt" id="truename" name="truename" placeholder="您的姓名"></li>'
+                            +        '<li>电　话：<input type="text" class="txt" id="mobile" name="mobile" maxlength="11" placeholder="您的电话"></li>'
+                            +        '<li class="reg-wrap" data-regcode="commu8" style="display: list-item;">验证码：<input type="text" name="verify" id="verify" class="txt" style="width: 120px;" placeholder="请输入验证码" maxlength="4">'
+                            +   getverify
+                            +        '</li>'
+                            +        '<li><input type="button" id="sure_sign" class="btn-submit" value="立即报名"></li>'
+                            +    '</ul>'
+                            +'</form>'
+                            +'</div>';
                 layer.open({
                   type: 1,
                   title:'报名预约',
                   skin: 'layui-layer-rim', //加上边框
                   area: ['520px', '340px'], //宽高
-                  content: $('#sign').html(),
+                  content: html,
                 });
             } else {
                 //登录失败
@@ -253,26 +244,24 @@ $('.signup').click(function(event) {
 });
 
 
-var truename = $('#truename').val();
-var verify = $('#verify').val();
+
 
 $(document).on('click', '#sure_sign', function(event) {
     event.preventDefault();
     
-    
-    /*if (truename=='') {
-        alert(truename);
+    var truename = $('#truename').val();
+    if (truename=='') {
         layer.msg('请填写您的姓名', {icon: 5});return false;
-    }*/
-    var mobile = $(".sign-mobile").val();
-    alert(mobile);
+    }
+    var mobile = $("#mobile").val();
     if (mobile=='') {
         layer.msg('请填写手机号', {icon: 5});return false;
     }
+    var verify = $('#verify').val();
     if (verify=='') {
         layer.msg('请填写验证码', {icon: 5});return false;
     }
-
+    var group_id = $('#chooseid').html();
 
     var _this = this;
     //ajax提交报名
@@ -281,8 +270,9 @@ $(document).on('click', '#sure_sign', function(event) {
         url : posturl,
         type : 'POST',
         data : {
-            mobile : mobile,
+            group_id : group_id,
             truename : truename,
+            mobile : mobile,
             verify : verify
         },
         beforeSend : function (data) {
@@ -296,7 +286,7 @@ $(document).on('click', '#sure_sign', function(event) {
                 setTimeout(function () {
                     forward = '{APP_PATH}index.php?m=member&c=group&a=show';
                     window.location.href = forward;
-                },1300)
+                },1500)
             } else {
                 //登录失败
                 $(_this).val('立即报名').removeAttr('disabled').css({'background':'#ff5e00'});
