@@ -116,8 +116,8 @@ class group extends admin {
 	}
 
 	/**
-	 * 删除友情链接  
-	 * @param	intval	$sid	友情链接ID，递归删除
+	 * 删除团购信息  
+	 * @param	intval	$sid	ID，递归删除
 	 */
 	public function delete() {
 
@@ -127,7 +127,7 @@ class group extends admin {
 
 			if(is_array($_POST['groupid'])){
 				foreach($_POST['groupid'] as $groupid_arr) {
- 					//批量删除友情链接
+ 					//批量删除
 					$this->db->delete(array('id'=>$groupid_arr));
 					//更新附件状态
 					if(pc_base::load_config('system','attachment_stat')) {
@@ -139,7 +139,7 @@ class group extends admin {
 			}else{
 				$groupid = intval($_GET['groupid']);
 				if($groupid < 1) return false;
-				//删除友情链接
+				//删除
 				$result = $this->db->delete(array('id'=>$groupid));
 				//更新附件状态
 				if(pc_base::load_config('system','attachment_stat')) {

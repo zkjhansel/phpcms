@@ -53,7 +53,7 @@ if(is_array($infos)){
 		<td align="center" width="12%">
 			<a href="###" onclick="edit(<?php echo $info['id']?>, '<?php echo new_addslashes(new_html_special_chars($info['title']))?>')" title="修改">修改</a> |  
 			<a href='?m=group&c=group&a=delete&groupid=<?php echo $info['id']?>' onClick="return confirm('<?php echo L('confirm', array('message' => new_addslashes(new_html_special_chars($info['title']))))?>')">删除</a>  |  
-			<a href='?m=group&c=group&a=signlist&groupid=<?php echo $info['id']?>'>报名列表</a>
+			<a href='?m=group&c=group_sign&a=init&groupid=<?php echo $info['id']?>'>报名列表</a>
 		</td>
 	</tr>
 	<?php
