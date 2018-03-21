@@ -52,6 +52,7 @@ if(is_array($infos)){
 
 		<td align="center" width="12%">
 			<a href="###" onclick="edit(<?php echo $info['id']?>, '<?php echo new_addslashes(new_html_special_chars($info['title']))?>')" title="修改">修改</a> |  
+			<a href="###" onclick="intro(<?php echo $info['id']?>, '<?php echo new_addslashes(new_html_special_chars($info['title']))?>')" title="修改">详情</a> |  
 			<a href='?m=group&c=group&a=delete&groupid=<?php echo $info['id']?>' onClick="return confirm('<?php echo L('confirm', array('message' => new_addslashes(new_html_special_chars($info['title']))))?>')">删除</a>  |  
 			<a href='?m=group&c=group_sign&a=init&groupid=<?php echo $info['id']?>'>报名列表</a>
 		</td>
@@ -72,10 +73,18 @@ if(is_array($infos)){
 </div>
 <script type="text/javascript">
 
+//编辑弹窗
 function edit(id, name) {
 	window.top.art.dialog({id:'edit'}).close();
 	window.top.art.dialog({title:'<?php echo L('edit')?> '+name+' ',id:'edit',iframe:'?m=group&c=group&a=edit&groupid='+id,width:'700',height:'450'}, function(){var d = window.top.art.dialog({id:'edit'}).data.iframe;var form = d.document.getElementById('dosubmit');form.click();return false;}, function(){window.top.art.dialog({id:'edit'}).close()});
 }
+
+//详情弹窗
+function intro(id, name) {
+	window.top.art.dialog({id:'intro'}).close();
+	window.top.art.dialog({title:' '+name+' 的详情',id:'intro',iframe:'?m=group&c=group&a=intro&groupid='+id,width:'900',height:'450'}, function(){var d = window.top.art.dialog({id:'intro'}).data.iframe;var form = d.document.getElementById('dosubmit');form.click();return false;}, function(){window.top.art.dialog({id:'intro'}).close()});
+}
+
 function checkuid() {
 	var ids='';
 	$("input[name='groupid[]']:checked").each(function(i, n){

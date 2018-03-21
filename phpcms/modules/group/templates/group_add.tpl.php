@@ -98,8 +98,6 @@ $(function(){
 		<span style="color: red">0 则不做限制</span>	
 		</td>
 	</tr>
-	
-
 
 
 <tr>

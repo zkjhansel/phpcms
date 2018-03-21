@@ -94,13 +94,6 @@
 		<td><input type="text" name="group[phone]" id="phone" value="<?php echo $phone;?>" size="30" class="input-text"></td>
 	</tr>
 
-	<tr>
-		<th>最大报名数：</th>
-		<td><input type="number" name="group[max_num]" id="max_num" size="30" value="<?php echo $max_num;?>" class="input-text">
-		<span style="color: red">0 则不做限制<?php echo $max_num;?></span>	
-		</td>
-	</tr>
-
 
 	<tr>
 		<th></th>

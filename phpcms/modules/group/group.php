@@ -5,6 +5,7 @@ class group extends admin {
 	function __construct() {
 		parent::__construct();
 		$this->db = pc_base::load_model('group_model');
+		$this->db_intro = pc_base::load_model('group_intro_model');
 		$this->db_office = pc_base::load_model('member_office_model');
 	}
 
@@ -48,6 +49,9 @@ class group extends admin {
 			$data = new_addslashes($_POST['group']);
 			$groupid = $this->db->insert($data,true);
 			if(!$groupid) showmessage('增加团购失败',HTTP_REFERER);
+
+			//详情表加入一条记录
+			$this->db_intro->insert(array('group_id'=>$groupid,'content'=>''));
  			
 	 		//更新附件状态
 			if(pc_base::load_config('system','attachment_stat') & $_POST['group']['image']) {
@@ -79,7 +83,9 @@ class group extends admin {
 		} 
 	}
 		
- 
+ 	/*
+	* 团购的主内容修改
+ 	*/
 	public function edit() {
 		if(isset($_POST['dosubmit'])){
 
@@ -98,7 +104,7 @@ class group extends admin {
 				$this->attachment_db = pc_base::load_model('attachment_model');
 				$this->attachment_db->api_update($_POST['group']['image'],'group-'.$id,1);
 			}
-			showmessage(L('operation_success'),'?m=link&c=link&a=edit','', 'edit');
+			showmessage(L('operation_success'),'?m=group&c=group&a=edit','', 'edit');
 			
 		}else{
  			$show_validator = $show_scroll = $show_header = true;
@@ -111,6 +117,30 @@ class group extends admin {
 			if(!$info) showmessage('信息不存在');
 			extract($info);
  			include $this->admin_tpl('group_edit');
+		}
+
+	}
+
+	/*
+	* 团购的详情介绍编辑修改
+	*/
+	public function intro() {
+		if(isset($_POST['dosubmit'])){
+
+ 			$group_id = intval($_GET['group_id']);
+			if($group_id < 1) return false;
+			$this->db_intro->update( array('content'=>$_POST['content']) ,array('group_id'=>$group_id));
+			showmessage('操作成功','?m=group&c=group&a=init','', 'intro');
+			
+		}else{
+ 			$show_validator = $show_scroll = $show_header = true;
+			pc_base::load_sys_class('form', '', 0);
+
+			//解出链接内容
+			$info = $this->db_intro->get_one(array('group_id'=>$_GET['groupid']));
+			if(!$info) showmessage('信息不存在');
+			extract($info);
+ 			include $this->admin_tpl('group_intro');
 		}
 
 	}
@@ -144,7 +174,7 @@ class group extends admin {
 				//更新附件状态
 				if(pc_base::load_config('system','attachment_stat')) {
 					$this->attachment_db = pc_base::load_model('attachment_model');
-					$this->attachment_db->api_delete('link-'.$groupid);
+					$this->attachment_db->api_delete('group-'.$groupid);
 				}
 				if($result){
 					showmessage(L('operation_success'),'?m=group&c=group');
