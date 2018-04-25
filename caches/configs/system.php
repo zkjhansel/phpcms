@@ -66,5 +66,8 @@ return array(
 'qq_callback' => '',	//QQ号码登录 callback
 
 'admin_url' => '',	//允许访问后台的域名
+
+'server_qq' => '1125014902',
+'server_phone' => '0539-5656566',
 );
 ?>

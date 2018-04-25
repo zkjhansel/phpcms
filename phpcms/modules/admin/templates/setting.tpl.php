@@ -71,6 +71,18 @@ include $this->admin_tpl('header');?>
     <th width="120"><?php echo L('setting_upload_url')?></th>
     <td class="y-bg"><input type="text" class="input-text" name="setconfig[upload_url]" id="upload_url" size="50" value="<?php echo $upload_url?>" /></td>
   </tr>
+
+  <tr>
+    <th width="120">客服QQ</th>
+    <td class="y-bg"><input type="text" class="input-text" name="setconfig[server_qq]" id="server_qq" size="50" value="<?php echo $server_qq;?>" /></td>
+  </tr>
+
+
+  <tr>
+    <th width="120">客服电话</th>
+    <td class="y-bg"><input type="text" class="input-text" name="setconfig[server_phone]" id="server_phone" size="50" value="<?php echo $server_phone;?>" /></td>
+  </tr>
+  
 </table>
 </div>
 <div id="div_setting_2" class="contentList pad-10 hidden">
