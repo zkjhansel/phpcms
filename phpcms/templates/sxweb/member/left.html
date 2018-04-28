@@ -1,8 +1,8 @@
 <div class="col-left col-1 left-memu">
-    <h5 class="title"><img src="{IMG_PATH}icon/m_1.png" width="15" height="15" /> {L('manage_center')}</h5>
+    <h5 class="title"><img src="{IMG_PATH}icon/m_1.png" width="15" height="15" /> 管理中心</h5>
     <ul>
-	       <li {if ROUTE_A=="publish"} class="on"{/if}><a href="index.php?m=member&c=content&a=publish"><img src="{IMG_PATH}icon/m_2.png" width="14" height="15" /> {L('online_publish')}</a></li>
-         <li {if ROUTE_A=="published"} class="on"{/if}><a href="index.php?m=member&c=content&a=published"><img src="{IMG_PATH}icon/m_3.png" width="14" height="16" /> {L('published_content')}</a></li>
+	       <li {if ROUTE_A=="publish"} class="on"{/if}><a href="index.php?m=member&c=content&a=publish"><img src="{IMG_PATH}icon/m_2.png" width="14" height="15" /> 在线投稿</a></li>
+         <li {if ROUTE_A=="published"} class="on"{/if}><a href="index.php?m=member&c=content&a=published"><img src="{IMG_PATH}icon/m_3.png" width="14" height="16" /> 已发布稿件</a></li>
     </ul>
 
 
@@ -30,9 +30,8 @@
     <ul>
         <li><a href="index.php?m=group&c=index&a=init" target="_blank"><img src="{IMG_PATH}icon/m_group.png" width="15" height="16" /> 报名团购</a></li>
 
-        <li{if ROUTE_A=="show" && ROUTE_C=="group"} class="on"{/if}><a href="index.php?m=member&c=group&a=show"><img src="{IMG_PATH}icon/m_baoming.png" width="15" height="16" /> 我的报名</a></li>
+        <li{if ROUTE_A=="show" && ROUTE_M=="group"} class="on"{/if}><a href="index.php?m=group&c=index&a=show"><img src="{IMG_PATH}icon/m_baoming.png" width="15" height="16" /> 我的报名</a></li>
     </ul>
-
 
 
 {pc:message action="check_new"}

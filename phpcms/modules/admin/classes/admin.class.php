@@ -73,6 +73,7 @@ class admin {
 		}
 		//权限检查
 		if($_SESSION['roleid'] == 1) return $result;
+		
 		$array = array();
 		$privdb = pc_base::load_model('admin_role_priv_model');
 		$siteid = param::get_cookie('siteid');

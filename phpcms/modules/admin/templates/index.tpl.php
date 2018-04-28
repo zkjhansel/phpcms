@@ -41,42 +41,42 @@ var pc_hash = '<?php echo $_SESSION['pc_hash']?>'
 </style>
 </head>
 <body scroll="no" class="objbody">
-<div class="btns btns2" id="btnx">
-<div class="bg_btn"></div>
-<?php $model_types = pc_base::load_config('model_config');?>
-<h6><?php echo L('panel_switch');?></h6>
-<ul id="Site_model" class="pd4">
-		<li onclick="_Site_M();" class="ac"><span><?php echo L('full_menu')?></span></li>
-		<?php if (is_array($model_types)) { foreach ($model_types as $mt => $mn) {?>
-		<li onclick="_Site_M('<?php echo $mt;?>');"><span><?php echo $mn;?></span></li>
-		<?php } }?>
-	</ul>
-</div>
+
+<!-- 锁屏时的遮罩 -->
 <div id="dvLockScreen" class="ScreenLock" style="display:<?php if(isset($_SESSION['lock_screen']) && $_SESSION['lock_screen']==0) echo 'none';?>">
     <div id="dvLockScreenWin" class="inputpwd">
-    <h5><b class="ico ico-info"></b><span id="lock_tips"><?php echo L('lockscreen_status');?></span></h5>
+    <h5><b class="ico ico-info"></b><span id="lock_tips">锁屏状态，请输入密码解锁</span></h5>
     <div class="input">
-    	<label class="lb"><?php echo L('password')?>：</label><input type="password" id="lock_password" class="input-text" size="24">
+    	<label class="lb">密码：</label><input type="password" id="lock_password" class="input-text" size="24">
         <input type="submit" class="submit" value="&nbsp;" name="dosubmit" onclick="check_screenlock();return false;">
     </div></div>
 </div>
+
 <div class="header">
-	<div class="logo lf"><a href="<?php echo $currentsite['domain']?>" target="_blank"><span class="invisible"><?php echo L('phpcms_title')?></span></a></div>
+	<div class="logo lf"><a href="<?php echo $currentsite['domain']?>" target="_blank"><span class="invisible">临沂思学网</span></a></div>
+    
+    <!-- 右上角 -->
     <div class="rt-col">
-    	<div class="tab_style white cut_line text-r"><a href="javascript:;" onclick="lock_screen()"><img src="<?php echo IMG_PATH.'icon/lockscreen.png'?>"> <?php echo L('lockscreen')?></a><span>|</span><a href="http://www.phpcms.cn" target="_blank">PHPCMS</a><span>|</span><a href="http://www.phpcms.cn/license/license.php" target="_blank"><?php echo L('authorization')?></a><span>|</span><a href="http://bbs.phpcms.cn" target="_blank"><?php echo L('igenus_for_postfix')?></a><span>|</span><a href="http://v9.help.phpcms.cn/" target="_blank"><?php echo L('help')?></a>
-    <ul id="Skin">
-		<li class="s1 styleswitch" rel="styles1"></li>
-		<li class="s2 styleswitch" rel="styles2"></li>
-		<li class="s3 styleswitch" rel="styles3"></li>
-        <li class="s4 styleswitch" rel="styles4"></li>
-	</ul>
+    	<div class="tab_style white cut_line text-r">
+    		<a href="javascript:;" onclick="lock_screen()"><img src="<?php echo IMG_PATH.'icon/lockscreen.png'?>">锁屏</a><span>|</span>
+    		<a href="javascript:;" target="_blank">PHPCMS</a><span>|</span>
+    		<a href="javascript:;" target="_blank">授权</a><span>|</span>
+    		<a href="javascript:;" target="_blank">论坛</a><span>|</span>
+    		<a href="http://v9.help.phpcms.cn/" target="_blank">帮助</a>
+		    <ul id="Skin">
+				<li class="s1 styleswitch" rel="styles1"></li>
+				<li class="s2 styleswitch" rel="styles2"></li>
+				<li class="s3 styleswitch" rel="styles3"></li>
+		        <li class="s4 styleswitch" rel="styles4"></li>
+			</ul>
         </div>
     </div>
+
     <div class="col-auto">
-    	<div class="log white cut_line"><?php echo L('hello'),$admin_username?>  [<?php echo $rolename?>]<span>|</span><a href="?m=admin&c=index&a=public_logout">[<?php echo L('exit')?>]</a><span>|</span>
-    		<a href="<?php echo $currentsite['domain']?>" target="_blank" id="site_homepage"><?php echo L('site_homepage')?></a><span>|</span>
-    		<a href="?m=member" target="_blank"><?php echo L('member_center')?></a><span>|</span>
-    		<a href="?m=search" target="_blank" id="site_search"><?php echo L('search')?></a>
+    	<div class="log white cut_line">您好，<?php echo $admin_username?>  [<?php echo $rolename?>]<span>|</span>
+    		<a href="?m=admin&c=index&a=public_logout">[退出]</a><span>|</span>
+    		<a href="<?php echo $currentsite['domain']?>" target="_blank" id="site_homepage">站点首页</a><span>|</span>
+    		<a href="?m=member" target="_blank">会员中心</a><span>|</span>
     	</div>
         <ul class="nav white" id="top_menu">
         <?php
@@ -94,20 +94,32 @@ var pc_hash = '<?php echo $_SESSION['pc_hash']?>'
         </ul>
     </div>
 </div>
+
 <div id="content">
 	<div class="col-left left_menu">
     	<div id="Scroll"><div id="leftMain"></div></div>
         <a href="javascript:;" id="openClose" style="outline-style: none; outline-color: invert; outline-width: medium;" hideFocus="hidefocus" class="open" title="<?php echo L('spread_or_closed')?>"><span class="hidden"><?php echo L('expand')?></span></a>
     </div>
+
 	<div class="col-1 lf cat-menu" id="display_center_id" style="display:none" height="100%">
-	<div class="content">
+	
+		<div class="content">
         	<iframe name="center_frame" id="center_frame" src="" frameborder="false" scrolling="auto" style="border:none" width="100%" height="auto" allowtransparency="true"></iframe>
             </div>
-        </div>
+    </div>
+
     <div class="col-auto mr8">
-    <div class="crumbs">
-    <div class="shortcut cu-span"><a href="?m=content&c=create_html&a=public_index&pc_hash=<?php echo $_SESSION['pc_hash'];?>" target="right"><span><?php echo L('create_index')?></span></a><a href="?m=admin&c=cache_all&a=init&pc_hash=<?php echo $_SESSION['pc_hash'];?>" target="right"><span><?php echo L('update_backup')?></span></a><a href="javascript:art.dialog({id:'map',iframe:'?m=admin&c=index&a=public_map', title:'<?php echo L('background_map')?>', width:'700', height:'500', lock:true});void(0);"><span><?php echo L('background_map')?></span></a><?php echo runhook('admin_top_left_menu')?></div>
-    <?php echo L('current_position')?><span id="current_pos"></span></div>
+    	
+	    <div class="crumbs">
+		    <div class="shortcut cu-span">
+		    	<a href="?m=content&c=create_html&a=public_index&pc_hash=<?php echo $_SESSION['pc_hash'];?>" target="right"><span><?php echo L('create_index')?></span></a>
+		    	<a href="?m=admin&c=cache_all&a=init&pc_hash=<?php echo $_SESSION['pc_hash'];?>" target="right"><span><?php echo L('update_backup')?></span></a>
+		    	<a href="javascript:art.dialog({id:'map',iframe:'?m=admin&c=index&a=public_map', title:'<?php echo L('background_map')?>', width:'700', height:'500', lock:true});void(0);"><span><?php echo L('background_map')?></span></a>
+		    	<?php echo runhook('admin_top_left_menu')?>
+		    </div>
+	    	<?php echo L('current_position')?><span id="current_pos"></span>
+	    </div>
+
     	<div class="col-1">
         	<div class="content" style="position:relative; overflow:hidden">
                 <iframe name="right" id="rightMain" src="?m=admin&c=index&a=public_main" frameborder="false" scrolling="auto" style="border:none; margin-bottom:30px" width="100%" height="auto" allowtransparency="true"></iframe>
@@ -128,6 +140,7 @@ var pc_hash = '<?php echo $_SESSION['pc_hash']?>'
         </div>
     </div>
 </div>
+
 <div class="tab-web-panel hidden" style="position:absolute; z-index:999; background:#fff">
 <ul>
 <?php foreach ($sitelist as $key=>$v):?>

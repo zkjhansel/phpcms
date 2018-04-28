@@ -23,7 +23,6 @@ class index {
 		$group_list = $this->db->listinfo($where, 'listorder ASC', $page,5);
 
 		$count = $this->db->count($where);
-		//echo '<pre>';print_r($group_list);die;
 		$pages = $this->db->pages;
 		$offices = $this->db_office->getList();
 
@@ -104,59 +103,43 @@ class index {
 
 		$res = $this->db_group_sign->insert($signData,true);
 		//更新报名人数
-		$up = $this->db->update(array('sign_num'=>'+=1',),array('id'=>$signData['group_id']));
+		$this->db->update(array('sign_num'=>'+=1',),array('id'=>$signData['group_id']));
 		if (!$res) exit('预约失败');
 		
 		exit('success');
 
 
 	} 
- 	
-	 /**
-	 *	申请友情链接 
-	 */
-	public function register() { 
- 		$siteid = SITEID;
- 		if(isset($_POST['dosubmit'])){
- 			if($_POST['name']==""){
- 				showmessage(L('sitename_noempty'),"?m=link&c=index&a=register&siteid=$siteid");
- 			}
- 			if($_POST['url']=="" || !preg_match('/^http:\/\/(.*)/i', $_POST['url'])){
- 				showmessage(L('siteurl_not_empty'),"?m=link&c=index&a=register&siteid=$siteid");
- 			}
- 			if(!in_array($_POST['linktype'],array('0','1'))){
- 				$_POST['linktype'] = '0';
- 			}
- 			$link_db = pc_base::load_model(link_model);
- 			$_POST['logo'] =new_html_special_chars($_POST['logo']);
 
-			$logo = safe_replace(strip_tags($_POST['logo']));
-			if(!preg_match('/^http:\/\/(.*)/i', $logo)){
-				$logo = '';
-			}
-			$name = safe_replace(strip_tags($_POST['name']));
-			$url = safe_replace(strip_tags($_POST['url']));
-			$url = trim_script($url);
- 			if($_POST['linktype']=='0'){
- 				$sql = array('siteid'=>$siteid,'typeid'=>intval($_POST['typeid']),'linktype'=>intval($_POST['linktype']),'name'=>$name,'url'=>$url);
- 			}else{
- 				$sql = array('siteid'=>$siteid,'typeid'=>intval($_POST['typeid']),'linktype'=>intval($_POST['linktype']),'name'=>$name,'url'=>$url,'logo'=>$logo);
- 			}
- 			$link_db->insert($sql);
- 			showmessage(L('add_success'), "?m=link&c=index&siteid=$siteid");
- 		} else {
-  			$setting = getcache('link', 'commons');
-			$setting = $setting[$siteid];
- 			if($setting['is_post']=='0'){
- 				showmessage(L('suspend_application'), HTTP_REFERER);
- 			}
- 			$this->type = pc_base::load_model('type_model');
- 			$types = $this->type->get_types($siteid);//获取站点下所有友情链接分类
- 			pc_base::load_sys_class('form', '', 0);
-  			$SEO = seo(SITEID, '', L('application_links'), '', '');
-   			include template('link', 'register');
- 		}
-	} 
+	public function ajax_get_details() {
+
+		$group_id = trim($_POST['group_id']);
+		if (!is_numeric($group_id)) {
+			exit('参数错误');
+		}
+		$this->db_intro = pc_base::load_model('group_intro_model');
+
+		$intro = $this->db_intro->get_one( array('group_id'=>$group_id) );
+		if (empty($intro) || empty($intro['content'])) {
+			exit('暂无详情介绍');
+		}
+
+		echo $intro['content'];die;
+
+	}
+
+
+	//个人中心显示我的报名列表
+	public function show() {
+
+		$phpcms_auth = param::get_cookie('auth');
+		if (!$phpcms_auth) {
+			showmessage('请先登录', 'index.php?m=member&c=index&a=login');
+		}
+		include template('group','show');
+
+
+	}
 	
 }
 ?>

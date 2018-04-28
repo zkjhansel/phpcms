@@ -1,10 +1,11 @@
 <?php
 /**
  *  extention.func.php 用户自定义函数库
- *
- * @copyright			(C) 2005-2010 PHPCMS
- * @license				http://www.phpcms.cn/license/
- * @lastmodify			2010-10-27
- */
- 
+*/
+
+//辅助函数用于测试打印数据
+function dd($data){
+    echo "<pre>";
+    print_r($data);die;
+} 
 ?>

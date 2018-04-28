@@ -29,8 +29,8 @@ class index extends admin {
 			
 			//不为口令卡验证
 			if (!isset($_GET['card'])) {
-				$username = isset($_POST['username']) ? trim($_POST['username']) : showmessage(L('nameerror'),HTTP_REFERER);
-				$code = isset($_POST['code']) && trim($_POST['code']) ? trim($_POST['code']) : showmessage(L('input_code'), HTTP_REFERER);
+				$username = isset($_POST['username']) ? trim($_POST['username']) : showmessage('用户名错误',HTTP_REFERER);
+				$code = isset($_POST['code']) && trim($_POST['code']) ? trim($_POST['code']) : showmessage('请填写验证码', HTTP_REFERER);
 				if ($_SESSION['code'] != strtolower($code)) {
 					$_SESSION['code'] = '';
 					showmessage(L('code_error'), HTTP_REFERER);
@@ -43,7 +43,7 @@ class index extends admin {
 				$username = $_SESSION['card_username'] ? $_SESSION['card_username'] :  showmessage(L('nameerror'),HTTP_REFERER);
 			}
 			if(!is_username($username)){
-				showmessage(L('username_illegal'), HTTP_REFERER);
+				showmessage('用户名不合法', HTTP_REFERER);
 			}
 			//密码错误剩余重试次数
 			$this->times_db = pc_base::load_model('times_model');
@@ -57,7 +57,8 @@ class index extends admin {
 			}
 			//查询帐号
 			$r = $this->db->get_one(array('username'=>$username));
-			if(!$r) showmessage(L('user_not_exist'),'?m=admin&c=index&a=login');
+			if(!$r) showmessage('用户名不存在','?m=admin&c=index&a=login');
+
 			$password = md5(md5(trim((!isset($_GET['card']) ? $_POST['password'] : $_SESSION['card_password']))).$r['encrypt']);
 			
 			if($r['password'] != $password) {
@@ -99,13 +100,8 @@ class index extends admin {
 			param::set_cookie('userid', $r['userid'],$cookie_time);
 			param::set_cookie('admin_email', $r['email'],$cookie_time);
 			param::set_cookie('sys_lang', $r['lang'],$cookie_time);
-			showmessage(L('login_success'),'?m=admin&c=index');
-			//同步登陆vms,先检查是否启用了vms
-			$video_setting = getcache('video', 'video');
-			if ($video_setting['sn'] && $video_setting['skey']) {
-				$vmsapi = pc_base::load_app_class('ku6api', 'video');
-				$vmsapi->member_login_vms();
-			}
+			
+			showmessage('登录成功','?m=admin&c=index');
 		} else {
 			pc_base::load_sys_class('form', '', 0);
 			include $this->admin_tpl('login');
@@ -217,10 +213,6 @@ class index extends admin {
 		$pc_writeable = is_writable(PC_PATH.'base.php');
 		$common_cache = getcache('common','commons');
 		$logsize_warning = errorlog_size() > $common_cache['errorlog_size'] ? '1' : '0';
-		$adminpanel = $this->panel_db->select(array('userid'=>$userid), '*',20 , 'datetime');
-		$product_copyright = '酷溜网(北京)科技有限公司';
-		$programmer = '马玉辉、张明雪、李天会、潘兆志';
- 		$designer = '张二强';
 		ob_start();
 		include $this->admin_tpl('main');
 		$data = ob_get_contents();
