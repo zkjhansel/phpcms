@@ -136,6 +136,17 @@ class index {
 		if (!$phpcms_auth) {
 			showmessage('请先登录', 'index.php?m=member&c=index&a=login');
 		}
+		$offices = $this->db_office->getList();
+		$auth_key = $auth_key = get_auth_key('login');
+		list($userid, $password) = explode("\t", sys_auth($phpcms_auth, 'DECODE', $auth_key));
+		$userid = intval($userid);
+
+		$sql = " SELECT * from v9_group_sign as gs left join v9_group as g ON gs.group_id = g.id where gs.user_id=$userid";
+
+		$result = $this->db->query($sql);
+
+		dd($result);
+
 		include template('group','show');
 
 
